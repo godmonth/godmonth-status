@@ -11,18 +11,6 @@
 	<name>commons status</name>
 	<description>commons status</description>
 
-	<distributionManagement>
-		<repository>
-			<id>deployRelease</id>
-			<name>weihui Internal Repository</name>
-			<url>http://nexus.weihui.com:8081/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>deploySnapshot</id>
-			<name>weihui Internal Repository</name>
-			<url>http://nexus.weihui.com:8081/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
