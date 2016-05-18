@@ -1,5 +1,7 @@
 package com.godmonth.commons.status.sample;
 
+import java.util.Set;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -8,6 +10,8 @@ public class Activity {
 	private String id;
 
 	private ActivityStatus status;
+	
+	private Set<String> participators;
 
 	public String getId() {
 		return id;
