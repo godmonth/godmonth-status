@@ -19,7 +19,9 @@ public class EntityManagerStatusTransitor<TRIGGER, STATUS, MODEL, E extends Exce
 	@Override
 	protected MODEL mergeModel(MODEL model, TransitionCallback<MODEL> transitionCallback) throws E {
 		return transactionTemplate.execute((TransactionStatus status) -> {
-			transitionCallback.beforeMerge(model);
+			if (transitionCallback != null) {
+				transitionCallback.beforeMerge(model);
+			}
 			return entityManager.merge(model);
 		});
 
