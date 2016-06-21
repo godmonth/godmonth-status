@@ -15,7 +15,7 @@ import com.godmonth.commons.status.sample.Activity;
 import com.godmonth.commons.status.sample.ActivityInstruction;
 import com.godmonth.commons.status.sample.ActivityStatus;
 import com.godmonth.commons.status.sample.ActivityTrigger;
-import com.godmonth.commons.status.sample.EnrollAdvancer;
+import com.godmonth.commons.status.sample.advancer.EnrollAdvancer;
 
 public class OrderExecutorTest {
 
