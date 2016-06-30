@@ -10,7 +10,18 @@
 
 	<name>commons status</name>
 	<description>commons status</description>
-
+	<scm>
+		<connection>scm:git:git@github.com:godmonth/godmonth-status.git</connection>
+		<developerConnection>scm:git:git@github.com:godmonth/godmonth-status.git</developerConnection>
+		<url>https://github.com/godmonth/godmonth-status</url>
+		<tag>HEAD</tag>
+	</scm>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
@@ -71,6 +82,16 @@
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 					<debug>true</debug>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
 		</plugins>
