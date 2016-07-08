@@ -1,0 +1,11 @@
+[
+	{
+		"currentStatus": "ddd",
+		"transit": [
+			{
+				"trigger": "next",
+				"nextStatus": "fff"
+			}
+		]
+	}
+]
