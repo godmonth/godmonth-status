@@ -51,6 +51,7 @@ public class BeanStatusTransitorImpl<MODEL, STATUS, TRIGGER> implements BeanStat
 		Validate.notNull(status, "status is null");
 
 		STATUS nextStatus = statusTransitor.transit(status, trigger);
+		Validate.notNull(nextStatus, "nextStatus is null");
 
 		if (statusExitMap.get(status) != null) {
 			statusExitMap.get(status).previousStatusExit(model);
@@ -85,6 +86,10 @@ public class BeanStatusTransitorImpl<MODEL, STATUS, TRIGGER> implements BeanStat
 
 	public void setStatusPropertyName(String statusPropertyName) {
 		this.statusPropertyName = statusPropertyName;
+	}
+
+	public void setExecutorService(Executor executorService) {
+		this.executorService = executorService;
 	}
 
 }
