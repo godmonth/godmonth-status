@@ -11,7 +11,7 @@ public class BeanModelAnalysis<MODEL, VALUE, STATUS> implements ModelAnalysis<MO
 
 	private Class<MODEL> modelClass;
 
-	private VALUE expectedValue;
+	private VALUE expectedTypeValue;
 
 	private String typePropertyName;
 
@@ -22,9 +22,10 @@ public class BeanModelAnalysis<MODEL, VALUE, STATUS> implements ModelAnalysis<MO
 		if (modelClass != null) {
 			Validate.isTrue(modelClass.equals(model.getClass()));
 		}
-		if (StringUtils.isNotBlank(typePropertyName) && expectedValue != null) {
+		if (StringUtils.isNotBlank(typePropertyName) && expectedTypeValue != null) {
 			VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
-			Validate.isTrue(expectedValue.equals(actualValue), "expected:%s,actual:%s", expectedValue, actualValue);
+			Validate.isTrue(expectedTypeValue.equals(actualValue), "expected:%s,actual:%s", expectedTypeValue,
+					actualValue);
 		}
 	}
 
@@ -33,8 +34,8 @@ public class BeanModelAnalysis<MODEL, VALUE, STATUS> implements ModelAnalysis<MO
 		return BeanUtil.silent.getProperty(model, statusPropertyName);
 	}
 
-	public void setExpectedValue(VALUE expectedValue) {
-		this.expectedValue = expectedValue;
+	public void setExpectedTypeValue(VALUE expectedTypeValue) {
+		this.expectedTypeValue = expectedTypeValue;
 	}
 
 	public void setTypePropertyName(String typePropertyName) {
