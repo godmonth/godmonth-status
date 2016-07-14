@@ -23,12 +23,18 @@ import com.godmonth.status.transitor.tx.intf.TransitionCallback;
 public class DefaultOrderExecutorTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest.class);
+
 	private DefaultOrderExecutor<SampleModel, Void, SampleTrigger> defaultOrderExecutor;
 
 	@BeforeClass
 	public void prepare() {
+
+		BeanModelAnalysis<SampleModel, String, String> analysis = new BeanModelAnalysis<>();
+		analysis.setExpectedValue("test");
+		analysis.setTypePropertyName("type");
+		analysis.setStatusPropertyName("status");
 		defaultOrderExecutor = new DefaultOrderExecutor<SampleModel, Void, SampleTrigger>();
-		defaultOrderExecutor.setStatusPropertyName("status");
+		defaultOrderExecutor.setModelAnalysis(analysis);
 		defaultOrderExecutor.setAdvancerMappings(Collections.singletonMap(SampleStatus.CREATED, new PayAdvancer()));
 		AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger> abstractTxStatusTransitor = new AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger>() {
 			@Override
@@ -66,7 +72,7 @@ public class DefaultOrderExecutorTest {
 	public void execute() {
 		SampleModel sampleModel = new SampleModel();
 		sampleModel.setStatus(SampleStatus.CREATED);
-
+		sampleModel.setType("test");
 		SyncResult<SampleModel, ?> execute = defaultOrderExecutor.execute(sampleModel, null, null);
 		Assert.assertEquals(execute.getModel().getStatus(), SampleStatus.PAID);
 	}
