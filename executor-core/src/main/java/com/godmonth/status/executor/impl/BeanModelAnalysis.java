@@ -1,5 +1,6 @@
 package com.godmonth.status.executor.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import com.godmonth.status.executor.intf.ModelAnalysis;
@@ -15,8 +16,10 @@ public class BeanModelAnalysis<MODEL, VALUE, STATUS> implements ModelAnalysis<MO
 
 	@Override
 	public void validate(MODEL model) {
-		VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
-		Validate.isTrue(expectedValue.equals(actualValue), "expected:%s,actual:%s", expectedValue, actualValue);
+		if (StringUtils.isNotBlank(typePropertyName) && expectedValue != null) {
+			VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
+			Validate.isTrue(expectedValue.equals(actualValue), "expected:%s,actual:%s", expectedValue, actualValue);
+		}
 	}
 
 	@Override
