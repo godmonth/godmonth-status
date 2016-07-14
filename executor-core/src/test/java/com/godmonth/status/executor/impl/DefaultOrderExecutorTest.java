@@ -30,7 +30,7 @@ public class DefaultOrderExecutorTest {
 	public void prepare() {
 
 		BeanModelAnalysis<SampleModel, String, String> analysis = new BeanModelAnalysis<>();
-		analysis.setExpectedValue("test");
+		analysis.setExpectedTypeValue("test");
 		analysis.setTypePropertyName("type");
 		analysis.setStatusPropertyName("status");
 		defaultOrderExecutor = new DefaultOrderExecutor<SampleModel, Void, SampleTrigger>();
