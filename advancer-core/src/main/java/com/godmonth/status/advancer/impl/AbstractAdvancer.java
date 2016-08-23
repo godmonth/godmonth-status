@@ -22,7 +22,7 @@ public abstract class AbstractAdvancer<MODEL, INST, TRIGGER> implements StatusAd
 		this.expectedInstruction = expectedInstruction;
 	}
 
-	public void setAvailableStatus(String availableStatus) {
+	public void setAvailableStatus(Object availableStatus) {
 		this.availableStatus = availableStatus;
 	}
 
