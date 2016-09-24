@@ -40,8 +40,8 @@
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<id>deploySnapshot</id>
+			<url>http://nexus.weihui.com:8081/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<build>
