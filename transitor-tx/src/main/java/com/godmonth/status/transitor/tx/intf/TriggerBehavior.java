@@ -12,7 +12,6 @@ public class TriggerBehavior<TRIGGER, MODEL> {
 	private TRIGGER trigger;
 
 	private TransitionCallback<MODEL> transitionCallback;
-	private boolean lock;
 
 	public TriggerBehavior() {
 	}
@@ -24,12 +23,6 @@ public class TriggerBehavior<TRIGGER, MODEL> {
 	public TriggerBehavior(TRIGGER trigger, TransitionCallback<MODEL> transitionCallback) {
 		this.trigger = trigger;
 		this.transitionCallback = transitionCallback;
-	}
-
-	public TriggerBehavior(TRIGGER trigger, TransitionCallback<MODEL> transitionCallback, boolean lock) {
-		this.trigger = trigger;
-		this.transitionCallback = transitionCallback;
-		this.lock = lock;
 	}
 
 	public TRIGGER getTrigger() {
@@ -46,14 +39,6 @@ public class TriggerBehavior<TRIGGER, MODEL> {
 
 	public void setTransitionCallback(TransitionCallback<MODEL> transitionCallback) {
 		this.transitionCallback = transitionCallback;
-	}
-
-	public boolean isLock() {
-		return lock;
-	}
-
-	public void setLock(boolean lock) {
-		this.lock = lock;
 	}
 
 	/**

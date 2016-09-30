@@ -42,11 +42,6 @@ public class DefaultOrderExecutorTest {
 					TransitionCallback<SampleModel> transitionCallback) {
 				return model;
 			}
-
-			@Override
-			protected void lockModel(SampleModel model) {
-
-			}
 		};
 		abstractTxStatusTransitor.setTransactionOperations(new TransactionOperations() {
 
