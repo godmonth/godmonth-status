@@ -18,10 +18,12 @@ public abstract class AbstractTxStatusTransitor<MODEL, STATUS, TRIGGER>
 	@Override
 	public MODEL transit(MODEL model, TriggerBehavior<TRIGGER, MODEL> triggerBehavior) {
 		STATUS nextStatus = beforeChange(model, triggerBehavior.getTrigger());
-		
-		BeanUtil.silent.setProperty(model, statusPropertyName, nextStatus);
 
 		MODEL mergedModel = transactionOperations.execute((TransactionStatus status) -> {
+			if (triggerBehavior.isLock()) {
+				lockModel(model);
+			}
+			BeanUtil.silent.setProperty(model, statusPropertyName, nextStatus);
 			return mergeModel(model, nextStatus, triggerBehavior.getTransitionCallback());
 		});
 		afterChange(mergedModel, nextStatus);
@@ -30,6 +32,8 @@ public abstract class AbstractTxStatusTransitor<MODEL, STATUS, TRIGGER>
 	}
 
 	protected abstract MODEL mergeModel(MODEL model, STATUS nextStatus, TransitionCallback<MODEL> transitionCallback);
+
+	protected abstract void lockModel(MODEL model);
 
 	public void setTransactionOperations(TransactionOperations transactionOperations) {
 		this.transactionOperations = transactionOperations;

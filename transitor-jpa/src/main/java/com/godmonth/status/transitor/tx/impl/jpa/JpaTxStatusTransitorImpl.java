@@ -1,6 +1,7 @@
 package com.godmonth.status.transitor.tx.impl.jpa;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +19,11 @@ public class JpaTxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
 			transitionCallback.beforeMerge(model);
 		}
 		return entityManager.merge(model);
+	}
+
+	@Override
+	protected void lockModel(MODEL model) {
+		entityManager.lock(model, LockModeType.PESSIMISTIC_WRITE);
 	}
 
 }
