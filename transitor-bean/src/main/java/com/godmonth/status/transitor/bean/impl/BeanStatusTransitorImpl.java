@@ -2,7 +2,6 @@ package com.godmonth.status.transitor.bean.impl;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import com.godmonth.status.transitor.bean.intf.BeanStatusTransitor;
 import com.godmonth.status.transitor.bean.intf.StatusEntry;
 import com.godmonth.status.transitor.bean.intf.StatusExit;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
-import com.google.common.util.concurrent.MoreExecutors;
 
 import jodd.bean.BeanUtil;
 
@@ -27,8 +25,6 @@ public class BeanStatusTransitorImpl<MODEL, STATUS, TRIGGER> implements BeanStat
 	private Map<STATUS, StatusExit<MODEL>> statusExitMap = Collections.emptyMap();
 
 	private Map<STATUS, StatusEntry<MODEL>> statusEntryMap = Collections.emptyMap();
-
-	private Executor executorService = MoreExecutors.directExecutor();
 
 	@Override
 	public MODEL transit(MODEL model, TRIGGER trigger) {
@@ -61,14 +57,7 @@ public class BeanStatusTransitorImpl<MODEL, STATUS, TRIGGER> implements BeanStat
 
 	protected void afterChange(MODEL model, STATUS status) {
 		if (statusEntryMap.get(status) != null) {
-			executorService.execute(() -> {
-				try {
-					statusEntryMap.get(status).nextStatusEntry(model);
-				} catch (Exception e) {
-					logger.error("", e);
-					throw e;
-				}
-			});
+			statusEntryMap.get(status).nextStatusEntry(model);
 		}
 	}
 
@@ -86,10 +75,6 @@ public class BeanStatusTransitorImpl<MODEL, STATUS, TRIGGER> implements BeanStat
 
 	public void setStatusPropertyName(String statusPropertyName) {
 		this.statusPropertyName = statusPropertyName;
-	}
-
-	public void setExecutorService(Executor executorService) {
-		this.executorService = executorService;
 	}
 
 }
