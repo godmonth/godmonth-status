@@ -7,7 +7,7 @@ import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
  * @author shenyue
  *
  */
-public class DoNothingAdvancer<MODEL, TRIGGER, INST> extends InstructionAdvancer<MODEL, INST, TRIGGER> {
+public class DoNothingAdvancer<MODEL, INST, TRIGGER> extends InstructionAdvancer<MODEL, INST, TRIGGER> {
 
 	private TRIGGER trigger;
 
