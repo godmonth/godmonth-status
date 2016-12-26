@@ -20,4 +20,8 @@ public class DoNothingAdvancer<MODEL, INST, TRIGGER> extends InstructionAdvancer
 		this.trigger = trigger;
 	}
 
+	public TRIGGER getTrigger() {
+		return trigger;
+	}
+
 }
