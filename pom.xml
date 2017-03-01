@@ -39,12 +39,6 @@
 		<url>https://github.com/godmonth/godmonth-status</url>
 		<tag>HEAD</tag>
 	</scm>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>deploySnapshot</id>
-			<url>http://nexus.weihui.com:8081/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
