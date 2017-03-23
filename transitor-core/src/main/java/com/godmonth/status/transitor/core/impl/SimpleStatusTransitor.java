@@ -20,7 +20,7 @@ public class SimpleStatusTransitor<STATUS, TRIGGER> implements StatusTransitor<S
 		}
 		STATUS nextStatus = triggerBehavior.get(trigger);
 		if (nextStatus == null) {
-			throw new IllegalArgumentException("trigger not found:" + trigger);
+			throw new IllegalArgumentException("status:" + status + ", trigger not found:" + trigger);
 		}
 		return nextStatus;
 	}
