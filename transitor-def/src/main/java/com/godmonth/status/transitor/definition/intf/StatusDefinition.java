@@ -11,9 +11,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * @param <STATUS>
  * @param <TRIGGER>
- * @param <TD>
  */
 public class StatusDefinition<STATUS, TRIGGER> {
+	
 	private STATUS status;
 
 	private List<TriggerDefinition<TRIGGER, STATUS>> triggers;
