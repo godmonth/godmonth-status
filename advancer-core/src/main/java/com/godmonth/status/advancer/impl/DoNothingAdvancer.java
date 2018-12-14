@@ -19,4 +19,12 @@ public class DoNothingAdvancer<MODEL, INST, TRIGGER> extends InstructionAdvancer
 		return new AdvancedResult<>(new TriggerBehavior<TRIGGER, MODEL>(trigger), nextOperation);
 	}
 
+	public void setTrigger(TRIGGER trigger) {
+		this.trigger = trigger;
+	}
+
+	public void setNextOperation(NextOperation nextOperation) {
+		this.nextOperation = nextOperation;
+	}
+
 }
