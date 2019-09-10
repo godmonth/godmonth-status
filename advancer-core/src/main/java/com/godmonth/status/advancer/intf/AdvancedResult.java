@@ -25,6 +25,8 @@ public class AdvancedResult<MODEL, TRIGGER> {
 	 */
 	private NextOperation nextOperation = NextOperation.ADVANCE;
 
+	private boolean dropInstruction;
+
 	public AdvancedResult(TriggerBehavior<TRIGGER, MODEL> triggerBehavior) {
 		this.triggerBehavior = triggerBehavior;
 	}
@@ -32,6 +34,13 @@ public class AdvancedResult<MODEL, TRIGGER> {
 	public AdvancedResult(TriggerBehavior<TRIGGER, MODEL> triggerBehavior, NextOperation nextOperation) {
 		this.triggerBehavior = triggerBehavior;
 		this.nextOperation = nextOperation;
+	}
+
+	public AdvancedResult(TriggerBehavior<TRIGGER, MODEL> triggerBehavior, NextOperation nextOperation,
+			boolean dropInstruction) {
+		this.triggerBehavior = triggerBehavior;
+		this.nextOperation = nextOperation;
+		this.dropInstruction = dropInstruction;
 	}
 
 	public AdvancedResult(SyncResult<MODEL, ?> syncResult) {
@@ -63,12 +72,21 @@ public class AdvancedResult<MODEL, TRIGGER> {
 		this.nextOperation = nextOperation;
 	}
 
+	public boolean isDropInstruction() {
+		return dropInstruction;
+	}
+
+	public void setDropInstruction(boolean dropInstruction) {
+		this.dropInstruction = dropInstruction;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("transitionParam", this.triggerBehavior)
-				.append("syncResult", this.syncResult).append("nextOperation", this.nextOperation).toString();
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("syncResult", this.syncResult)
+				.append("dropInstruction", this.dropInstruction).append("triggerBehavior", this.triggerBehavior)
+				.append("nextOperation", this.nextOperation).toString();
 	}
 
 }

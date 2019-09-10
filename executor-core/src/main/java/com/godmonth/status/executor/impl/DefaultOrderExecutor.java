@@ -75,6 +75,9 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 			if (advancedResult.getTriggerBehavior() != null) {
 				model = transit(model, advancedResult);
 				if (model != null) {
+					if (advancedResult.isDropInstruction()) {
+						instruction = null;
+					}
 					switch (advancedResult.getNextOperation()) {
 					case ADVANCE:
 						advancedResult = null;
