@@ -24,7 +24,7 @@ public class DefaultOrderExecutorTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest.class);
 
-	private DefaultOrderExecutor<SampleModel, Void, SampleTrigger> defaultOrderExecutor;
+	private DefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor;
 
 	@BeforeClass
 	public void prepare() {
@@ -33,7 +33,7 @@ public class DefaultOrderExecutorTest {
 		analysis.setExpectedTypeValue("test");
 		analysis.setTypePropertyName("type");
 		analysis.setStatusPropertyName("status");
-		defaultOrderExecutor = new DefaultOrderExecutor<SampleModel, Void, SampleTrigger>();
+		defaultOrderExecutor = new DefaultOrderExecutor<SampleModel, String, SampleTrigger>();
 		defaultOrderExecutor.setModelAnalysis(analysis);
 		defaultOrderExecutor.setAdvancerMappings(Collections.singletonMap(SampleStatus.CREATED, new PayAdvancer()));
 		AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger> abstractTxStatusTransitor = new AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger>() {
@@ -73,7 +73,16 @@ public class DefaultOrderExecutorTest {
 		SampleModel sampleModel = new SampleModel();
 		sampleModel.setStatus(SampleStatus.CREATED);
 		sampleModel.setType("test");
-		SyncResult<SampleModel, ?> execute = defaultOrderExecutor.execute(sampleModel, null, null);
+		SyncResult<SampleModel, ?> execute = defaultOrderExecutor.execute(sampleModel, "eee", "fff");
 		Assert.assertEquals(execute.getModel().getStatus(), SampleStatus.PAID);
+	}
+
+	@Test
+	public void execute2() {
+		SampleModel sampleModel = new SampleModel();
+		sampleModel.setStatus(SampleStatus.CREATED);
+		sampleModel.setType("test");
+		SyncResult<SampleModel, ?> execute = defaultOrderExecutor.execute(sampleModel, null, null);
+		Assert.assertEquals(execute.getModel().getStatus(), SampleStatus.CREATED);
 	}
 }

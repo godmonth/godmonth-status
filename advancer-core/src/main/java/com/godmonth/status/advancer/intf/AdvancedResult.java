@@ -24,7 +24,10 @@ public class AdvancedResult<MODEL, TRIGGER> {
 	 * 跃迁完成后动作
 	 */
 	private NextOperation nextOperation = NextOperation.ADVANCE;
-
+	
+	/**
+	 * 丢弃指令
+	 */
 	private boolean dropInstruction;
 
 	public AdvancedResult(TriggerBehavior<TRIGGER, MODEL> triggerBehavior) {

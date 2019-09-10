@@ -7,16 +7,20 @@ import com.godmonth.status.test.sample.SampleStatus;
 import com.godmonth.status.test.sample.SampleTrigger;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 
-public class PayAdvancer extends AbstractAdvancer<SampleModel, Void, SampleTrigger> {
+public class PayAdvancer extends AbstractAdvancer<SampleModel, String, SampleTrigger> {
 	{
 		availableStatus = SampleStatus.CREATED;
 	}
 
 	@Override
-	public AdvancedResult<SampleModel, SampleTrigger> advance(SampleModel model, Void instruction, Object message)
+	public AdvancedResult<SampleModel, SampleTrigger> advance(SampleModel model, String instruction, Object message)
 			throws IllegalStateException {
 		System.out.println("advanced");
-		return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
+		if ("eee".equals(instruction) && "fff".equals(message)) {
+			return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
+		}
+		return null;
+
 	}
 
 }
