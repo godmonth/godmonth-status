@@ -19,6 +19,7 @@
 		<module>transitor-jpa</module>
 		<module>advancer-core</module>
 		<module>executor-core</module>
+		<module>bom</module>
 	</modules>
 	<developers>
 		<developer>
