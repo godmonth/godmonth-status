@@ -7,7 +7,6 @@ package com.godmonth.status.transitor.core.intf;
  *
  * @param <TRIGGER>
  * @param <STATUS>
- * @param <E>
  */
 public interface StatusTransitor<STATUS, TRIGGER> {
 
