@@ -5,7 +5,7 @@
 
 	<groupId>com.godmonth.status</groupId>
 	<artifactId>status-parent</artifactId>
-	<version>0.4.1-SNAPSHOT</version>
+	<version>0.4.1</version>
 	<url>https://github.com/godmonth/godmonth-status</url>
 	<packaging>pom</packaging>
 	<name>godmonth status</name>
@@ -37,7 +37,7 @@
 		<connection>scm:git:git@github.com:godmonth/godmonth-status.git</connection>
 		<developerConnection>scm:git:git@github.com:godmonth/godmonth-status.git</developerConnection>
 		<url>https://github.com/godmonth/godmonth-status</url>
-		<tag>HEAD</tag>
+		<tag>status-parent-0.4.1</tag>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
