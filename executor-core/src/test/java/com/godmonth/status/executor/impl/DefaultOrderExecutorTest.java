@@ -1,6 +1,8 @@
 package com.godmonth.status.executor.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.test.sample.SampleConfigMap;
 import com.godmonth.status.test.sample.SampleModel;
@@ -24,7 +27,7 @@ public class DefaultOrderExecutorTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest.class);
 
-	private DefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor;
+	private DefaultOrderExecutor<SampleModel, String, SampleTrigger, SampleStatus> defaultOrderExecutor;
 
 	@BeforeClass
 	public void prepare() {
@@ -33,9 +36,12 @@ public class DefaultOrderExecutorTest {
 		analysis.setExpectedTypeValue("test");
 		analysis.setTypePropertyName("type");
 		analysis.setStatusPropertyName("status");
-		defaultOrderExecutor = new DefaultOrderExecutor<SampleModel, String, SampleTrigger>();
+		defaultOrderExecutor = new DefaultOrderExecutor<>();
 		defaultOrderExecutor.setModelAnalysis(analysis);
-		defaultOrderExecutor.setAdvancerMappings(Collections.singletonMap(SampleStatus.CREATED, new PayAdvancer()));
+		Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
+		advancers.put(SampleStatus.CREATED, new PayAdvancer());
+		advancers.put(SampleStatus.PAID, new CheckAdvancer());
+		defaultOrderExecutor.setAdvancerMappings(advancers);
 		AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger> abstractTxStatusTransitor = new AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger>() {
 			@Override
 			protected SampleModel mergeModel(SampleModel model, SampleStatus nextStatus,

@@ -19,11 +19,11 @@ import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 
-public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST> {
+public class DefaultOrderExecutor<MODEL, INST, TRIGGER, STATUS> implements OrderExecutor<MODEL, INST> {
 
 	private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
-	private Map<Object, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
+	private Map<STATUS, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
 
 	private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
 
@@ -129,7 +129,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 		this.executorService = executorService;
 	}
 
-	public void setAdvancerMappings(Map<Object, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings) {
+	public void setAdvancerMappings(Map<STATUS, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings) {
 		this.advancerMappings = advancerMappings;
 	}
 
