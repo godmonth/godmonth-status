@@ -42,9 +42,9 @@
     </scm>
     <distributionManagement>
         <snapshotRepository>
-            <id>deploySnapshot</id>
-            <name>weihui Internal Repository</name>
-            <url>http://nexus.weihui.com:8081/content/repositories/snapshots</url>
+            <id>maven-snapshots</id>
+            <name>To Pay Internal Repository</name>
+            <url>http://nexus.test2pay.com/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
     <build>
