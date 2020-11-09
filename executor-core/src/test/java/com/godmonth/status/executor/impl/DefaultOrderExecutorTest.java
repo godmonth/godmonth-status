@@ -27,11 +27,11 @@ public class DefaultOrderExecutorTest {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest.class);
 
-    private static DefaultOrderExecutor<SampleModel, String, SampleTrigger, SampleStatus> defaultOrderExecutor;
+    private static DefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor;
 
     @BeforeAll
     public static void prepare() {
-        BeanModelAnalysis<SampleModel, String, String> analysis = new BeanModelAnalysis<>();
+        BeanModelAnalysis<SampleModel, String> analysis = new BeanModelAnalysis<>();
         analysis.setExpectedTypeValue("test");
         analysis.setTypePropertyName("type");
         analysis.setStatusPropertyName("status");

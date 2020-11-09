@@ -19,12 +19,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class DefaultOrderExecutor<MODEL, INST, TRIGGER, STATUS> implements OrderExecutor<MODEL, INST> {
+public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST> {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
     @Setter
-    private Map<STATUS, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
+    private Map<?, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
 
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;

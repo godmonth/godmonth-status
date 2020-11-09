@@ -27,12 +27,12 @@ public class DefaultOrderExecutorTest2 {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest2.class);
 
-    private static DefaultOrderExecutor<SampleModel, String, SampleTrigger, SampleStatus> defaultOrderExecutor;
+    private static DefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor;
 
     @BeforeAll
     public static void prepare() {
         defaultOrderExecutor = new DefaultOrderExecutor<>();
-        defaultOrderExecutor.setModelAnalysis(AnnotationBeanModelAnalysis.<SampleModel, SampleStatus>builder().modelClass(SampleModel.class).build());
+        defaultOrderExecutor.setModelAnalysis(AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).build());
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
         advancers.put(SampleStatus.CREATED, new PayAdvancer());
         advancers.put(SampleStatus.PAID, new CheckAdvancer());
