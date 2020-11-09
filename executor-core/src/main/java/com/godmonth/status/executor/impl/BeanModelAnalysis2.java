@@ -1,9 +1,6 @@
 package com.godmonth.status.executor.impl;
 
-import jodd.bean.BeanUtil;
 import lombok.Setter;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.Validate;
 
 import java.util.List;
 
@@ -20,20 +17,9 @@ public class BeanModelAnalysis2<MODEL> extends AbstractBeanModelAnalysis<MODEL> 
     @Override
     public void validate(MODEL model) {
         super.validate(model);
-        if (CollectionUtils.isNotEmpty(beanModelRestrictions)) {
-            for (BeanModelRestriction beanModelRestriction : beanModelRestrictions) {
-                Object actualValue = BeanUtil.silent.getProperty(model, beanModelRestriction.getRestrictionProperty());
-                Validate.isTrue(beanModelRestriction.getRestrictionValue().equals(actualValue), "expected:%s,actual:%s",
-                        beanModelRestriction.getRestrictionValue(), actualValue);
-            }
-        }
-
+        BeanModelRestrictions.check(beanModelRestrictions, model);
     }
 
-    @Override
-    public <STATUS> STATUS getStatus(MODEL model) {
-        return BeanUtil.silent.getProperty(model, statusPropertyName);
-    }
 
     public void setStatusPropertyName(String statusPropertyName) {
         this.statusPropertyName = statusPropertyName;

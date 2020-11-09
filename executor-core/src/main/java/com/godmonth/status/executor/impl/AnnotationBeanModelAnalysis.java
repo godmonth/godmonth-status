@@ -1,9 +1,7 @@
 package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.executor.intf.Status;
-import jodd.bean.BeanUtil;
 import lombok.Builder;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -39,17 +37,9 @@ public class AnnotationBeanModelAnalysis<MODEL> extends AbstractBeanModelAnalysi
         Validate.notNull(statusPropertyName, "statusPropertyName is null.");
     }
 
-
     public void validate(MODEL model) {
         super.validate(model);
-        if (CollectionUtils.isNotEmpty(beanModelRestrictions)) {
-            for (BeanModelRestriction beanModelRestriction : beanModelRestrictions) {
-                Object actualValue = BeanUtil.silent.getProperty(model, beanModelRestriction.getRestrictionProperty());
-                Validate.isTrue(beanModelRestriction.getRestrictionValue().equals(actualValue), "expected:%s,actual:%s",
-                        beanModelRestriction.getRestrictionValue(), actualValue);
-            }
-        }
-
+        BeanModelRestrictions.check(beanModelRestrictions, model);
     }
 
 
