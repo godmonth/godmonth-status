@@ -16,7 +16,7 @@ import java.util.List;
  * @param <MODEL>
  */
 
-public class AnnotationBeanModelAnalysis<MODEL> extends CommonBeanModelAnalysis<MODEL> {
+public class AnnotationBeanModelAnalysis<MODEL> extends AbstractBeanModelAnalysis<MODEL> {
 
     private List<BeanModelRestriction> beanModelRestrictions;
 

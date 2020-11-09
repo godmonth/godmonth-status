@@ -7,7 +7,7 @@ import org.apache.commons.lang3.Validate;
 /**
  * @param <MODEL>
  */
-public abstract class CommonBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
+public abstract class AbstractBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
 
     protected Class<MODEL> modelClass;
 

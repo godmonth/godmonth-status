@@ -1,7 +1,7 @@
 package com.godmonth.status.executor.impl;
 
-import com.godmonth.status.executor.intf.ModelAnalysis;
 import jodd.bean.BeanUtil;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -12,20 +12,14 @@ import java.util.List;
  * @see AnnotationBeanModelAnalysis
  */
 @SuppressWarnings("rawtypes")
-public class BeanModelAnalysis2<MODEL> implements ModelAnalysis<MODEL> {
+public class BeanModelAnalysis2<MODEL> extends AbstractBeanModelAnalysis<MODEL> {
 
-    private Class<MODEL> modelClass;
-
-    private String statusPropertyName;
-
+    @Setter
     private List<BeanModelRestriction> beanModelRestrictions;
 
     @Override
     public void validate(MODEL model) {
-        if (modelClass != null) {
-            Validate.isTrue(modelClass.equals(model.getClass()));
-        }
-
+        super.validate(model);
         if (CollectionUtils.isNotEmpty(beanModelRestrictions)) {
             for (BeanModelRestriction beanModelRestriction : beanModelRestrictions) {
                 Object actualValue = BeanUtil.silent.getProperty(model, beanModelRestriction.getRestrictionProperty());
@@ -49,8 +43,5 @@ public class BeanModelAnalysis2<MODEL> implements ModelAnalysis<MODEL> {
         this.modelClass = modelClass;
     }
 
-    public void setBeanModelRestrictions(List<BeanModelRestriction> beanModelRestrictions) {
-        this.beanModelRestrictions = beanModelRestrictions;
-    }
 
 }
