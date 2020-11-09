@@ -1,53 +1,57 @@
 package com.godmonth.status.executor.impl;
 
+import com.godmonth.status.executor.intf.ModelAnalysis;
+import jodd.bean.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
-import com.godmonth.status.executor.intf.ModelAnalysis;
+/**
+ * @param <MODEL>
+ * @param <VALUE>
+ * @see AnnotationBeanModelAnalysis
+ */
+@Deprecated
+public class BeanModelAnalysis<MODEL, VALUE> implements ModelAnalysis<MODEL> {
 
-import jodd.bean.BeanUtil;
+    private Class<MODEL> modelClass;
 
-public class BeanModelAnalysis<MODEL, VALUE, STATUS> implements ModelAnalysis<MODEL, STATUS> {
+    private VALUE expectedTypeValue;
 
-	private Class<MODEL> modelClass;
+    private String typePropertyName;
 
-	private VALUE expectedTypeValue;
+    private String statusPropertyName;
 
-	private String typePropertyName;
+    @Override
+    public void validate(MODEL model) {
+        if (modelClass != null) {
+            Validate.isTrue(modelClass.equals(model.getClass()));
+        }
+        if (StringUtils.isNotBlank(typePropertyName) && expectedTypeValue != null) {
+            VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
+            Validate.isTrue(expectedTypeValue.equals(actualValue), "expected:%s,actual:%s", expectedTypeValue,
+                    actualValue);
+        }
+    }
 
-	private String statusPropertyName;
+    @Override
+    public <STATUS> STATUS getStatus(MODEL model) {
+        return BeanUtil.silent.getProperty(model, statusPropertyName);
+    }
 
-	@Override
-	public void validate(MODEL model) {
-		if (modelClass != null) {
-			Validate.isTrue(modelClass.equals(model.getClass()));
-		}
-		if (StringUtils.isNotBlank(typePropertyName) && expectedTypeValue != null) {
-			VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
-			Validate.isTrue(expectedTypeValue.equals(actualValue), "expected:%s,actual:%s", expectedTypeValue,
-					actualValue);
-		}
-	}
+    public void setExpectedTypeValue(VALUE expectedTypeValue) {
+        this.expectedTypeValue = expectedTypeValue;
+    }
 
-	@Override
-	public STATUS getStatus(MODEL model) {
-		return BeanUtil.silent.getProperty(model, statusPropertyName);
-	}
+    public void setTypePropertyName(String typePropertyName) {
+        this.typePropertyName = typePropertyName;
+    }
 
-	public void setExpectedTypeValue(VALUE expectedTypeValue) {
-		this.expectedTypeValue = expectedTypeValue;
-	}
+    public void setStatusPropertyName(String statusPropertyName) {
+        this.statusPropertyName = statusPropertyName;
+    }
 
-	public void setTypePropertyName(String typePropertyName) {
-		this.typePropertyName = typePropertyName;
-	}
-
-	public void setStatusPropertyName(String statusPropertyName) {
-		this.statusPropertyName = statusPropertyName;
-	}
-
-	public void setModelClass(Class<MODEL> modelClass) {
-		this.modelClass = modelClass;
-	}
+    public void setModelClass(Class<MODEL> modelClass) {
+        this.modelClass = modelClass;
+    }
 
 }

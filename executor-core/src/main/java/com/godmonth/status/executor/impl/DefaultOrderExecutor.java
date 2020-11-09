@@ -7,6 +7,7 @@ import com.godmonth.status.executor.intf.ModelAnalysis;
 import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
+import lombok.Setter;
 import org.apache.commons.lang3.exception.ContextedRuntimeException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -22,13 +23,17 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER, STATUS> implements Order
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
+    @Setter
     private Map<STATUS, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
 
+    @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
 
+    @Setter
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
-    private ModelAnalysis<MODEL, ?> modelAnalysis;
+    @Setter
+    private ModelAnalysis<MODEL> modelAnalysis;
 
     @Override
     public Future<SyncResult<MODEL, ?>> executeAsync(final MODEL model, final INST instruction, final Object message) {
@@ -116,20 +121,5 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER, STATUS> implements Order
         }
     }
 
-    public void setExecutorService(ExecutorService executorService) {
-        this.executorService = executorService;
-    }
-
-    public void setAdvancerMappings(Map<STATUS, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings) {
-        this.advancerMappings = advancerMappings;
-    }
-
-    public void setTxStatusTransitor(TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor) {
-        this.txStatusTransitor = txStatusTransitor;
-    }
-
-    public void setModelAnalysis(ModelAnalysis<MODEL, ?> modelAnalysis) {
-        this.modelAnalysis = modelAnalysis;
-    }
 
 }

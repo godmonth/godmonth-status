@@ -1,8 +1,12 @@
 package com.godmonth.status.executor.intf;
 
-public interface ModelAnalysis<MODEL, STATUS> {
-	void validate(MODEL model);
+/**
+ * 升级，去掉status泛型
+ *
+ * @param <MODEL>
+ */
+public interface ModelAnalysis<MODEL> {
+    void validate(MODEL model);
 
-	STATUS getStatus(MODEL model);
-
+    <STATUS> STATUS getStatus(MODEL model);
 }
