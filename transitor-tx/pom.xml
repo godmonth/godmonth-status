@@ -16,18 +16,9 @@
 			<artifactId>spring-tx</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.godmonth.status</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>transitor-bean</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

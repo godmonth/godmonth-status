@@ -13,27 +13,18 @@
     <artifactId>executor-core</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.godmonth.status</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>advancer-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.godmonth.status</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>transitor-tx</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

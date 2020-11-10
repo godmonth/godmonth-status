@@ -8,7 +8,7 @@ import java.util.List;
  * @param <MODEL>
  * @see AnnotationBeanModelAnalysis
  */
-@SuppressWarnings("rawtypes")
+
 public class BeanModelAnalysis2<MODEL> extends AbstractBeanModelAnalysis<MODEL> {
 
     @Setter

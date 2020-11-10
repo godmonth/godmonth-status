@@ -2,6 +2,7 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.executor.intf.ModelAnalysis;
 import jodd.bean.BeanUtil;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -13,12 +14,16 @@ import org.apache.commons.lang3.Validate;
 @Deprecated
 public class BeanModelAnalysis<MODEL, VALUE> implements ModelAnalysis<MODEL> {
 
+    @Setter
     private Class<MODEL> modelClass;
 
+    @Setter
     private VALUE expectedTypeValue;
 
+    @Setter
     private String typePropertyName;
 
+    @Setter
     private String statusPropertyName;
 
     @Override
@@ -38,20 +43,5 @@ public class BeanModelAnalysis<MODEL, VALUE> implements ModelAnalysis<MODEL> {
         return BeanUtil.silent.getProperty(model, statusPropertyName);
     }
 
-    public void setExpectedTypeValue(VALUE expectedTypeValue) {
-        this.expectedTypeValue = expectedTypeValue;
-    }
-
-    public void setTypePropertyName(String typePropertyName) {
-        this.typePropertyName = typePropertyName;
-    }
-
-    public void setStatusPropertyName(String statusPropertyName) {
-        this.statusPropertyName = statusPropertyName;
-    }
-
-    public void setModelClass(Class<MODEL> modelClass) {
-        this.modelClass = modelClass;
-    }
 
 }

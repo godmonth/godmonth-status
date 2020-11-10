@@ -1,4 +1,4 @@
-package com.godmonth.status.advancer.annotations;
+package com.godmonth.status.builder;
 
 import org.springframework.stereotype.Component;
 

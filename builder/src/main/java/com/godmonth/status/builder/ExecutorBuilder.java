@@ -1,6 +1,5 @@
-package com.godmonth.status.executor.builder;
+package com.godmonth.status.builder;
 
-import com.godmonth.status.advancer.annotations.Advancer;
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
 import com.godmonth.status.executor.intf.OrderExecutor;

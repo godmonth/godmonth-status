@@ -1,4 +1,6 @@
-package com.godmonth.status.executor.builder;
+package com.godmonth.status.builder;
+
+import com.godmonth.status.transitor.definition.intf.StatusDefinition;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -19,5 +21,5 @@ import java.lang.annotation.Target;
 public @interface EnableOrderExecutor {
     //String[] basePackages() default {};
 
-    Enum<? extends StatusDefinition>
+    Class<? extends StatusDefinition> aaa();
 }

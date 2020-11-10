@@ -1,24 +1,12 @@
 package com.godmonth.status.test.sample;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+@Data
 public class SampleModel {
 	private SampleStatus status;
 
-	public SampleStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(SampleStatus status) {
-		this.status = status;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("status", this.status).toString();
-	}
 
 }
