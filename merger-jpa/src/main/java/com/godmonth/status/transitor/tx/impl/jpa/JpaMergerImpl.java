@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 
-public class JpaTxStatusTransitorImpl<MODEL> implements Merger<MODEL> {
+public class JpaMergerImpl<MODEL> implements Merger<MODEL> {
 
     @Autowired
     private EntityManager entityManager;

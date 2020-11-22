@@ -2,6 +2,7 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.executor.intf.ModelAnalysis;
 import jodd.bean.BeanUtil;
+import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -24,6 +25,7 @@ public class BeanModelAnalysis<MODEL, VALUE> implements ModelAnalysis<MODEL> {
     private String typePropertyName;
 
     @Setter
+    @Getter
     private String statusPropertyName;
 
     @Override

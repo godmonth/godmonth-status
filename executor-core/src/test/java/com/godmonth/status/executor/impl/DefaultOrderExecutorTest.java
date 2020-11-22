@@ -7,7 +7,7 @@ import com.godmonth.status.test.sample.SampleModel;
 import com.godmonth.status.test.sample.SampleStatus;
 import com.godmonth.status.test.sample.SampleTrigger;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
-import com.godmonth.status.transitor.tx.impl.TxStatusTransitor;
+import com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,7 +39,7 @@ public class DefaultOrderExecutorTest {
         advancers.put(SampleStatus.PAID, new CheckAdvancer());
         defaultOrderExecutor.setAdvancerMappings(advancers);
 
-        TxStatusTransitor<SampleModel, SampleStatus, SampleTrigger> txStatusTransitor = new TxStatusTransitor<>();
+        TxStatusTransitorImpl<SampleModel, SampleStatus, SampleTrigger> txStatusTransitor = new TxStatusTransitorImpl<>();
         SimpleStatusTransitor<SampleStatus, SampleTrigger> statusTransitor = new SimpleStatusTransitor<>(
                 SampleConfigMap.INSTANCE);
 

@@ -4,7 +4,11 @@ import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import com.godmonth.status.transitor.tx.intf.StatusEntry;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
+import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 import jodd.bean.BeanUtil;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
@@ -15,8 +19,11 @@ import java.util.Collections;
 import java.util.Map;
 
 @Slf4j
-public class TxStatusTransitor<MODEL, STATUS, TRIGGER>
-        implements com.godmonth.status.transitor.tx.intf.TxStatusTransitor<MODEL, TRIGGER> {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
+        implements TxStatusTransitor<MODEL, TRIGGER> {
 
     @Setter
     protected String statusPropertyName;

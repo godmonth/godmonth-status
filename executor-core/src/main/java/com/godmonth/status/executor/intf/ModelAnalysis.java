@@ -9,4 +9,6 @@ public interface ModelAnalysis<MODEL> {
     void validate(MODEL model);
 
     <STATUS> STATUS getStatus(MODEL model);
+
+    String  getStatusPropertyName();
 }
