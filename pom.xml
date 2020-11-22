@@ -15,9 +15,8 @@
     <modules>
         <module>transitor-core</module>
         <module>transitor-def</module>
-        <module>transitor-bean</module>
         <module>transitor-tx</module>
-        <module>transitor-jpa</module>
+        <module>merger-jpa</module>
         <module>advancer-core</module>
         <module>executor-core</module>
         <module>builder</module>
@@ -44,7 +43,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>maven-snapshots</id>
-            <name>To Pay Internal Repository</name>
+            <name>payby Internal Repository</name>
             <url>http://nexus.test2pay.com/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>

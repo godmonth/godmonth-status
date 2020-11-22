@@ -2,11 +2,10 @@ package com.godmonth.status.transitor.tx.intf;
 
 /**
  * 事务内
- * 
- * @author shenyue
  *
  * @param <MODEL>
+ * @author shenyue
  */
-public interface TransitionCallback<MODEL> {
-	void beforeMerge(MODEL model);
+public interface TransitionCallback<MODEL, ACCESSORY> {
+    ACCESSORY beforeMerge(MODEL model);
 }

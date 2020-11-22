@@ -7,16 +7,13 @@ import com.godmonth.status.test.sample.SampleModel;
 import com.godmonth.status.test.sample.SampleStatus;
 import com.godmonth.status.test.sample.SampleTrigger;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
-import com.godmonth.status.transitor.tx.impl.AbstractTxStatusTransitor;
-import com.godmonth.status.transitor.tx.intf.TransitionCallback;
+import com.godmonth.status.transitor.tx.impl.TxStatusTransitor;
+import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.TransactionException;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionOperations;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,31 +34,21 @@ public class DefaultOrderExecutorTest2 {
         advancers.put(SampleStatus.CREATED, new PayAdvancer());
         advancers.put(SampleStatus.PAID, new CheckAdvancer());
         defaultOrderExecutor.setAdvancerMappings(advancers);
-        AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger> abstractTxStatusTransitor = new AbstractTxStatusTransitor<SampleModel, SampleStatus, SampleTrigger>() {
-            @Override
-            protected SampleModel mergeModel(SampleModel model, SampleStatus nextStatus,
-                                             TransitionCallback<SampleModel> transitionCallback) {
-                return model;
-            }
-        };
-        abstractTxStatusTransitor.setTransactionOperations(new TransactionOperations() {
+        TxStatusTransitor<SampleModel, SampleStatus, SampleTrigger> txStatusTransitor = new TxStatusTransitor<>();
 
-            @Override
-            public <T> T execute(TransactionCallback<T> action) throws TransactionException {
-                return action.doInTransaction(null);
-            }
-        });
+
         SimpleStatusTransitor<SampleStatus, SampleTrigger> statusTransitor = new SimpleStatusTransitor<>(
                 SampleConfigMap.INSTANCE);
 
-        abstractTxStatusTransitor.setStatusTransitor(statusTransitor);
-        abstractTxStatusTransitor.setStatusPropertyName("status");
-        abstractTxStatusTransitor.setStatusEntryMap(Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print));
-        abstractTxStatusTransitor.setStatusExitMap(Collections.singletonMap(SampleStatus.CREATED, DefaultOrderExecutorTest2::print));
-        defaultOrderExecutor.setTxStatusTransitor(abstractTxStatusTransitor);
+        txStatusTransitor.setStatusTransitor(statusTransitor);
+        txStatusTransitor.setStatusPropertyName("status");
+        txStatusTransitor.setStatusEntryMap(Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print));
+        txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
+
+        defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
     }
 
-    private static void print(SampleModel sampleStatus) {
+    private static void print(TransitedResult<SampleModel, ?> sampleStatus) {
         logger.debug("sampleStatus:{}", sampleStatus);
     }
 

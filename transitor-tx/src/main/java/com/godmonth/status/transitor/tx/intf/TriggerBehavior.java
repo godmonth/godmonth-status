@@ -16,13 +16,11 @@ public class TriggerBehavior<TRIGGER, MODEL> {
 
     private TRIGGER trigger;
 
-    private TransitionCallback<MODEL> transitionCallback;
+    private TransitionCallback<MODEL, ?> transitionCallback;
 
     /**
      * @param trigger
-     * @deprecated use builder
      */
-    @Deprecated
     public TriggerBehavior(TRIGGER trigger) {
         this.trigger = trigger;
     }
