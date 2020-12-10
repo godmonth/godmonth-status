@@ -7,6 +7,8 @@ import com.godmonth.status.executor.intf.ModelAnalysis;
 import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.exception.ContextedRuntimeException;
 import org.apache.commons.lang3.tuple.Pair;
@@ -19,6 +21,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST> {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);

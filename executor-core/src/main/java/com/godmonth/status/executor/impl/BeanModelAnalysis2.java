@@ -9,7 +9,7 @@ import java.util.List;
  * @see AnnotationBeanModelAnalysis
  */
 
-public class BeanModelAnalysis2<MODEL> extends AbstractBeanModelAnalysis<MODEL> {
+public class BeanModelAnalysis2<MODEL> extends SimpleBeanModelAnalysis<MODEL> {
 
     @Setter
     private List<BeanModelRestriction> beanModelRestrictions;

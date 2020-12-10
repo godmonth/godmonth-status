@@ -1,6 +1,5 @@
 package com.godmonth.status.executor.impl;
 
-import com.godmonth.status.executor.intf.ModelAnalysis;
 import jodd.bean.BeanUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +12,8 @@ import org.apache.commons.lang3.Validate;
  * @see AnnotationBeanModelAnalysis
  */
 @Deprecated
-public class BeanModelAnalysis<MODEL, VALUE> implements ModelAnalysis<MODEL> {
+public class BeanModelAnalysis<MODEL, VALUE> extends SimpleBeanModelAnalysis<MODEL> {
 
-    @Setter
-    private Class<MODEL> modelClass;
 
     @Setter
     private VALUE expectedTypeValue;
