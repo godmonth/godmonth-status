@@ -8,6 +8,5 @@ package com.godmonth.status.transitor.tx.intf;
 public interface StatusEntry<MODEL, ACCESSORY> {
 
     void nextStatusEntry(TransitedResult<MODEL, ACCESSORY> transitedResult);
-    void nextStatusEntry(MODEL model);
 
 }

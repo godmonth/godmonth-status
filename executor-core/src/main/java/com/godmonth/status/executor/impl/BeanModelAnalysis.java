@@ -11,7 +11,6 @@ import org.apache.commons.lang3.Validate;
  * @param <VALUE>
  * @see AnnotationBeanModelAnalysis
  */
-@Deprecated
 public class BeanModelAnalysis<MODEL, VALUE> extends SimpleBeanModelAnalysis<MODEL> {
 
 
@@ -27,20 +26,12 @@ public class BeanModelAnalysis<MODEL, VALUE> extends SimpleBeanModelAnalysis<MOD
 
     @Override
     public void validate(MODEL model) {
-        if (modelClass != null) {
-            Validate.isTrue(modelClass.equals(model.getClass()));
-        }
+        super.validate(model);
         if (StringUtils.isNotBlank(typePropertyName) && expectedTypeValue != null) {
             VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
             Validate.isTrue(expectedTypeValue.equals(actualValue), "expected:%s,actual:%s", expectedTypeValue,
                     actualValue);
         }
     }
-
-    @Override
-    public <STATUS> STATUS getStatus(MODEL model) {
-        return BeanUtil.silent.getProperty(model, statusPropertyName);
-    }
-
 
 }

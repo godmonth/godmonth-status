@@ -50,20 +50,23 @@ public class ExecutorBuilder {
         }
     }
 
-    @Builder(builderMethodName = "fffBuilder", buildMethodName = "fff", builderClassName = "fffC")
-    private static <MODEL, INST> OrderExecutor<MODEL, INST> fff(Class<MODEL> modelClass, List<StatusAdvancer> statusAdvancers, Resource transitorConfig, Class<? extends StatusDefinition> statusDefinitionClass) {
+    @Builder(builderMethodName = "resourceBuilder")
+    private static <MODEL, INST> OrderExecutor<MODEL, INST> resourceBuild(Class<MODEL> modelClass, List<StatusAdvancer> statusAdvancers, Resource transitorConfig, Class<? extends StatusDefinition> statusDefinitionClass) {
         return new DefaultOrderExecutor<>();
     }
 
-    @Builder(builderMethodName = "abcBuilder", buildMethodName = "vvv", builderClassName = "fffC")
-    private static <MODEL, INST, STATUS> OrderExecutor<MODEL, INST> abc(List<StatusAdvancer> advancers, Class<MODEL> modelClass, Map<STATUS, StatusEntry> entryMap, List<StatusDefinition> statusDefinitions, ModelAnalysis modelAnalysis, ExecutorService executorService, Merger merger, TransactionOperations transactionOperations) {
+    @Builder(builderMethodName = "simpleBuilder")
+    private static <MODEL, INST, STATUS> OrderExecutor<MODEL, INST> simpleBuild(List<StatusAdvancer> advancers, Map<STATUS, StatusEntry> entryMap, List<StatusDefinition> statusDefinitions, ModelAnalysis modelAnalysis, ExecutorService executorService, Merger merger, TransactionOperations transactionOperations) {
         DefaultOrderExecutor defaultOrderExecutor = new DefaultOrderExecutor();
-        defaultOrderExecutor.setExecutorService(executorService);
+        if (executorService != null) {
+            defaultOrderExecutor.setExecutorService(executorService);
+        }
         defaultOrderExecutor.setModelAnalysis(modelAnalysis);
 
         TxStatusTransitor txStatusTransitor = TxStatusTransitorImpl.builder().modelMerger(merger).statusEntryMap(entryMap).statusPropertyName(modelAnalysis.getStatusPropertyName()).statusTransitor(statusTransitor(statusDefinitions)).transactionOperations(transactionOperations).build();
         Map<Object, StatusAdvancer> map = list2Map(advancers, "key");
         defaultOrderExecutor.setAdvancerMappings(map);
+        defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
         return defaultOrderExecutor;
     }
 
