@@ -1,4 +1,4 @@
-package com.godmonth.status.executor.impl;
+package com.godmonth.status.executor.impl.analysis;
 
 import com.godmonth.status.executor.intf.Status;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.godmonth.status.executor.impl;
+package com.godmonth.status.executor.impl.analysis;
 
 import com.godmonth.status.executor.intf.ModelAnalysis;
 import jodd.bean.BeanUtil;

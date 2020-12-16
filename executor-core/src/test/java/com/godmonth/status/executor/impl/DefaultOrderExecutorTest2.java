@@ -2,6 +2,7 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
+import com.godmonth.status.executor.impl.analysis.AnnotationBeanModelAnalysis;
 import com.godmonth.status.test.sample.SampleConfigMap;
 import com.godmonth.status.test.sample.SampleModel;
 import com.godmonth.status.test.sample.SampleStatus;

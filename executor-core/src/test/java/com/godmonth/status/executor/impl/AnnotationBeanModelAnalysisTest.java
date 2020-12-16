@@ -1,5 +1,6 @@
 package com.godmonth.status.executor.impl;
 
+import com.godmonth.status.executor.impl.analysis.AnnotationBeanModelAnalysis;
 import com.godmonth.status.test.sample.SampleModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
