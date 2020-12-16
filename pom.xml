@@ -13,6 +13,7 @@
     <description>godmonth status</description>
 
     <modules>
+        <module>annotations</module>
         <module>transitor-core</module>
         <module>transitor-def</module>
         <module>transitor-tx</module>

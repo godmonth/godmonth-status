@@ -1,4 +1,4 @@
-package com.godmonth.status.executor.intf;
+package com.godmonth.status.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

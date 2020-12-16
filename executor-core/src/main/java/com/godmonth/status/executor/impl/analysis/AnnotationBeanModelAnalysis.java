@@ -1,6 +1,6 @@
 package com.godmonth.status.executor.impl.analysis;
 
-import com.godmonth.status.executor.intf.Status;
+import com.godmonth.status.annotations.Status;
 import lombok.Builder;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.reflect.FieldUtils;
