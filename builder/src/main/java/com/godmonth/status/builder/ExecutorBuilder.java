@@ -50,12 +50,12 @@ public class ExecutorBuilder {
         }
     }
 
-    @Builder(builderMethodName = "resourceBuilder")
+    @Builder(builderMethodName = "resourceBuilder", builderClassName = "ResourceBuilder")
     private static <MODEL, INST> OrderExecutor<MODEL, INST> resourceBuild(Class<MODEL> modelClass, List<StatusAdvancer> statusAdvancers, Resource transitorConfig, Class<? extends StatusDefinition> statusDefinitionClass) {
         return new DefaultOrderExecutor<>();
     }
 
-    @Builder(builderMethodName = "simpleBuilder")
+    @Builder(builderMethodName = "simpleBuilder", builderClassName = "SimpleBuilder")
     private static <MODEL, INST, STATUS> OrderExecutor<MODEL, INST> simpleBuild(List<StatusAdvancer> advancers, Map<STATUS, StatusEntry> entryMap, List<StatusDefinition> statusDefinitions, ModelAnalysis modelAnalysis, ExecutorService executorService, Merger merger, TransactionOperations transactionOperations) {
         DefaultOrderExecutor defaultOrderExecutor = new DefaultOrderExecutor();
         if (executorService != null) {
