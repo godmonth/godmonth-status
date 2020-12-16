@@ -1,7 +1,6 @@
 package com.godmonth.status.executor.impl;
 
 import jodd.bean.BeanUtil;
-import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -13,16 +12,11 @@ import org.apache.commons.lang3.Validate;
  */
 public class BeanModelAnalysis<MODEL, VALUE> extends SimpleBeanModelAnalysis<MODEL> {
 
-
     @Setter
     private VALUE expectedTypeValue;
 
     @Setter
     private String typePropertyName;
-
-    @Setter
-    @Getter
-    private String statusPropertyName;
 
     @Override
     public void validate(MODEL model) {

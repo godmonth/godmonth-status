@@ -21,13 +21,4 @@ public class BeanModelAnalysis2<MODEL> extends SimpleBeanModelAnalysis<MODEL> {
     }
 
 
-    public void setStatusPropertyName(String statusPropertyName) {
-        this.statusPropertyName = statusPropertyName;
-    }
-
-    public void setModelClass(Class<MODEL> modelClass) {
-        this.modelClass = modelClass;
-    }
-
-
 }
