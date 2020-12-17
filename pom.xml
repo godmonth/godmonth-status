@@ -22,6 +22,7 @@
         <module>executor-core</module>
         <module>builder</module>
         <module>bom</module>
+        <module>test</module>
     </modules>
     <developers>
         <developer>
