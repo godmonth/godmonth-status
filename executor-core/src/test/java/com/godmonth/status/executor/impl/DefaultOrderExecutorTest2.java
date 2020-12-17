@@ -3,6 +3,7 @@ package com.godmonth.status.executor.impl;
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.impl.analysis.AnnotationBeanModelAnalysis;
+import com.godmonth.status.executor.impl.analysis.TypeFieldPredicate;
 import com.godmonth.status.test.sample.SampleConfigMap;
 import com.godmonth.status.test.sample.SampleModel;
 import com.godmonth.status.test.sample.SampleStatus;
@@ -19,6 +20,7 @@ import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionOperations;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +35,9 @@ public class DefaultOrderExecutorTest2 {
     @BeforeAll
     public static void prepare() {
         defaultOrderExecutor = new DefaultOrderExecutor<>();
-        defaultOrderExecutor.setModelAnalysis(AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).build());
+        TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().typePropertyName("type").expectedTypeValue("test").build();
+        AnnotationBeanModelAnalysis analysis = AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(typeFieldPredicate)).build();
+        defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
         advancers.put(SampleStatus.CREATED, new PayAdvancer());
         advancers.put(SampleStatus.PAID, new CheckAdvancer());
