@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="sampleModelExecutor"
+          class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
+          p:advancerMappings-ref="sampleModelAdvancerMappings"
+          p:txStatusTransitor-ref="sampleModelStatusTransitor">
+        <property name="modelAnalysis">
+            <bean class="com.godmonth.status.executor.impl.analysis.SimpleBeanModelAnalysis"
+                  p:modelClass="com.uaepay.acquire2.domain.sampleModel"/>
+        </property>
+    </bean>
+
+    <bean id="sampleModelAdvancerMappings"
+          class="com.godmonth.util.collections.List2MapFactoryBean"
+          p:propertyPath="key">
+        <property name="sourceList">
+            <list value-type="java.lang.Object">
+                <bean class="com.godmonth.status.test.executor.PayAdvancer"/>
+                <bean class="com.godmonth.status.test.executor.CheckAdvancer"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="sampleModelStatusTransitor"
+          parent="statusRepositoryStatusTransitor" p:statusPropertyName="status">
+        <property name="statusTransitor">
+            <bean factory-bean="sampleModelTransitorBuilder"
+                  factory-method="buildTransitor"/>
+        </property>
+
+        <property name="statusEntryMap">
+            <map>
+                <entry>
+                    <key>
+                        <util:constant static-field="com.godmonth.status.test.sample.SampleStatus.CREATED"/>
+                    </key>
+                    <bean class="com.godmonth.status.test.executor.EchoStatusEntry"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="sampleModelTransitorBuilder"
+          class="com.godmonth.status.transitor.definition.impl.StatusTransitorBuilder"
+          p:definitionClass="com.uaepay.acquire2.domainservice.statusmachine.acquire.sampleModelStatusDefinition"
+          p:resource="classpath:/json/status-machine-acquire-order.json">
+    </bean>
+
+</beans>
