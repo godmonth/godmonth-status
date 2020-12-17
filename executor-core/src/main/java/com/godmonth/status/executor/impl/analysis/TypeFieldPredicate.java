@@ -12,16 +12,16 @@ import java.util.function.Predicate;
  * @author shenyue
  */
 @Builder
-public class TypeFieldPredicate<MODEL, VALUE> implements Predicate<MODEL> {
+public class TypeFieldPredicate implements Predicate {
     @Setter
-    private VALUE expectedTypeValue;
+    private Object expectedTypeValue;
 
     @Setter
     private String typePropertyName;
 
     @Override
-    public boolean test(MODEL model) {
-        VALUE actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
+    public boolean test(Object model) {
+        Object actualValue = BeanUtil.silent.getProperty(model, typePropertyName);
         return expectedTypeValue.equals(actualValue);
     }
 }

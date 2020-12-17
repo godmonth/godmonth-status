@@ -16,6 +16,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.TransactionException;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionOperations;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,7 +36,9 @@ public class DefaultOrderExecutorTest {
     public static void prepare() {
         SimpleBeanModelAnalysis<SampleModel> analysis = new SimpleBeanModelAnalysis<>();
         analysis.setStatusPropertyName("status");
-//        analysis.setPredicateList(Arrays.asList(TypeFieldPredicate.builder().expectedTypeValue("")));
+        analysis.setModelClass(SampleModel.class);
+        TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().typePropertyName("type").expectedTypeValue("test").build();
+        analysis.setPredicateList(Arrays.asList(typeFieldPredicate));
         defaultOrderExecutor = new DefaultOrderExecutor<>();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
@@ -49,7 +54,14 @@ public class DefaultOrderExecutorTest {
         txStatusTransitor.setStatusPropertyName("status");
         txStatusTransitor.setStatusEntryMap(Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest::print));
         txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
+        txStatusTransitor.setTransactionOperations(new TransactionOperations() {
+            @Override
+            public <T> T execute(TransactionCallback<T> action) throws TransactionException {
+                return action.doInTransaction(null);
+            }
+        });
         defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
+
     }
 
     private static void print(TransitedResult transitedResult) {
