@@ -2,7 +2,8 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
-import com.godmonth.status.executor.impl.analysis.BeanModelAnalysis;
+import com.godmonth.status.executor.impl.analysis.SimpleBeanModelAnalysis;
+import com.godmonth.status.executor.impl.analysis.TypeFieldPredicate;
 import com.godmonth.status.test.sample.SampleConfigMap;
 import com.godmonth.status.test.sample.SampleModel;
 import com.godmonth.status.test.sample.SampleStatus;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,10 +31,9 @@ public class DefaultOrderExecutorTest {
 
     @BeforeAll
     public static void prepare() {
-        BeanModelAnalysis<SampleModel, String> analysis = new BeanModelAnalysis<>();
-        analysis.setExpectedTypeValue("test");
-        analysis.setTypePropertyName("type");
+        SimpleBeanModelAnalysis<SampleModel> analysis = new SimpleBeanModelAnalysis<>();
         analysis.setStatusPropertyName("status");
+//        analysis.setPredicateList(Arrays.asList(TypeFieldPredicate.builder().expectedTypeValue("")));
         defaultOrderExecutor = new DefaultOrderExecutor<>();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
