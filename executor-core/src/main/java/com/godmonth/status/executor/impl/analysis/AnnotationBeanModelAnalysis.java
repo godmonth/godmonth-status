@@ -7,6 +7,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * 使用Status注释来寻找status字段
@@ -16,12 +17,11 @@ import java.util.List;
 
 public class AnnotationBeanModelAnalysis<MODEL> extends SimpleBeanModelAnalysis<MODEL> {
 
-    private List<BeanModelRestriction> beanModelRestrictions;
 
     @Builder
-    public AnnotationBeanModelAnalysis(Class<MODEL> modelClass, List<BeanModelRestriction> beanModelRestrictions) {
+    public AnnotationBeanModelAnalysis(Class<MODEL> modelClass, List<Predicate<MODEL>> predicateList) {
         this.modelClass = modelClass;
-        this.beanModelRestrictions = beanModelRestrictions;
+        this.predicateList = predicateList;
         init();
     }
 
@@ -36,11 +36,5 @@ public class AnnotationBeanModelAnalysis<MODEL> extends SimpleBeanModelAnalysis<
         }
         Validate.notNull(statusPropertyName, "statusPropertyName is null.");
     }
-
-    public void validate(MODEL model) {
-        super.validate(model);
-        BeanModelRestrictions.check(beanModelRestrictions, model);
-    }
-
 
 }

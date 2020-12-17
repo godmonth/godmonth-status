@@ -5,8 +5,6 @@ import com.godmonth.status.test.sample.SampleModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 /**
  * <p></p >
  *
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 class AnnotationBeanModelAnalysisTest {
     @Test
     void construct() {
-        AnnotationBeanModelAnalysis<SampleModel> build = AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).beanModelRestrictions(new ArrayList<>()).build();
+        AnnotationBeanModelAnalysis<SampleModel> build = AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).build();
         Assertions.assertNotNull(build);
     }
 }

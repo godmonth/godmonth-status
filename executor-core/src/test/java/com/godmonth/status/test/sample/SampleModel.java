@@ -1,6 +1,6 @@
 package com.godmonth.status.test.sample;
 
-import com.godmonth.status.executor.intf.Status;
+import com.godmonth.status.annotations.Status;
 import lombok.Data;
 
 @Data
