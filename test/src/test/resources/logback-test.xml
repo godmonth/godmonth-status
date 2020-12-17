@@ -8,11 +8,8 @@
 	<logger name="jdbc.sqlonly">
 		<level value="info" />
 	</logger>
-	<logger name="com.godmonth.util.cooler">
-		<level value="trace" />
-	</logger>
 	<root>
-		<level value="info" />
+		<level value="warn" />
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
