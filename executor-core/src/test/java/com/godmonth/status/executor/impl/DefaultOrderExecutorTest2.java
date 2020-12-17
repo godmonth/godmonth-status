@@ -16,8 +16,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.TransactionException;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionOperations;
 
 import java.util.Arrays;
@@ -52,12 +50,7 @@ public class DefaultOrderExecutorTest2 {
         txStatusTransitor.setStatusPropertyName("status");
         txStatusTransitor.setStatusEntryMap(Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print));
         txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
-        txStatusTransitor.setTransactionOperations(new TransactionOperations() {
-            @Override
-            public <T> T execute(TransactionCallback<T> action) throws TransactionException {
-                return action.doInTransaction(null);
-            }
-        });
+        txStatusTransitor.setTransactionOperations(TransactionOperations.withoutTransaction());
         defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
     }
 
