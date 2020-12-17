@@ -2,6 +2,7 @@ package com.godmonth.status.test.executor;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
+import com.godmonth.status.executor.impl.DefaultOrderExecutor;
 import com.godmonth.status.executor.impl.analysis.SimpleBeanModelAnalysis;
 import com.godmonth.status.executor.impl.analysis.TypeFieldPredicate;
 import com.godmonth.status.test.sample.SampleConfigMap;
