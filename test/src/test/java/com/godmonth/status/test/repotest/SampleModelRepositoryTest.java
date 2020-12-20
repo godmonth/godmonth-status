@@ -1,9 +1,9 @@
-package com.godmonth.status.test;
+package com.godmonth.status.test.repotest;
 
-import com.godmonth.status.test.sample.SampleModel;
-import com.godmonth.status.test.sample.SampleStatus;
-import com.godmonth.status.test.sample.jpa.RepoConfig;
-import com.godmonth.status.test.sample.jpa.SampleModelRepository;
+import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.repo.RepoConfig;
+import com.godmonth.status.test.sample.repo.SampleModelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

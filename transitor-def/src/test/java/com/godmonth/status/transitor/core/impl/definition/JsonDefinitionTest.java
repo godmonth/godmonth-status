@@ -1,8 +1,8 @@
 package com.godmonth.status.transitor.core.impl.definition;
 
-import com.godmonth.status.test.sample.SampleStatus;
-import com.godmonth.status.test.sample.SampleStatusDefinition;
-import com.godmonth.status.test.sample.SampleTrigger;
+import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.domain.SampleStatusDefinition;
+import com.godmonth.status.test.sample.domain.SampleTrigger;
 import com.godmonth.status.transitor.definition.impl.JsonDefinition;
 import com.godmonth.status.transitor.definition.intf.StringStatusDefinition;
 import org.apache.commons.io.FileUtils;

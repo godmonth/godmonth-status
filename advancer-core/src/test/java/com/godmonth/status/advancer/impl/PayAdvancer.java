@@ -1,9 +1,9 @@
 package com.godmonth.status.advancer.impl;
 
 import com.godmonth.status.advancer.intf.AdvancedResult;
-import com.godmonth.status.test.sample.SampleModel;
-import com.godmonth.status.test.sample.SampleStatus;
-import com.godmonth.status.test.sample.SampleTrigger;
+import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.domain.SampleTrigger;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 
 public class PayAdvancer extends AbstractAdvancer<SampleModel, Void, SampleTrigger> {

@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample;
+package com.godmonth.status.test.sample.domain;
 
 /**
  * 测试状态

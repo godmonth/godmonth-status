@@ -17,7 +17,7 @@ class StringJsonDefinitionBuilderTest {
         FileSystemResource fileSystemResource = new FileSystemResource(new File("src/test/resources/state-machine-sample.json"));
         System.out.println(fileSystemResource);
 
-        Map<String, Map<String, String>> build = StringJsonDefinitionBuilder.build(fileSystemResource);
+        Map<String, Map<String, String>> build = StringJsonDefinitionBuilder.buildConfigMap(fileSystemResource);
         System.out.println(build);
     }
 }

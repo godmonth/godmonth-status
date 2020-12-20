@@ -2,6 +2,9 @@ package com.godmonth.status.transitor.definition.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.godmonth.status.transitor.core.impl.StringStatusTransitor;
+import com.godmonth.status.transitor.core.intf.StatusTransitor;
+import lombok.Builder;
 import org.apache.commons.lang3.exception.ContextedRuntimeException;
 import org.springframework.core.io.Resource;
 
@@ -12,8 +15,12 @@ import java.util.Map;
 
 public class StringJsonDefinitionBuilder {
 
+    public static <STATUS, TRIGGER> StatusTransitor<STATUS, TRIGGER> buildTransitor(Resource resource, Class<STATUS> statusClass) {
+        Map<String, Map<String, String>> stringMapMap = buildConfigMap(resource);
+        return new StringStatusTransitor<>(stringMapMap, statusClass);
+    }
 
-    public static Map<String, Map<String, String>> build(Resource resource) {
+    public static Map<String, Map<String, String>> buildConfigMap(Resource resource) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = null;
@@ -33,7 +40,7 @@ public class StringJsonDefinitionBuilder {
                 String nextStatus = trigger.get("nextStatus").textValue();
                 triggerMap.put(trigger1, nextStatus);
             }
-            statusConfigs.put(status,triggerMap);
+            statusConfigs.put(status, triggerMap);
         }
         return statusConfigs;
     }

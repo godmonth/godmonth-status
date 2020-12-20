@@ -1,12 +1,12 @@
-package com.godmonth.status.test.executor;
+package com.godmonth.status.test.sample.machine.advancer;
 
 import org.apache.commons.lang3.Validate;
 
 import com.godmonth.status.advancer.impl.AbstractAdvancer;
 import com.godmonth.status.advancer.intf.AdvancedResult;
-import com.godmonth.status.test.sample.SampleModel;
-import com.godmonth.status.test.sample.SampleStatus;
-import com.godmonth.status.test.sample.SampleTrigger;
+import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.domain.SampleTrigger;
 
 public class CheckAdvancer extends AbstractAdvancer<SampleModel, String, SampleTrigger> {
 	{
