@@ -1,7 +1,9 @@
 package com.godmonth.status.analysis.impl;
 
 import com.godmonth.status.annotations.Status;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -14,7 +16,8 @@ import java.util.function.Predicate;
  *
  * @param <MODEL>
  */
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnnotationBeanModelAnalysis<MODEL> extends SimpleBeanModelAnalysis<MODEL> {
 
 
@@ -25,7 +28,7 @@ public class AnnotationBeanModelAnalysis<MODEL> extends SimpleBeanModelAnalysis<
         init();
     }
 
-    private void init() {
+    public void init() {
         Field[] fields = FieldUtils.getAllFields(modelClass);
         for (Field field : fields) {
             Status annotation = field.getAnnotation(Status.class);
