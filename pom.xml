@@ -4,9 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>status</groupId>
+    <groupId>com.godmonth.status</groupId>
     <artifactId>status-parent</artifactId>
-    <version>0.4.3-refactor-SNAPSHOT</version>
+    <version></version>
     <url>https://github.com/godmonth/godmonth-status</url>
     <packaging>pom</packaging>
     <name>godmonth status</name>

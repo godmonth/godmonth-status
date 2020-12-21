@@ -1,7 +1,7 @@
 package com.godmonth.status.builder.statemachine.definition.impl;
 
-import status.transitor.core.impl.SimpleStatusTransitor;
-import status.transitor.core.intf.StatusTransitor;
+import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
+import com.godmonth.status.transitor.core.intf.StatusTransitor;
 
 public class StatusTransitorBuilder<STATUS, TRIGGER> extends JsonDefinitionBuilder<STATUS, TRIGGER> {
 	

@@ -1,7 +1,7 @@
 package com.godmonth.status.builder.statemachine.definition.impl;
 
 import com.godmonth.status.builder.statemachine.definition.intf.StatusDefinition;
-import status.transitor.core.impl.SimpleStatusTransitor;
+import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
 
 public class SimpleStatusTransitorFactory {
 

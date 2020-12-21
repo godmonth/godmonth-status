@@ -2,8 +2,8 @@ package com.godmonth.status.builder.statemachine.definition.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import status.transitor.core.impl.StringStatusTransitor;
-import status.transitor.core.intf.StatusTransitor;
+import com.godmonth.status.transitor.core.impl.StringStatusTransitor;
+import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import org.apache.commons.lang3.exception.ContextedRuntimeException;
 import org.springframework.core.io.Resource;
 

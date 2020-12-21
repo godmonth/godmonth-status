@@ -1,17 +1,17 @@
 package com.godmonth.status.builder;
 
-import status.advancer.intf.StatusAdvancer;
-import status.analysis.intf.ModelAnalysis;
+import com.godmonth.status.advancer.intf.StatusAdvancer;
+import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.builder.statemachine.definition.intf.StatusDefinition;
 import com.godmonth.status.builder.statemachine.definition.intf.TriggerDefinition;
-import status.executor.impl.DefaultOrderExecutor;
-import status.executor.intf.OrderExecutor;
-import status.transitor.core.impl.SimpleStatusTransitor;
-import status.transitor.core.intf.StatusTransitor;
-import status.transitor.tx.impl.Merger;
-import status.transitor.tx.impl.TxStatusTransitorImpl;
-import status.transitor.tx.intf.StatusEntry;
-import status.transitor.tx.intf.TxStatusTransitor;
+import com.godmonth.status.executor.impl.DefaultOrderExecutor;
+import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
+import com.godmonth.status.transitor.core.intf.StatusTransitor;
+import com.godmonth.status.transitor.tx.impl.Merger;
+import com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl;
+import com.godmonth.status.transitor.tx.intf.StatusEntry;
+import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 import com.google.common.collect.Maps;
 import jodd.bean.BeanUtil;
 import lombok.Builder;

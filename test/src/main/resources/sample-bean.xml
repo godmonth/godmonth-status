@@ -5,14 +5,14 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-    <bean id="sampleModelAnalysis" class="status.analysis.impl.SimpleBeanModelAnalysis"
-          p:modelClass="status.test.sample.domain.SampleModel" p:statusPropertyName="status">
+    <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.SimpleBeanModelAnalysis"
+          p:modelClass="SampleModel" p:statusPropertyName="status">
         <property name="predicateList">
-            <bean class="status.analysis.impl.TypeFieldPredicate" p:propertyName="type"
+            <bean class="com.godmonth.status.analysis.impl.TypeFieldPredicate" p:propertyName="type"
                   p:expectedValue="test"/>
         </property>
     </bean>
-    <bean id="sampleModelExecutor" class="status.executor.impl.DefaultOrderExecutor"
+    <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
           p:advancerMappings-ref="sampleModelAdvancerMappings" p:txStatusTransitor-ref="sampleModelStatusTransitor"
           p:modelAnalysis-ref="sampleModelAnalysis"/>
 
@@ -21,16 +21,16 @@
           p:propertyPath="key">
         <property name="sourceList">
             <list value-type="java.lang.Object">
-                <bean class="status.test.sample.machine.advancer.PayAdvancer"/>
-                <bean class="status.test.sample.machine.advancer.CheckAdvancer"/>
+                <bean class="com.godmonth.status.test.sample.machine.advancer.PayAdvancer"/>
+                <bean class="com.godmonth.status.test.sample.machine.advancer.CheckAdvancer"/>
             </list>
         </property>
     </bean>
     <bean id="statusRepositoryStatusTransitor" abstract="true"
-          class="status.transitor.tx.impl.TxStatusTransitorImpl"
+          class="com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl"
           p:transactionOperations-ref="transactionTemplate">
         <property name="modelMerger">
-            <bean class="status.transitor.tx.impl.jpa.EntityManagerMergerImpl" autowire="byType"/>
+            <bean class="com.godmonth.status.transitor.tx.impl.jpa.EntityManagerMergerImpl" autowire="byType"/>
         </property>
     </bean>
 
@@ -49,7 +49,7 @@
                     <key>
                         <util:constant static-field="status.test.sample.SampleStatus.CREATED"/>
                     </key>
-                    <bean class="status.test.sample.machine.entry.EchoStatusEntry"/>
+                    <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
                 </entry>
             </map>
         </property>
