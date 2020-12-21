@@ -1,6 +1,6 @@
 package com.godmonth.status.builder;
 
-import com.godmonth.status.transitor.definition.intf.StatusDefinition;
+import com.godmonth.status.builder.statemachine.definition.intf.StatusDefinition;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -8,7 +8,7 @@
     <logger name="jdbc.sqlonly">
         <level value="info"/>
     </logger>
-    <logger name="com.godmonth.status">
+    <logger name="status">
         <level value="trace"/>
     </logger>
     <root>

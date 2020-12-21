@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.godmonth.status</groupId>
+        <groupId>status</groupId>
         <artifactId>status-parent</artifactId>
         <version>0.4.3-refactor-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -24,11 +24,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>transitor-def</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>merger-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -40,6 +35,10 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
 
     </dependencies>
