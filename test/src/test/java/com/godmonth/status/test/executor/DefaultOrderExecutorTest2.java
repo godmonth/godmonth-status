@@ -49,7 +49,7 @@ public class DefaultOrderExecutorTest2 {
                 SampleConfigMap.INSTANCE);
 
         txStatusTransitor.setStatusTransitor(statusTransitor);
-        txStatusTransitor.setStatusPropertyName("status");
+        txStatusTransitor.setModelAnalysis(analysis);
         txStatusTransitor.setStatusEntryMap(Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print));
         txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
         txStatusTransitor.setTransactionOperations(TransactionOperations.withoutTransaction());

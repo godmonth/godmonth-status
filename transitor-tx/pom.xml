@@ -12,6 +12,11 @@
 	<artifactId>transitor-tx</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>com.godmonth.status</groupId>
+			<artifactId>model-analysis</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 		</dependency>

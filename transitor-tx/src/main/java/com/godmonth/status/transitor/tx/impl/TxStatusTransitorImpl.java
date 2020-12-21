@@ -1,11 +1,11 @@
 package com.godmonth.status.transitor.tx.impl;
 
+import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import com.godmonth.status.transitor.tx.intf.StatusEntry;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
-import jodd.bean.BeanUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -26,7 +26,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
         implements TxStatusTransitor<MODEL, TRIGGER> {
 
     @Setter
-    protected String statusPropertyName;
+    protected ModelAnalysis<MODEL> modelAnalysis;
 
     @Setter
     private TransactionOperations transactionOperations;
@@ -44,7 +44,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     public MODEL transit(MODEL model, TriggerBehavior<TRIGGER, MODEL> triggerBehavior) {
         STATUS nextStatus = beforeChange(model, triggerBehavior.getTrigger());
         TransitedResult<MODEL, Object> transitedResult = transactionOperations.execute((TransactionStatus status) -> {
-            BeanUtil.silent.setProperty(model, statusPropertyName, nextStatus);
+            modelAnalysis.setStatus(model, nextStatus);
             Object accessory = null;
             if (triggerBehavior.getTransitionCallback() != null) {
                 accessory = triggerBehavior.getTransitionCallback().beforeMerge(model);
@@ -58,7 +58,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     }
 
     protected STATUS beforeChange(MODEL model, TRIGGER trigger) {
-        STATUS status = BeanUtil.silent.getProperty(model, statusPropertyName);
+        STATUS status = modelAnalysis.getStatus(model);
         Validate.notNull(status, "status is null");
 
         STATUS nextStatus = statusTransitor.transit(status, trigger);
@@ -68,7 +68,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     }
 
     protected void afterChange(TransitedResult<MODEL, Object> transitedResult) {
-        STATUS status = BeanUtil.silent.getProperty(transitedResult.getModel(), statusPropertyName);
+        STATUS status = modelAnalysis.getStatus(transitedResult.getModel());
         Validate.notNull(status, "status is null");
         if (statusEntryMap.get(status) != null) {
             statusEntryMap.get(status).nextStatusEntry(transitedResult);

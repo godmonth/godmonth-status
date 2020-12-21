@@ -38,4 +38,10 @@ public class SimpleBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
         return BeanUtil.silent.getProperty(model, statusPropertyName);
     }
 
+    @Override
+    public <STATUS> void setStatus(MODEL model, STATUS value) {
+        BeanUtil.silent.setProperty(model, statusPropertyName, value);
+    }
+
+
 }
