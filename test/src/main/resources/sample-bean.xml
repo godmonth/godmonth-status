@@ -40,14 +40,14 @@
             <bean class="com.godmonth.status.transitor.definition.impl.StringJsonDefinitionBuilder"
                   factory-method="buildTransitor">
                 <constructor-arg value="classpath:/sample-status.json"/>
-                <constructor-arg value="SampleStatus"/>
+                <constructor-arg value="com.godmonth.status.test.sample.domain.SampleStatus"/>
             </bean>
         </property>
         <property name="statusEntryMap">
             <map>
                 <entry>
                     <key>
-                        <util:constant static-field="SampleStatus.CREATED"/>
+                        <util:constant static-field="com.godmonth.status.test.sample.domain.SampleStatus.CREATED"/>
                     </key>
                     <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
                 </entry>
