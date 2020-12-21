@@ -5,12 +5,11 @@ import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.ModelAnalysis;
 import com.godmonth.status.executor.intf.OrderExecutor;
-import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang3.exception.ContextedRuntimeException;
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,22 +75,20 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
                 return new SyncResult<MODEL, Object>(model);
             }
             if (advancedResult.getTriggerBehavior() != null) {
-                model = transit(model, advancedResult);
-                if (model != null) {
-                    if (advancedResult.isDropInstruction()) {
-                        instruction = null;
-                        message = null;
-                    }
-                    switch (advancedResult.getNextOperation()) {
-                        case ADVANCE:
-                            advancedResult = null;
-                            continue;
-                        case ASYNC_ADVANCE:
-                            logger.debug("executeAsync");
-                            executeAsync(model, instruction, message);
-                        case PAUSE:
-                    }
-
+                model = txStatusTransitor.transit(model, advancedResult.getTriggerBehavior());
+                Validate.notNull(model, "transtied model is null.");
+                if (advancedResult.isDropInstruction()) {
+                    instruction = null;
+                    message = null;
+                }
+                switch (advancedResult.getNextOperation()) {
+                    case ADVANCE:
+                        advancedResult = null;
+                        continue;
+                    case ASYNC_ADVANCE:
+                        logger.debug("executeAsync");
+                        executeAsync(model, instruction, message);
+                    case PAUSE:
                 }
             }
             break;
@@ -104,24 +101,6 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
                 syncResult.setModel(model);
             }
             return syncResult;
-        }
-    }
-
-    /**
-     * @param model
-     * @param advancedResult
-     * @return 跃迁是否成功
-     */
-    private MODEL transit(MODEL model, AdvancedResult<MODEL, TRIGGER> advancedResult) {
-        if (advancedResult.getTriggerBehavior().getTrigger() == null) {
-            logger.trace("transitionSymbol is null");
-            return null;
-        }
-        try {
-            TriggerBehavior<TRIGGER, MODEL> triggerBehavior = advancedResult.getTriggerBehavior();
-            return txStatusTransitor.transit(model, triggerBehavior);
-        } catch (Exception e) {
-            throw new ContextedRuntimeException(e);
         }
     }
 

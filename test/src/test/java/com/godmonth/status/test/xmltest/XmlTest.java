@@ -36,7 +36,7 @@ public class XmlTest {
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
         SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
-        SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel, null, null);
+        SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel, "eee", "fff");
         System.out.println(execute);
     }
 }
