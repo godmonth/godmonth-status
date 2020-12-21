@@ -14,6 +14,7 @@
 
     <modules>
         <module>annotations</module>
+        <module>model-analysis</module>
         <module>transitor-core</module>
         <module>transitor-def</module>
         <module>transitor-tx</module>
@@ -23,6 +24,7 @@
         <module>builder</module>
         <module>bom</module>
         <module>test</module>
+
     </modules>
     <developers>
         <developer>

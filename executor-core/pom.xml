@@ -13,8 +13,8 @@
     <artifactId>executor-core</artifactId>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>annotations</artifactId>
+            <groupId>com.godmonth.status</groupId>
+            <artifactId>model-analysis</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

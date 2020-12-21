@@ -1,10 +1,8 @@
-package com.godmonth.status.executor.impl.analysis;
+package com.godmonth.status.analysis.impl;
 
-import com.godmonth.status.executor.intf.ModelAnalysis;
+import com.godmonth.status.analysis.intf.ModelAnalysis;
 import jodd.bean.BeanUtil;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.Validate;
 

@@ -11,10 +11,10 @@
           p:advancerMappings-ref="sampleModelAdvancerMappings"
           p:txStatusTransitor-ref="sampleModelStatusTransitor">
         <property name="modelAnalysis">
-            <bean class="com.godmonth.status.executor.impl.analysis.SimpleBeanModelAnalysis"
+            <bean class="com.godmonth.status.analysis.impl.SimpleBeanModelAnalysis"
                   p:modelClass="com.godmonth.status.test.sample.domain.SampleModel" p:statusPropertyName="status">
                 <property name="predicateList">
-                    <bean class="com.godmonth.status.executor.impl.analysis.TypeFieldPredicate" p:propertyName="type"
+                    <bean class="com.godmonth.status.analysis.impl.TypeFieldPredicate" p:propertyName="type"
                           p:expectedValue="test"/>
                 </property>
             </bean>

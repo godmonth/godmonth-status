@@ -1,4 +1,4 @@
-package com.godmonth.status.executor.intf;
+package com.godmonth.status.analysis.intf;
 
 /**
  * 升级，去掉status泛型
