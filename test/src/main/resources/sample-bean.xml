@@ -12,7 +12,7 @@
           p:txStatusTransitor-ref="sampleModelStatusTransitor">
         <property name="modelAnalysis">
             <bean class="com.godmonth.status.executor.impl.analysis.SimpleBeanModelAnalysis"
-                  p:modelClass="com.uaepay.acquire2.domain.sampleModel"/>
+                  p:modelClass="com.godmonth.status.test.sample.domain.SampleModel"/>
         </property>
     </bean>
 
