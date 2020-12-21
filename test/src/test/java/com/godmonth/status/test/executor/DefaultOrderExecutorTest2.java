@@ -7,9 +7,9 @@ import com.godmonth.status.executor.impl.analysis.AnnotationBeanModelAnalysis;
 import com.godmonth.status.executor.impl.analysis.TypeFieldPredicate;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
-import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.test.sample.machine.advancer.CheckAdvancer;
 import com.godmonth.status.test.sample.machine.advancer.PayAdvancer;
+import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
 import com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
@@ -35,7 +35,7 @@ public class DefaultOrderExecutorTest2 {
     @BeforeAll
     public static void prepare() {
         defaultOrderExecutor = new DefaultOrderExecutor<>();
-        TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().typePropertyName("type").expectedTypeValue("test").build();
+        TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build();
         AnnotationBeanModelAnalysis analysis = AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(typeFieldPredicate)).build();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();

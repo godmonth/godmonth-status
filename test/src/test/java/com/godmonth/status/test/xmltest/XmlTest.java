@@ -1,11 +1,18 @@
 package com.godmonth.status.test.xmltest;
 
+import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.repo.RepoConfig;
+import com.godmonth.status.test.sample.repo.SampleModelRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ImportResource;
+
+import javax.annotation.Resource;
 
 /**
  * <p></p >
@@ -17,8 +24,16 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource(locations = {"classpath:/sample-bean.xml"})
 @EnableAutoConfiguration
 public class XmlTest {
+    @Autowired
+    private SampleModelRepository sampleModelRepository;
+    @Resource(name = "sampleModelExecutor")
+    private OrderExecutor<SampleModel, String> sampleModelExecutor;
+
     @Test
     void name() {
-        System.out.println("ok");
+        SampleModel sampleModel = new SampleModel();
+        sampleModel.setStatus(SampleStatus.CREATED);
+        sampleModel.setType("test");
+        System.out.println(sampleModelExecutor);
     }
 }
