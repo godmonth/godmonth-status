@@ -20,12 +20,17 @@
         <dependencies>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>advancer-core</artifactId>
+                <artifactId>annotations</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>executor-core</artifactId>
+                <artifactId>model-analysis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>advancer-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -38,15 +43,19 @@
                 <artifactId>transitor-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>transitor-jpa</artifactId>
+                <artifactId>transitor-tx</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>transitor-tx</artifactId>
+                <artifactId>executor-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>builder</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
