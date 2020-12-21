@@ -39,7 +39,7 @@
         <property name="statusTransitor">
             <bean class="com.godmonth.status.transitor.definition.impl.StringJsonDefinitionBuilder"
                   factory-method="buildTransitor">
-                <constructor-arg value="file:src/test/resources/sample-status.json"/>
+                <constructor-arg value="classpath:/sample-status.json"/>
                 <constructor-arg value="SampleStatus"/>
             </bean>
         </property>
