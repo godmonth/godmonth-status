@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 public class XmlTest {
     @Autowired
     private SampleModelRepository sampleModelRepository;
+
     @Resource(name = "sampleModelExecutor")
     private OrderExecutor<SampleModel, String> sampleModelExecutor;
 
@@ -36,7 +37,7 @@ public class XmlTest {
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
         SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
-        SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel, "eee", "fff");
+        SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel1, "eee", "fff");
         System.out.println(execute);
     }
 }

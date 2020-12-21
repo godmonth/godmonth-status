@@ -6,7 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.SimpleBeanModelAnalysis"
-          p:modelClass="SampleModel" p:statusPropertyName="status">
+          p:modelClass="com.godmonth.status.test.sample.domain.SampleModel" p:statusPropertyName="status">
         <property name="predicateList">
             <bean class="com.godmonth.status.analysis.impl.TypeFieldPredicate" p:propertyName="type"
                   p:expectedValue="test"/>
@@ -37,17 +37,17 @@
     <bean id="sampleModelStatusTransitor"
           parent="statusRepositoryStatusTransitor" p:modelAnalysis-ref="sampleModelAnalysis">
         <property name="statusTransitor">
-            <bean class="StringJsonDefinitionBuilder"
+            <bean class="com.godmonth.status.builder.statemachine.definition.impl.StringJsonDefinitionBuilder"
                   factory-method="buildTransitor">
                 <constructor-arg value="classpath:/sample-status.json"/>
-                <constructor-arg value="status.test.sample.SampleStatus"/>
+                <constructor-arg value="com.godmonth.status.test.sample.domain.SampleStatus"/>
             </bean>
         </property>
         <property name="statusEntryMap">
             <map>
                 <entry>
                     <key>
-                        <util:constant static-field="status.test.sample.SampleStatus.CREATED"/>
+                        <util:constant static-field="com.godmonth.status.test.sample.domain.SampleStatus.CREATED"/>
                     </key>
                     <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
                 </entry>
