@@ -10,8 +10,4 @@
 	</parent>
 
 	<artifactId>transitor-core</artifactId>
-
-	<dependencies>
-
-	</dependencies>
 </project>
