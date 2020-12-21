@@ -3,7 +3,6 @@ package com.godmonth.status.advancer.intf;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
 
 /**
  * 推进结果.当跃迁参数为空时,查看同步结果
@@ -12,7 +11,6 @@ import lombok.experimental.SuperBuilder;
  * @author shenyue
  */
 @Data
-@SuperBuilder
 @AllArgsConstructor
 public class AdvancedResult<MODEL, TRIGGER> {
     /**

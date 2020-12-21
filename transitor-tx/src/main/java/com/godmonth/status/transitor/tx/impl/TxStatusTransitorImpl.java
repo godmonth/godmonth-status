@@ -52,7 +52,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
             MODEL mergedModelInTx = modelMerger.mergeInTx(model);
             return new TransitedResult(mergedModelInTx, accessory);
         });
-        afterChange(transitedResult, nextStatus);
+        afterChange(transitedResult);
 
         return transitedResult.getModel();
     }
@@ -67,7 +67,9 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
         return nextStatus;
     }
 
-    protected void afterChange(TransitedResult<MODEL, Object> transitedResult, STATUS status) {
+    protected void afterChange(TransitedResult<MODEL, Object> transitedResult) {
+        STATUS status = BeanUtil.silent.getProperty(transitedResult.getModel(), statusPropertyName);
+        Validate.notNull(status, "status is null");
         if (statusEntryMap.get(status) != null) {
             statusEntryMap.get(status).nextStatusEntry(transitedResult);
         }

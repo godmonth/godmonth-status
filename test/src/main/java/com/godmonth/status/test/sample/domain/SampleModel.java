@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Setter
 @Getter
@@ -27,5 +28,6 @@ public class SampleModel {
 
     private String type;
 
-
+    @Version
+    private Long dataVersion;
 }

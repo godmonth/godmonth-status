@@ -15,8 +15,7 @@ public class PayAdvancer extends AbstractAdvancer<SampleModel, Void, SampleTrigg
     public AdvancedResult<SampleModel, SampleTrigger> advance(SampleModel model, Void instruction, Object message)
             throws IllegalStateException {
         System.out.println("advanced");
-//		return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
-        return AdvancedResult.<SampleModel, SampleTrigger>builder().triggerBehavior(TriggerBehavior.<SampleTrigger, SampleModel>builder().trigger(SampleTrigger.PAY).build()).build();
+        return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
     }
 
 }
