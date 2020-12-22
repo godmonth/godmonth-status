@@ -1,12 +1,13 @@
 package com.godmonth.status.executor.impl;
 
-import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
+import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.Validate;
@@ -22,6 +23,7 @@ import java.util.concurrent.Future;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST> {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
@@ -32,6 +34,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
 
+    @Builder.Default
     @Setter
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
