@@ -18,4 +18,17 @@ public @interface Advancer {
 
     Class modelClass();
 
+    /**
+     * 限制子类型名字
+     *
+     * @return
+     */
+    String typeFieldName() default "";
+
+    /**
+     * 限制子类型值.值
+     *
+     * @return
+     */
+    String typeFieldValue() default "";
 }
