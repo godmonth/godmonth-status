@@ -2,12 +2,13 @@ package com.godmonth.status.transitor.core.impl;
 
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.util.Map;
 
+@Builder
 @AllArgsConstructor
 public class SimpleStatusTransitor<STATUS, TRIGGER> implements StatusTransitor<STATUS, TRIGGER> {
-
     private final Map<STATUS, Map<TRIGGER, STATUS>> config;
 
     @Override

@@ -2,8 +2,8 @@ package com.godmonth.status.builder;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
-import com.godmonth.status.builder.statemachine.definition.intf.StatusDefinition;
-import com.godmonth.status.builder.statemachine.definition.intf.TriggerDefinition;
+import com.godmonth.status.builder.transitor.StatusMachineDefinition;
+import com.godmonth.status.builder.transitor.TriggerDefinition;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
 import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
@@ -51,12 +51,12 @@ public class ExecutorBuilder {
     }
 
     @Builder(builderMethodName = "resourceBuilder", builderClassName = "ResourceBuilder")
-    private static <MODEL, INST> OrderExecutor<MODEL, INST> resourceBuild(Class<MODEL> modelClass, List<StatusAdvancer> statusAdvancers, Resource transitorConfig, Class<? extends StatusDefinition> statusDefinitionClass) {
+    private static <MODEL, INST> OrderExecutor<MODEL, INST> resourceBuild(Class<MODEL> modelClass, List<StatusAdvancer> statusAdvancers, Resource transitorConfig, Class<? extends StatusMachineDefinition> statusDefinitionClass) {
         return new DefaultOrderExecutor<>();
     }
 
     @Builder(builderMethodName = "simpleBuilder", builderClassName = "SimpleBuilder")
-    private static <MODEL, INST, STATUS> OrderExecutor<MODEL, INST> simpleBuild(List<StatusAdvancer> advancers, Map<STATUS, StatusEntry> entryMap, List<StatusDefinition> statusDefinitions, ModelAnalysis modelAnalysis, ExecutorService executorService, Merger merger, TransactionOperations transactionOperations) {
+    private static <MODEL, INST, STATUS> OrderExecutor<MODEL, INST> simpleBuild(List<StatusAdvancer> advancers, Map<STATUS, StatusEntry> entryMap, List<StatusMachineDefinition> statusDefinitions, ModelAnalysis modelAnalysis, ExecutorService executorService, Merger merger, TransactionOperations transactionOperations) {
         DefaultOrderExecutor defaultOrderExecutor = new DefaultOrderExecutor();
         if (executorService != null) {
             defaultOrderExecutor.setExecutorService(executorService);
@@ -70,9 +70,9 @@ public class ExecutorBuilder {
         return defaultOrderExecutor;
     }
 
-    private static <STATUS, TRIGGER> StatusTransitor<STATUS, TRIGGER> statusTransitor(List<StatusDefinition> statusDefinitions) {
+    private static <STATUS, TRIGGER> StatusTransitor<STATUS, TRIGGER> statusTransitor(List<StatusMachineDefinition> statusDefinitions) {
         Map<STATUS, Map<TRIGGER, STATUS>> statusConfigs = new HashMap<>();
-        for (StatusDefinition<STATUS, TRIGGER> statusDefinition : statusDefinitions) {
+        for (StatusMachineDefinition<STATUS, TRIGGER> statusDefinition : statusDefinitions) {
             Validate.notNull(statusDefinition.getStatus(), "status is null");
             Validate.notNull(statusDefinition.getTriggers(), "triggerDefinitions is null");
             Map<TRIGGER, STATUS> triggerConfig = new HashMap<>();

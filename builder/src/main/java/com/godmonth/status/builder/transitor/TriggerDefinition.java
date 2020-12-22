@@ -1,4 +1,4 @@
-package com.godmonth.status.builder.statemachine.definition.intf;
+package com.godmonth.status.builder.transitor;
 
 import lombok.Data;
 

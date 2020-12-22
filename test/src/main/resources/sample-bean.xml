@@ -44,11 +44,10 @@
     <bean id="sampleModelStatusTransitor"
           parent="statusRepositoryStatusTransitor" p:modelAnalysis-ref="sampleModelAnalysis">
         <property name="statusTransitor">
-            <bean class="com.godmonth.status.builder.statemachine.definition.impl.StringJsonDefinitionBuilder"
-                  factory-method="buildTransitor">
-                <constructor-arg value="classpath:/sample-status.json"/>
-                <constructor-arg value="com.godmonth.status.test.sample.domain.SampleStatus"/>
-            </bean>
+            <bean class="com.godmonth.status.builder.transitor.JsonDefinitionFactoryBean"
+                  p:statusClass="com.godmonth.status.test.sample.domain.SampleStatus"
+                  p:triggerClass="com.godmonth.status.test.sample.machine.trigger.SampleTrigger"
+                  p:resource="classpath:/sample-status.json"/>
         </property>
         <property name="statusEntryMap">
             <map>

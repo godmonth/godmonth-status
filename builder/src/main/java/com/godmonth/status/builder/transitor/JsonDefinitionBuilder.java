@@ -1,12 +1,12 @@
-package com.godmonth.status.builder.statemachine.definition.impl;
+package com.godmonth.status.builder.transitor;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.godmonth.status.builder.statemachine.definition.intf.StatusDefinition;
-import com.godmonth.status.builder.statemachine.definition.intf.TriggerDefinition;
+import lombok.Builder;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.exception.ContextedRuntimeException;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
@@ -15,28 +15,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonDefinitionBuilder<STATUS, TRIGGER> {
 
-    private Resource resource;
+public class JsonDefinitionBuilder {
 
-    private Class<? extends StatusDefinition<STATUS, TRIGGER>> definitionClass;
-
-    public Map<STATUS, Map<TRIGGER, STATUS>> build() {
-
+    @Builder
+    private static <STATUS, TRIGGER> Map<STATUS, Map<TRIGGER, STATUS>> build(Class<STATUS> statusClass, Class<TRIGGER> triggerClass, String jsonString, Resource resource) throws IOException {
         TypeFactory typeFactory = TypeFactory.defaultInstance();
-
+        JavaType javaType = typeFactory.constructParametricType(StatusMachineDefinition.class, statusClass, triggerClass);
+        CollectionType collectionType = typeFactory.constructCollectionType(List.class, javaType);
+        List<StatusMachineDefinition> statusDefinitions = null;
         ObjectMapper objectMapper = new ObjectMapper();
-
-        CollectionType collectionType = typeFactory.constructCollectionType(List.class, definitionClass);
-        List<StatusDefinition<STATUS, TRIGGER>> statusDefinitions;
-        try (InputStream inputStream = resource.getInputStream()) {
-            statusDefinitions = objectMapper.readValue(inputStream, collectionType);
-        } catch (IOException e) {
-            throw new ContextedRuntimeException(e);
+        if (StringUtils.isNotBlank(jsonString)) {
+            statusDefinitions = objectMapper.readValue(jsonString, collectionType);
+        } else {
+            try (InputStream inputStream = resource.getInputStream()) {
+                statusDefinitions = objectMapper.readValue(inputStream, collectionType);
+            }
         }
+
         Map<STATUS, Map<TRIGGER, STATUS>> statusConfigs = new HashMap<>();
 
-        for (StatusDefinition<STATUS, TRIGGER> statusDefinition : statusDefinitions) {
+        for (StatusMachineDefinition<STATUS, TRIGGER> statusDefinition : statusDefinitions) {
             Validate.notNull(statusDefinition.getStatus(), "status is null");
             Validate.notNull(statusDefinition.getTriggers(), "triggerDefinitions is null");
             Map<TRIGGER, STATUS> triggerConfig = new HashMap<>();
@@ -50,12 +49,5 @@ public class JsonDefinitionBuilder<STATUS, TRIGGER> {
         return statusConfigs;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
-
-    public void setDefinitionClass(Class<? extends StatusDefinition<STATUS, TRIGGER>> definitionClass) {
-        this.definitionClass = definitionClass;
-    }
 
 }

@@ -1,4 +1,4 @@
-package com.godmonth.status.builder.statemachine.definition.intf;
+package com.godmonth.status.builder.transitor;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @author shenyue
  */
 @Data
-public class StatusDefinition<STATUS, TRIGGER> {
+public class StatusMachineDefinition<STATUS, TRIGGER> {
 
 	private STATUS status;
 

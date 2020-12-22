@@ -1,7 +1,5 @@
 package com.godmonth.status.builder;
 
-import com.godmonth.status.builder.statemachine.definition.intf.StatusDefinition;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
