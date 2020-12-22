@@ -14,11 +14,11 @@
           </property>
       </bean>
 -->
-     <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis"
-           p:modelClass="com.godmonth.status.test.sample.domain.SampleModel" autowire="no">
+
+    <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis"
+          p:modelClass="com.godmonth.status.test.sample.domain.SampleModel"/>
 
 
-    </bean><!-- -->
     <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
           p:advancerMappings-ref="sampleModelAdvancerMappings" p:txStatusTransitor-ref="sampleModelStatusTransitor"
           p:modelAnalysis-ref="sampleModelAnalysis"/>
@@ -37,7 +37,7 @@
           class="com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl"
           p:transactionOperations-ref="transactionTemplate">
         <property name="modelMerger">
-            <bean class="com.godmonth.status.transitor.tx.impl.jpa.EntityManagerMergerImpl" />
+            <bean class="com.godmonth.status.transitor.tx.impl.jpa.EntityManagerMergerImpl" autowire="byType"/>
         </property>
     </bean>
 
