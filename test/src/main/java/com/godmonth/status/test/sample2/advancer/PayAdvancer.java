@@ -6,8 +6,10 @@ import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
+import org.springframework.stereotype.Component;
 
-@SampleAdvancer
+@SampleAdvancerBinding
+@Component
 public class PayAdvancer extends AbstractAdvancer<SampleModel, String, SampleTrigger> {
     {
         availableStatus = SampleStatus.CREATED;
