@@ -5,6 +5,7 @@ import com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis;
 import com.godmonth.status.analysis.impl.TypeFieldPredicate;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.builder.advancer.AdvancerFunctionBuilder;
+import com.godmonth.status.builder.entry.EntryFunctionBuilder;
 import com.godmonth.status.builder.transitor.JsonDefinitionBuilder;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
 import com.godmonth.status.executor.intf.OrderExecutor;
@@ -15,6 +16,7 @@ import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import com.godmonth.status.transitor.tx.impl.Merger;
 import com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl;
+import com.godmonth.status.transitor.tx.intf.StatusEntry;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,8 +30,6 @@ import org.springframework.transaction.support.TransactionOperations;
 import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -39,7 +39,7 @@ import java.util.function.Function;
  */
 @ComponentScan
 @Configuration
-public class SampleConfig {
+public class SampleOrderExecutorConfig {
 
 
     //多个执行器可以公用
@@ -60,15 +60,38 @@ public class SampleConfig {
     }
 
     @Bean
-    public TxStatusTransitor sampleStatusTxStatusTransitor(Merger merger, TransactionOperations transactionOperations, @Qualifier("sampleStatusStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, Optional<Map> statusEntryMap) {
-        return TxStatusTransitorImpl.builder().transactionOperations(transactionOperations).modelMerger(merger).statusTransitor(statusTransitor).modelAnalysis(modelAnalysis).statusEntryMap(statusEntryMap.orElse(null)).build();
+    public TxStatusTransitor sampleStatusTxStatusTransitor(Merger merger, TransactionOperations transactionOperations, @Qualifier("sampleStatusStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, @Qualifier("sampleStatusStatusEntryFunction") Function<SampleStatus, StatusEntry> entryFunction) {
+        return TxStatusTransitorImpl.builder().transactionOperations(transactionOperations).modelMerger(merger).statusTransitor(statusTransitor).modelAnalysis(modelAnalysis).statusFunction(entryFunction).build();
     }
 
+    /**
+     * 推进器可以根据需求灵活的定义
+     *
+     * @param beanFactory
+     * @param modelAnalysis
+     * @param txStatusTransitor
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @Bean
     public OrderExecutor<SampleModel, Void> sampleModelOrderExecutor(AutowireCapableBeanFactory beanFactory, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, @Qualifier("sampleStatusTxStatusTransitor") TxStatusTransitor txStatusTransitor) throws IOException, ClassNotFoundException {
-        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("").build();
+        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample2.advancer").build();
 
         return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(modelAnalysis).txStatusTransitor(txStatusTransitor).build();
     }
 
+    /**
+     * entry可以按照需求灵活的定义
+     *
+     * @param beanFactory
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    @Bean
+    public Function<SampleStatus, StatusEntry> sampleStatusStatusEntryFunction(AutowireCapableBeanFactory beanFactory) throws IOException, ClassNotFoundException {
+        Function<SampleStatus, StatusEntry> entryFunction = EntryFunctionBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample2.entry").statusClass(SampleStatus.class).build();
+        return entryFunction;
+    }
 }

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 /**
  * <p></p >
@@ -25,7 +24,7 @@ public class AdvancerFunctionBuilder {
 
 
     @Builder
-    private static Function<Object, StatusAdvancer> build(String packageName, Class modelClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Supplier<List<StatusAdvancer>> advancerSupplier) throws IOException, ClassNotFoundException {
+    private static Function<Object, StatusAdvancer> build(String packageName, Class modelClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, List<StatusAdvancer> advancers) throws IOException, ClassNotFoundException {
         Map<Object, StatusAdvancer> map = new HashMap<>();
         ClassPath from = ClassPath.from(ClassLoader.getSystemClassLoader());
         ImmutableSet<ClassPath.ClassInfo> topLevelClasses = from.getTopLevelClassesRecursive(packageName);
@@ -43,8 +42,8 @@ public class AdvancerFunctionBuilder {
                 }
             }
         }
-        if (advancerSupplier != null && advancerSupplier.get() != null) {
-            for (StatusAdvancer statusAdvancer : advancerSupplier.get()) {
+        if (advancers != null) {
+            for (StatusAdvancer statusAdvancer : advancers) {
                 map.put(statusAdvancer.getKey(), statusAdvancer);
             }
         }

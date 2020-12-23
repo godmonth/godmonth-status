@@ -12,15 +12,14 @@ import java.util.function.Predicate;
 /**
  * @param <MODEL>
  */
+@Setter
+@Getter
 public class SimpleBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
-    @Setter
+
     protected Class<MODEL> modelClass;
 
-    @Setter
-    @Getter
     protected String statusPropertyName;
 
-    @Setter
     protected List<Predicate<MODEL>> predicateList;
 
     @Override

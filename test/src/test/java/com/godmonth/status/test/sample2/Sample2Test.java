@@ -19,7 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan
 @AutoConfigureDataJpa
-@SpringBootTest(classes = {RepoConfig.class, SampleConfig.class})
+@SpringBootTest(classes = {RepoConfig.class, SampleOrderExecutorConfig.class})
 @EnableAutoConfiguration
 public class Sample2Test {
     @Autowired

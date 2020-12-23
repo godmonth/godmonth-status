@@ -15,8 +15,7 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionOperations;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.function.Function;
 
 @Slf4j
 @Builder
@@ -35,7 +34,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     private StatusTransitor<STATUS, TRIGGER> statusTransitor;
 
     @Setter
-    private Map<STATUS, StatusEntry<MODEL, Object>> statusEntryMap = Collections.emptyMap();
+    private Function<STATUS, StatusEntry<MODEL, Object>> statusFunction;
 
     @Setter
     private Merger<MODEL> modelMerger;
@@ -70,8 +69,11 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     protected void afterChange(TransitedResult<MODEL, Object> transitedResult) {
         STATUS status = modelAnalysis.getStatus(transitedResult.getModel());
         Validate.notNull(status, "status is null");
-        if (statusEntryMap.get(status) != null) {
-            statusEntryMap.get(status).nextStatusEntry(transitedResult);
+        if (statusFunction != null) {
+            StatusEntry<MODEL, Object> statusEntry = statusFunction.apply(status);
+            if (statusEntry != null) {
+                statusEntry.nextStatusEntry(transitedResult);
+            }
         }
     }
 }
