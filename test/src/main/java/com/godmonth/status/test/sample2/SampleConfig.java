@@ -40,20 +40,23 @@ import java.util.function.Function;
 @ComponentScan
 @Configuration
 public class SampleConfig {
-    @Bean
-    public ModelAnalysis<SampleModel> sampleModelModelAnalysis() {
-        return AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build())).build();
-    }
 
+
+    //多个执行器可以公用
     @Bean
     public Merger merger(EntityManager entityManager) {
         return entityManager::merge;
     }
 
     @Bean
+    public ModelAnalysis<SampleModel> sampleModelModelAnalysis() {
+        return AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build())).build();
+    }
+
+    @Bean
     public StatusTransitor<SampleStatus, SampleTrigger> sampleStatusStatusTransitor(@Value("classpath:/sample-status.json") Resource configResource) throws IOException {
-        Map<SampleStatus, Map<SampleTrigger, SampleStatus>> map = JsonDefinitionBuilder.<SampleStatus, SampleTrigger>builder().resource(configResource).statusClass(SampleStatus.class).triggerClass(SampleTrigger.class).build();
-        return new SimpleStatusTransitor(map);
+        Function<SampleStatus, Function<SampleTrigger, SampleStatus>> function = JsonDefinitionBuilder.<SampleStatus, SampleTrigger>builder().resource(configResource).statusClass(SampleStatus.class).triggerClass(SampleTrigger.class).build();
+        return new SimpleStatusTransitor(function);
     }
 
     @Bean

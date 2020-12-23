@@ -4,20 +4,20 @@ import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-import java.util.Map;
+import java.util.function.Function;
 
 @Builder
 @AllArgsConstructor
 public class SimpleStatusTransitor<STATUS, TRIGGER> implements StatusTransitor<STATUS, TRIGGER> {
-    private final Map<STATUS, Map<TRIGGER, STATUS>> config;
+    private final Function<STATUS, Function<TRIGGER, STATUS>> config;
 
     @Override
     public STATUS transit(STATUS status, TRIGGER trigger) {
-        Map<TRIGGER, STATUS> triggerBehavior = config.get(status);
+        Function<TRIGGER, STATUS> triggerBehavior = config.apply(status);
         if (triggerBehavior == null) {
             throw new IllegalStateException("status not found:" + status);
         }
-        STATUS nextStatus = triggerBehavior.get(trigger);
+        STATUS nextStatus = triggerBehavior.apply(trigger);
         if (nextStatus == null) {
             throw new IllegalArgumentException("status:" + status + ", trigger not found:" + trigger);
         }

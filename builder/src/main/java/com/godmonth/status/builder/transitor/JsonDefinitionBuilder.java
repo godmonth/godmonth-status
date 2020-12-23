@@ -14,12 +14,13 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 
 public class JsonDefinitionBuilder {
 
     @Builder
-    private static <STATUS, TRIGGER> Map<STATUS, Map<TRIGGER, STATUS>> build(Class<STATUS> statusClass, Class<TRIGGER> triggerClass, String jsonString, Resource resource) throws IOException {
+    private static <STATUS, TRIGGER> Function<STATUS, Function<TRIGGER, STATUS>> build(Class<STATUS> statusClass, Class<TRIGGER> triggerClass, String jsonString, Resource resource) throws IOException {
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         JavaType javaType = typeFactory.constructParametricType(StatusMachineDefinition.class, statusClass, triggerClass);
         CollectionType collectionType = typeFactory.constructCollectionType(List.class, javaType);
@@ -33,7 +34,7 @@ public class JsonDefinitionBuilder {
             }
         }
 
-        Map<STATUS, Map<TRIGGER, STATUS>> statusConfigs = new HashMap<>();
+        Map<STATUS, Function<TRIGGER, STATUS>> statusConfigs = new HashMap<>();
 
         for (StatusMachineDefinition<STATUS, TRIGGER> statusDefinition : statusDefinitions) {
             Validate.notNull(statusDefinition.getStatus(), "status is null");
@@ -44,9 +45,9 @@ public class JsonDefinitionBuilder {
                 Validate.notNull(triggerDefinition.getNextStatus(), "nextStatus is null");
                 triggerConfig.put(triggerDefinition.getTrigger(), triggerDefinition.getNextStatus());
             }
-            statusConfigs.put(statusDefinition.getStatus(), triggerConfig);
+            statusConfigs.put(statusDefinition.getStatus(), triggerConfig::get);
         }
-        return statusConfigs;
+        return statusConfigs::get;
     }
 
 
