@@ -14,7 +14,9 @@ public class PayAdvancer extends AbstractAdvancer<SampleModel, String, SampleTri
     {
         availableStatus = SampleStatus.CREATED;
     }
-
+    public PayAdvancer(){
+        System.out.println("ok");
+    }
     @Override
     public AdvancedResult<SampleModel, SampleTrigger> advance(SampleModel model, String instruction, Object message)
             throws IllegalStateException {

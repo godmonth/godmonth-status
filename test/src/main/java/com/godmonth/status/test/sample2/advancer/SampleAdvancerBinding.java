@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  *
  * @author shenyue
  */
-@Advancer(modelClass = SampleModel.class, typeFieldName = "type", typeFieldValue = "test")
+@Advancer(modelClass = SampleModel.class, subType = "test")
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
