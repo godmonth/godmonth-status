@@ -15,11 +15,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Function;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
     @Setter
-    private Map<?, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
+    private Function<Object, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
 
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
@@ -63,10 +63,10 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 
             StatusAdvancer<MODEL, INST, TRIGGER> advancer = null;
             if (instruction != null) {
-                advancer = advancerMappings.get(Pair.of(status, instruction));
+                advancer = advancerMappings.apply(Pair.of(status, instruction));
             }
             if (advancer == null) {
-                advancer = advancerMappings.get(status);
+                advancer = advancerMappings.apply(status);
             }
             logger.trace("advancer:{}", advancer);
             if (advancer == null) {

@@ -10,9 +10,11 @@ import org.springframework.core.annotation.AnnotationUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * <p></p >
@@ -23,7 +25,7 @@ public class AdvancerFunctionBuilder {
 
 
     @Builder
-    public static Function<Object, StatusAdvancer> build(String packageName, Class modelClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory) throws IOException, ClassNotFoundException {
+    private static Function<Object, StatusAdvancer> build(String packageName, Class modelClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Supplier<List<StatusAdvancer>> advancerSupplier) throws IOException, ClassNotFoundException {
         Map<Object, StatusAdvancer> map = new HashMap<>();
         ClassPath from = ClassPath.from(ClassLoader.getSystemClassLoader());
         ImmutableSet<ClassPath.ClassInfo> topLevelClasses = from.getTopLevelClassesRecursive(packageName);
@@ -39,6 +41,11 @@ public class AdvancerFunctionBuilder {
                 if (statusAdvancer != null) {
                     map.put(statusAdvancer.getKey(), statusAdvancer);
                 }
+            }
+        }
+        if (advancerSupplier != null && advancerSupplier.get() != null) {
+            for (StatusAdvancer statusAdvancer : advancerSupplier.get()) {
+                map.put(statusAdvancer.getKey(), statusAdvancer);
             }
         }
         return map::get;
