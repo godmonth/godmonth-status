@@ -12,6 +12,7 @@ import com.godmonth.status.test.sample.machine.advancer.PayAdvancer;
 import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
 import com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl;
+import com.godmonth.status.transitor.tx.intf.StatusEntry;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -50,14 +51,15 @@ public class DefaultOrderExecutorTest2 {
 
         txStatusTransitor.setStatusTransitor(statusTransitor);
         txStatusTransitor.setModelAnalysis(analysis);
-        txStatusTransitor.setStatusEntryMap(Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print));
+        Map<SampleStatus, StatusEntry> sampleStatusStatusEntryMap = Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print);
+        txStatusTransitor.setStatusFunction(sampleStatusStatusEntryMap::get);
         txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
         txStatusTransitor.setTransactionOperations(TransactionOperations.withoutTransaction());
         defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
     }
 
-    private static void print(TransitedResult<SampleModel, ?> sampleStatus) {
-        logger.debug("sampleStatus:{}", sampleStatus);
+    private static void print(TransitedResult<SampleModel, ?> transitedResult) {
+        logger.debug("transitedResult:{}", transitedResult);
     }
 
     @Test
