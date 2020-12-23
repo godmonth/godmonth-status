@@ -23,8 +23,7 @@
           p:advancerMappings-ref="sampleModelAdvancerMappings" p:txStatusTransitor-ref="sampleModelStatusTransitor"
           p:modelAnalysis-ref="sampleModelAnalysis"/>
 
-    <bean id="sampleModelAdvancerMappings"
-          class="com.godmonth.util.collections.List2MapFactoryBean"
+    <bean id="sampleModelAdvancerMappings" class="com.godmonth.util.collections.List2MapFactoryBean"
           p:propertyPath="key">
         <property name="sourceList">
             <list value-type="java.lang.Object">

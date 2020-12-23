@@ -5,14 +5,17 @@ import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class SampleConfigMap {
-	public static final Map<SampleStatus, Map<SampleTrigger, SampleStatus>> INSTANCE;
-	static {
-		Map<SampleTrigger, SampleStatus> payTriggerConfig = new HashMap<>();
-		payTriggerConfig.put(SampleTrigger.PAY, SampleStatus.PAID);
+    public static final Function<SampleStatus, Function<SampleTrigger, SampleStatus>> INSTANCE;
 
-		INSTANCE = new HashMap<SampleStatus, Map<SampleTrigger, SampleStatus>>();
-		INSTANCE.put(SampleStatus.CREATED, payTriggerConfig);
-	}
+    static {
+        Map<SampleTrigger, SampleStatus> payTriggerConfig = new HashMap<>();
+        payTriggerConfig.put(SampleTrigger.PAY, SampleStatus.PAID);
+
+        Map<SampleStatus, Function<SampleTrigger, SampleStatus>> map = new HashMap<SampleStatus, Function<SampleTrigger, SampleStatus>>();
+        map.put(SampleStatus.CREATED, payTriggerConfig::get);
+        INSTANCE = map::get;
+    }
 }

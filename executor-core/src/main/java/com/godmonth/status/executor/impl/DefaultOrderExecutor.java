@@ -15,6 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,17 +30,18 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
     @Setter
-    private Function<Object, StatusAdvancer<MODEL, INST, TRIGGER>> advancerMappings;
-
+    private Function<Object, StatusAdvancer<MODEL, INST, TRIGGER>> advancerFunctions;
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
-
     @Builder.Default
     @Setter
     private ExecutorService executorService = Executors.newCachedThreadPool();
-
     @Setter
     private ModelAnalysis<MODEL> modelAnalysis;
+
+    public void setAdvancerMappings(Map<Object, StatusAdvancer<MODEL, INST, TRIGGER>> map) {
+        advancerFunctions = map::get;
+    }
 
     @Override
     public Future<SyncResult<MODEL, ?>> executeAsync(final MODEL model, final INST instruction, final Object message) {
@@ -63,10 +65,10 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 
             StatusAdvancer<MODEL, INST, TRIGGER> advancer = null;
             if (instruction != null) {
-                advancer = advancerMappings.apply(Pair.of(status, instruction));
+                advancer = advancerFunctions.apply(Pair.of(status, instruction));
             }
             if (advancer == null) {
-                advancer = advancerMappings.apply(status);
+                advancer = advancerFunctions.apply(status);
             }
             logger.trace("advancer:{}", advancer);
             if (advancer == null) {

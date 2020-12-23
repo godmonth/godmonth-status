@@ -41,7 +41,7 @@ public class DefaultOrderExecutorTest2 {
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
         advancers.put(SampleStatus.CREATED, new PayAdvancer());
         advancers.put(SampleStatus.PAID, new CheckAdvancer());
-        defaultOrderExecutor.setAdvancerMappings(advancers);
+        defaultOrderExecutor.setAdvancerFunctions(advancers::get);
         TxStatusTransitorImpl<SampleModel, SampleStatus, SampleTrigger> txStatusTransitor = new TxStatusTransitorImpl<>();
 
 
