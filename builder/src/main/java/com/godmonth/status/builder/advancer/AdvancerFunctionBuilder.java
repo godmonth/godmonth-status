@@ -31,16 +31,19 @@ public class AdvancerFunctionBuilder {
 
         for (ClassPath.ClassInfo topLevelClass : topLevelClasses) {
             Class<?> aClass = Class.forName(topLevelClass.getName());
-            Advancer annotation = AnnotationUtils.findAnnotation(aClass, Advancer.class);
-            if (annotation != null && modelClass.equals(annotation.modelClass())) {
-                if (predicate != null && !predicate.test(aClass)) {
-                    continue;
-                }
-                StatusAdvancer statusAdvancer = (StatusAdvancer) autowireCapableBeanFactory.autowire(aClass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
-                if (statusAdvancer != null) {
-                    map.put(statusAdvancer.getKey(), statusAdvancer);
+            if (StatusAdvancer.class.isAssignableFrom(aClass)) {
+                Advancer annotation = AnnotationUtils.findAnnotation(aClass, Advancer.class);
+                if (annotation != null && modelClass.equals(annotation.modelClass())) {
+                    if (predicate != null && !predicate.test(aClass)) {
+                        continue;
+                    }
+                    StatusAdvancer statusAdvancer = (StatusAdvancer) autowireCapableBeanFactory.autowire(aClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
+                    if (statusAdvancer != null) {
+                        map.put(statusAdvancer.getKey(), statusAdvancer);
+                    }
                 }
             }
+
         }
         if (advancers != null) {
             for (StatusAdvancer statusAdvancer : advancers) {

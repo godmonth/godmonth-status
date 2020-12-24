@@ -52,7 +52,7 @@ public class DefaultOrderExecutorTest2 {
         txStatusTransitor.setStatusTransitor(statusTransitor);
         txStatusTransitor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusEntry> sampleStatusStatusEntryMap = Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print);
-        txStatusTransitor.setStatusFunction(sampleStatusStatusEntryMap::get);
+        txStatusTransitor.setStatusEntryFunction(sampleStatusStatusEntryMap::get);
         txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
         txStatusTransitor.setTransactionOperations(TransactionOperations.withoutTransaction());
         defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);

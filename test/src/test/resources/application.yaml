@@ -9,3 +9,5 @@ spring:
         format_sql: false
         show_sql: false
         ddl-auto: create
+aaa:
+  bbb: ccc

@@ -30,7 +30,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
     @Setter
-    private Function<Object, StatusAdvancer<MODEL, INST, TRIGGER>> advancerFunctions;
+    private Function<Object, StatusAdvancer> advancerFunctions;
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
     @Builder.Default
