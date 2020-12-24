@@ -1,10 +1,11 @@
 package com.godmonth.status.test.sample2;
 
-import com.godmonth.status.analysis.intf.ModelAnalysis;
+import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.OrderExecutor;
 import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.repo.RepoConfig;
-import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
+import com.godmonth.status.test.sample.repo.SampleModelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -22,17 +23,20 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootTest(classes = {RepoConfig.class, SampleOrderExecutorConfig.class})
 @EnableAutoConfiguration
 public class Sample2Test {
-    @Autowired
-    private ModelAnalysis<SampleModel> sampleModelModelAnalysis;
 
     @Autowired
-    private TxStatusTransitor sampleStatusTxStatusTransitor;
+    private OrderExecutor<SampleModel, String> sampleModelOrderExecutor;
 
     @Autowired
-    private OrderExecutor<SampleModel, Void> sampleModelOrderExecutor;
+    private SampleModelRepository sampleModelRepository;
 
     @Test
     void name() {
-        System.out.println(sampleModelOrderExecutor);
+        SampleModel sampleModel = new SampleModel();
+        sampleModel.setStatus(SampleStatus.CREATED);
+        sampleModel.setType("test");
+        SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
+        SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(sampleModel1, "eee", "fff");
+        System.out.println(execute);
     }
 }
