@@ -21,22 +21,18 @@ import java.util.function.Function;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
         implements TxStatusTransitor<MODEL, TRIGGER> {
 
-    @Setter
     protected ModelAnalysis<MODEL> modelAnalysis;
 
-    @Setter
     private TransactionOperations transactionOperations;
 
-    @Setter
     private StatusTransitor<STATUS, TRIGGER> statusTransitor;
 
-    @Setter
-    private Function<STATUS, StatusEntry<MODEL, Object>> statusFunction;
+    private Function<STATUS, StatusEntry<MODEL, Object>> statusEntryFunction;
 
-    @Setter
     private Merger<MODEL> modelMerger;
 
     @Override
@@ -69,8 +65,8 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     protected void afterChange(TransitedResult<MODEL, Object> transitedResult) {
         STATUS status = modelAnalysis.getStatus(transitedResult.getModel());
         Validate.notNull(status, "status is null");
-        if (statusFunction != null) {
-            StatusEntry<MODEL, Object> statusEntry = statusFunction.apply(status);
+        if (statusEntryFunction != null) {
+            StatusEntry<MODEL, Object> statusEntry = statusEntryFunction.apply(status);
             if (statusEntry != null) {
                 statusEntry.nextStatusEntry(transitedResult);
             }
