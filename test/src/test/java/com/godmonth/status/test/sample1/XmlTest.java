@@ -1,4 +1,4 @@
-package com.godmonth.status.test.xmltest;
+package com.godmonth.status.test.sample1;
 
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.OrderExecutor;
