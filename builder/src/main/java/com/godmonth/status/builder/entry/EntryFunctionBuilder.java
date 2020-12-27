@@ -5,12 +5,14 @@ import com.godmonth.status.transitor.tx.intf.StatusEntry;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import lombok.Builder;
+import lombok.Singular;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -21,7 +23,7 @@ import java.util.function.Predicate;
  */
 public class EntryFunctionBuilder {
     @Builder
-    private static <STATUS> Function<STATUS, StatusEntry> build(String[] packageNames, Class statusClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Map<STATUS, StatusEntry> entryMap) throws IOException, ClassNotFoundException {
+    private static <STATUS> Function<STATUS, StatusEntry> build(@Singular Set<String> packageNames, Class statusClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Map<STATUS, StatusEntry> entryMap) throws IOException, ClassNotFoundException {
         Map<Object, StatusEntry> map = new HashMap<>();
         ClassPath from = ClassPath.from(ClassLoader.getSystemClassLoader());
         if (packageNames != null) {
