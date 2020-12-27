@@ -18,7 +18,6 @@
     <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis"
           p:modelClass="com.godmonth.status.test.sample.domain.SampleModel"/>
 
-
     <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
           p:advancerMappings-ref="sampleModelAdvancerMappings" p:txStatusTransitor-ref="sampleModelStatusTransitor"
           p:modelAnalysis-ref="sampleModelAnalysis"/>
