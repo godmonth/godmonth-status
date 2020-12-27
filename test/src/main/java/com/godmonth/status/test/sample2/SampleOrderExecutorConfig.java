@@ -76,8 +76,7 @@ public class SampleOrderExecutorConfig {
      */
     @Bean
     public OrderExecutor<SampleModel, String> sampleModelOrderExecutor(AutowireCapableBeanFactory beanFactory, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, @Qualifier("sampleStatusTxStatusTransitor") TxStatusTransitor txStatusTransitor) throws IOException, ClassNotFoundException {
-        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample2.advancer").build();
-
+        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageNames(new String[]{"com.godmonth.status.test.sample2.advancer"}).build();
         return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(modelAnalysis).advancerFunctions(function).
                 txStatusTransitor(txStatusTransitor).build();
     }
@@ -92,7 +91,7 @@ public class SampleOrderExecutorConfig {
      */
     @Bean
     public Function<SampleStatus, StatusEntry> sampleStatusStatusEntryFunction(AutowireCapableBeanFactory beanFactory) throws IOException, ClassNotFoundException {
-        Function<SampleStatus, StatusEntry> entryFunction = EntryFunctionBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample2.entry").statusClass(SampleStatus.class).build();
+        Function<SampleStatus, StatusEntry> entryFunction = EntryFunctionBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageNames(new String[]{"com.godmonth.status.test.sample2.entry"}).statusClass(SampleStatus.class).build();
         return entryFunction;
     }
 }
