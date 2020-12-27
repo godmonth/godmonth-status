@@ -15,6 +15,6 @@ import com.godmonth.status.transitor.tx.intf.TransitedResult;
 public class EchoStatusEntry2 implements StatusEntry<SampleModel, Void> {
     @Override
     public void nextStatusEntry(TransitedResult<SampleModel, Void> transitedResult) {
-        System.out.println(transitedResult.getModel());
+        System.out.println("echo:" + transitedResult.getModel());
     }
 }
