@@ -27,24 +27,26 @@ public class AdvancerFunctionBuilder {
     private static Function<Object, StatusAdvancer> build(String[] packageNames, Class modelClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, List<StatusAdvancer> advancers) throws IOException, ClassNotFoundException {
         Map<Object, StatusAdvancer> map = new HashMap<>();
         ClassPath from = ClassPath.from(ClassLoader.getSystemClassLoader());
-        for (String packageName : packageNames) {
-            ImmutableSet<ClassPath.ClassInfo> topLevelClasses = from.getTopLevelClassesRecursive(packageName);
+        if (packageNames != null) {
+            for (String packageName : packageNames) {
+                ImmutableSet<ClassPath.ClassInfo> topLevelClasses = from.getTopLevelClassesRecursive(packageName);
 
-            for (ClassPath.ClassInfo topLevelClass : topLevelClasses) {
-                Class<?> aClass = Class.forName(topLevelClass.getName());
-                if (StatusAdvancer.class.isAssignableFrom(aClass)) {
-                    Advancer annotation = AnnotationUtils.findAnnotation(aClass, Advancer.class);
-                    if (annotation != null && modelClass.equals(annotation.modelClass())) {
-                        if (predicate != null && !predicate.test(aClass)) {
-                            continue;
-                        }
-                        StatusAdvancer statusAdvancer = (StatusAdvancer) autowireCapableBeanFactory.autowire(aClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
-                        if (statusAdvancer != null) {
-                            map.put(statusAdvancer.getKey(), statusAdvancer);
+                for (ClassPath.ClassInfo topLevelClass : topLevelClasses) {
+                    Class<?> aClass = Class.forName(topLevelClass.getName());
+                    if (StatusAdvancer.class.isAssignableFrom(aClass)) {
+                        Advancer annotation = AnnotationUtils.findAnnotation(aClass, Advancer.class);
+                        if (annotation != null && modelClass.equals(annotation.modelClass())) {
+                            if (predicate != null && !predicate.test(aClass)) {
+                                continue;
+                            }
+                            StatusAdvancer statusAdvancer = (StatusAdvancer) autowireCapableBeanFactory.autowire(aClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
+                            if (statusAdvancer != null) {
+                                map.put(statusAdvancer.getKey(), statusAdvancer);
+                            }
                         }
                     }
-                }
 
+                }
             }
         }
         if (advancers != null) {
