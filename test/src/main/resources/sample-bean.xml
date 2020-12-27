@@ -58,7 +58,7 @@
                         <entry>
                             <key>
                                 <util:constant
-                                        static-field="com.godmonth.status.test.sample.domain.SampleStatus.CREATED"/>
+                                        static-field="com.godmonth.status.test.sample.domain.SampleStatus.PAID"/>
                             </key>
                             <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
                         </entry>

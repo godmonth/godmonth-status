@@ -11,6 +11,9 @@
     <logger name="status">
         <level value="trace"/>
     </logger>
+    <logger name="com.godmonth.status">
+        <level value="trace"/>
+    </logger>
     <root>
         <level value="warn"/>
         <appender-ref ref="STDOUT"/>
