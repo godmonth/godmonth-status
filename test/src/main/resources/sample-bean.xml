@@ -16,7 +16,7 @@
 -->
 
     <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis"
-          p:modelClass="SampleModel"/>
+          p:modelClass="com.godmonth.status.test.sample.domain.SampleModel"/>
 
     <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
           p:advancerMappings-ref="sampleModelAdvancerMappings" p:txStatusTransitor-ref="sampleModelStatusTransitor"
@@ -45,7 +45,7 @@
             <bean class="com.godmonth.status.transitor.core.impl.SimpleStatusTransitor">
                 <constructor-arg>
                     <bean class="com.godmonth.status.builder.transitor.JsonDefinitionFactoryBean"
-                          p:statusClass="SampleStatus"
+                          p:statusClass="com.godmonth.status.test.sample.domain.SampleStatus"
                           p:triggerClass="com.godmonth.status.test.sample.machine.trigger.SampleTrigger"
                           p:resource="classpath:/sample-status.json"/>
                 </constructor-arg>
@@ -58,7 +58,7 @@
                         <entry>
                             <key>
                                 <util:constant
-                                        static-field="SampleStatus.PAID"/>
+                                        static-field="com.godmonth.status.test.sample.domain.SampleStatus.PAID"/>
                             </key>
                             <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
                         </entry>
