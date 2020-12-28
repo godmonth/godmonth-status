@@ -1,7 +1,7 @@
 package com.godmonth.status.test.sample.machine.advancer2;
 
 import com.godmonth.status.annotations.Advancer;
-import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.sample.domain.SampleModel;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

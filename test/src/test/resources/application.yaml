@@ -9,5 +9,16 @@ spring:
         format_sql: false
         show_sql: false
         ddl-auto: create
+
+#  db2:
+#    datasource:
+#      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#      url: jdbc:log4jdbc:h2:mem:testdb1
+#  db3:
+#    datasource:
+#      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#      url: jdbc:log4jdbc:h2:mem:testdb2
 aaa:
   bbb: ccc
+
+

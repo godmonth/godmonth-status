@@ -1,12 +1,12 @@
-package com.godmonth.status.test.executor;
+package com.godmonth.status.test.sample.executor;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
-import com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis;
+import com.godmonth.status.analysis.impl.SimpleBeanModelAnalysis;
 import com.godmonth.status.analysis.impl.TypeFieldPredicate;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
-import com.godmonth.status.test.sample.domain.SampleModel;
-import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.machine.advancer.CheckAdvancer;
 import com.godmonth.status.test.sample.machine.advancer.PayAdvancer;
 import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
@@ -27,38 +27,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class DefaultOrderExecutorTest2 {
+public class DefaultOrderExecutorTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest2.class);
+    private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest.class);
 
     private static DefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor;
 
     @BeforeAll
     public static void prepare() {
-        defaultOrderExecutor = new DefaultOrderExecutor<>();
+        SimpleBeanModelAnalysis<SampleModel> analysis = new SimpleBeanModelAnalysis<>();
+        analysis.setStatusPropertyName("status");
+        analysis.setModelClass(SampleModel.class);
         TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build();
-        AnnotationBeanModelAnalysis analysis = AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(typeFieldPredicate)).build();
+        analysis.setPredicateList(Arrays.asList(typeFieldPredicate));
+        defaultOrderExecutor = new DefaultOrderExecutor<>();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
         advancers.put(SampleStatus.CREATED, new PayAdvancer());
         advancers.put(SampleStatus.PAID, new CheckAdvancer());
         defaultOrderExecutor.setAdvancerFunctions(advancers::get);
+
         TxStatusTransitorImpl<SampleModel, SampleStatus, SampleTrigger> txStatusTransitor = new TxStatusTransitorImpl<>();
-
-
         SimpleStatusTransitor<SampleStatus, SampleTrigger> statusTransitor = new SimpleStatusTransitor<>(
                 SampleConfigMap.INSTANCE);
 
         txStatusTransitor.setStatusTransitor(statusTransitor);
         txStatusTransitor.setModelAnalysis(analysis);
-        Map<SampleStatus, StatusEntry> sampleStatusStatusEntryMap = Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest2::print);
+        Map<SampleStatus, StatusEntry> sampleStatusStatusEntryMap = Collections.singletonMap(SampleStatus.PAID, DefaultOrderExecutorTest::print);
         txStatusTransitor.setStatusEntryFunction(sampleStatusStatusEntryMap::get);
         txStatusTransitor.setModelMerger(sampleModel -> sampleModel);
         txStatusTransitor.setTransactionOperations(TransactionOperations.withoutTransaction());
         defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
+
     }
 
-    private static void print(TransitedResult<SampleModel, ?> transitedResult) {
+    private static void print(TransitedResult transitedResult) {
         logger.debug("transitedResult:{}", transitedResult);
     }
 

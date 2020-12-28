@@ -1,6 +1,6 @@
-package com.godmonth.status.test.sample.repo;
+package com.godmonth.status.test.sample.sample.repo;
 
-import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.sample.domain.SampleModel;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

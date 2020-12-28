@@ -1,7 +1,4 @@
-package com.godmonth.status.test.executor;
-
-import com.godmonth.status.test.sample.domain.SampleStatus;
-import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
+package com.godmonth.status.test.sample.sample.domain;
 
 import java.util.HashMap;
 import java.util.Map;

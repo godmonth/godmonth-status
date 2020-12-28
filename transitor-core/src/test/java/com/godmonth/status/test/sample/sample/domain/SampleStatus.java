@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample.domain;
+package com.godmonth.status.test.sample.sample.domain;
 
 import lombok.Getter;
 
