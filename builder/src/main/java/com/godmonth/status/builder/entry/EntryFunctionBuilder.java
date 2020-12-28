@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import lombok.Builder;
 import lombok.Singular;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -21,6 +22,7 @@ import java.util.function.Predicate;
  *
  * @author shenyue
  */
+@Slf4j
 public class EntryFunctionBuilder {
     @Builder
     private static <STATUS> Function<STATUS, StatusEntry> build(@Singular Set<String> packageNames, Class statusClass, Predicate<Class<?>> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Map<STATUS, StatusEntry> entryMap) throws IOException, ClassNotFoundException {
@@ -54,6 +56,7 @@ public class EntryFunctionBuilder {
         if (entryMap != null) {
             map.putAll(entryMap);
         }
+        log.debug("entryMap:{}", map);
         return map::get;
     }
 }
