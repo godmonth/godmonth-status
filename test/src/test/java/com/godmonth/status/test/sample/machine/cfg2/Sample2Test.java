@@ -2,10 +2,10 @@ package com.godmonth.status.test.sample.machine.cfg2;
 
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.OrderExecutor;
-import com.godmonth.status.test.sample.sample.domain.SampleModel;
-import com.godmonth.status.test.sample.sample.domain.SampleStatus;
-import com.godmonth.status.test.sample.sample.db1.RepoConfig;
-import com.godmonth.status.test.sample.sample.repo.SampleModelRepository;
+import com.godmonth.status.test.sample.domain.SampleModel;
+import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.db1.RepoConfig;
+import com.godmonth.status.test.sample.repo.SampleModelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

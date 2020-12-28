@@ -1,8 +1,8 @@
 package com.godmonth.status.transitor.core.impl;
 
-import com.godmonth.status.test.sample.sample.domain.SampleConfigMap;
-import com.godmonth.status.test.sample.sample.domain.SampleStatus;
-import com.godmonth.status.test.sample.sample.domain.SampleTrigger;
+import com.godmonth.status.test.sample.domain.SampleConfigMap;
+import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.domain.SampleTrigger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

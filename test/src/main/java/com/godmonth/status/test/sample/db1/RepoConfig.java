@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample.sample.db1;
+package com.godmonth.status.test.sample.db1;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

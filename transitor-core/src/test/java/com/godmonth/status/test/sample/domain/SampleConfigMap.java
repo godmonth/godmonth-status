@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample.sample.domain;
+package com.godmonth.status.test.sample.domain;
 
 import java.util.HashMap;
 import java.util.Map;

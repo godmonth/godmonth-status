@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample.sample.db2;
+package com.godmonth.status.test.sample.db2;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
