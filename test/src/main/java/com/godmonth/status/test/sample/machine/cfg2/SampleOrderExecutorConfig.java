@@ -9,9 +9,9 @@ import com.godmonth.status.builder.entry.EntryFunctionBuilder;
 import com.godmonth.status.builder.transitor.JsonDefinitionBuilder;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
 import com.godmonth.status.executor.intf.OrderExecutor;
-import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import com.godmonth.status.transitor.tx.impl.Merger;
@@ -76,7 +76,7 @@ public class SampleOrderExecutorConfig {
      */
     @Bean
     public OrderExecutor<SampleModel, String> sampleModelOrderExecutor(AutowireCapableBeanFactory beanFactory, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, @Qualifier("sampleStatusTxStatusTransitor") TxStatusTransitor txStatusTransitor) throws IOException, ClassNotFoundException {
-        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample2.advancer").build();
+        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample.machine.advancer2").build();
         return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(modelAnalysis).advancerFunctions(function).
                 txStatusTransitor(txStatusTransitor).build();
     }
@@ -91,7 +91,7 @@ public class SampleOrderExecutorConfig {
      */
     @Bean
     public Function<SampleStatus, StatusEntry> sampleStatusStatusEntryFunction(AutowireCapableBeanFactory beanFactory) throws IOException, ClassNotFoundException {
-        Function<SampleStatus, StatusEntry> entryFunction = EntryFunctionBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample2.entry").statusClass(SampleStatus.class).build();
+        Function<SampleStatus, StatusEntry> entryFunction = EntryFunctionBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample.machine.entry2").statusClass(SampleStatus.class).build();
         return entryFunction;
     }
 }

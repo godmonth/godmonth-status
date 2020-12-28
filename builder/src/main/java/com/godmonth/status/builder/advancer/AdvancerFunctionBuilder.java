@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import lombok.Builder;
 import lombok.Singular;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -22,6 +23,7 @@ import java.util.function.Predicate;
  *
  * @author shenyue
  */
+@Slf4j
 public class AdvancerFunctionBuilder {
 
 
@@ -56,6 +58,7 @@ public class AdvancerFunctionBuilder {
                 map.put(statusAdvancer.getKey(), statusAdvancer);
             }
         }
+        log.debug("advanceMap:{}", map);
         return map::get;
     }
 
