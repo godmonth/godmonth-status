@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample.machine.cfg2;
+package com.godmonth.status.test.sample.machine.cfg3;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis;
@@ -39,12 +39,12 @@ import java.util.function.Function;
  */
 @ComponentScan
 @Configuration
-public class SampleOrderExecutorConfig {
+public class SampleOrderExecutorConfig3 {
 
 
     //多个执行器可以公用
     @Bean
-    public Merger merger(EntityManager entityManager) {
+    public Merger merger2(@Qualifier("e2") EntityManager entityManager) {
         return entityManager::merge;
     }
 
@@ -60,7 +60,7 @@ public class SampleOrderExecutorConfig {
     }
 
     @Bean
-    public TxStatusTransitor sampleStatusTxStatusTransitor(Merger merger, TransactionOperations transactionOperations, @Qualifier("sampleStatusStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, @Qualifier("sampleStatusStatusEntryFunction") Function<SampleStatus, StatusEntry> entryFunction) {
+    public TxStatusTransitor sampleStatusTxStatusTransitor(@Qualifier("merger2") Merger merger, @Qualifier("tt2") TransactionOperations transactionOperations, @Qualifier("sampleStatusStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> modelAnalysis, @Qualifier("sampleStatusStatusEntryFunction") Function<SampleStatus, StatusEntry> entryFunction) {
         return TxStatusTransitorImpl.builder().transactionOperations(transactionOperations).modelMerger(merger).statusTransitor(statusTransitor).modelAnalysis(modelAnalysis).statusEntryFunction(entryFunction).build();
     }
 
