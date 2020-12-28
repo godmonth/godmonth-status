@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample2.advancer;
+package com.godmonth.status.test.sample.machine.advancer2;
 
 import com.godmonth.status.annotations.Advancer;
 import com.godmonth.status.test.sample.domain.SampleModel;

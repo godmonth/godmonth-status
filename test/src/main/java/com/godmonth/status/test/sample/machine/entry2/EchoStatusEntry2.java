@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample2.entry;
+package com.godmonth.status.test.sample.machine.entry2;
 
 import com.godmonth.status.annotations.StatusEntryBinding;
 import com.godmonth.status.test.sample.domain.SampleModel;

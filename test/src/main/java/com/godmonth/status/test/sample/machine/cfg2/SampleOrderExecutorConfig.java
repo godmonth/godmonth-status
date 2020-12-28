@@ -1,4 +1,4 @@
-package com.godmonth.status.test.sample2;
+package com.godmonth.status.test.sample.machine.cfg2;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis;
