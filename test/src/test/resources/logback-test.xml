@@ -6,7 +6,7 @@
         </layout>
     </appender>
     <logger name="jdbc.sqlonly">
-        <level value="info"/>
+        <level value="trace"/>
     </logger>
     <logger name="status">
         <level value="trace"/>
