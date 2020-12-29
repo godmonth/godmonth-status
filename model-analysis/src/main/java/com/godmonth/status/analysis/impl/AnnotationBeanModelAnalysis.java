@@ -2,11 +2,9 @@ package com.godmonth.status.analysis.impl;
 
 import com.godmonth.status.annotations.Status;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.Validate;
+import lombok.ToString;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
-import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Predicate;
@@ -16,27 +14,28 @@ import java.util.function.Predicate;
  *
  * @param <MODEL>
  */
-@NoArgsConstructor
+@ToString(callSuper = true)
 public class AnnotationBeanModelAnalysis<MODEL> extends SimpleBeanModelAnalysis<MODEL> {
 
-    @Builder
-    public AnnotationBeanModelAnalysis(Class<MODEL> modelClass, List<Predicate<MODEL>> predicateList) {
-        this.modelClass = modelClass;
-        this.predicateList = predicateList;
-        init();
+    public AnnotationBeanModelAnalysis(Class<MODEL> modelClass) {
+        this(modelClass, null);
     }
 
-    @PostConstruct
-    public void init() {
+    @Builder(builderMethodName = "annoBuilder")
+    public AnnotationBeanModelAnalysis(Class<MODEL> modelClass, List<Predicate<MODEL>> predicateList) {
+        super(modelClass, getStatusPropertyName(modelClass), predicateList);
+    }
+
+    private static String getStatusPropertyName(Class modelClass) {
         Field[] fields = FieldUtils.getAllFields(modelClass);
         for (Field field : fields) {
             Status annotation = field.getAnnotation(Status.class);
             if (annotation != null) {
-                statusPropertyName = field.getName();
-                break;
+                return field.getName();
             }
         }
-        Validate.notNull(statusPropertyName, "statusPropertyName is null.");
+        throw new IllegalArgumentException("statusPropertyName is null.");
     }
+
 
 }

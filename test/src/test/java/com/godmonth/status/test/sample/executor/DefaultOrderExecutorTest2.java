@@ -37,7 +37,7 @@ public class DefaultOrderExecutorTest2 {
     public static void prepare() {
         defaultOrderExecutor = new DefaultOrderExecutor<>();
         TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build();
-        AnnotationBeanModelAnalysis analysis = AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(typeFieldPredicate)).build();
+        AnnotationBeanModelAnalysis analysis = AnnotationBeanModelAnalysis.<SampleModel>annoBuilder().modelClass(SampleModel.class).predicateList(Arrays.asList(typeFieldPredicate)).build();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
         advancers.put(SampleStatus.CREATED, new PayAdvancer());

@@ -35,11 +35,8 @@ public class DefaultOrderExecutorTest {
 
     @BeforeAll
     public static void prepare() {
-        SimpleBeanModelAnalysis<SampleModel> analysis = new SimpleBeanModelAnalysis<>();
-        analysis.setStatusPropertyName("status");
-        analysis.setModelClass(SampleModel.class);
         TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build();
-        analysis.setPredicateList(Arrays.asList(typeFieldPredicate));
+        SimpleBeanModelAnalysis<SampleModel> analysis = new SimpleBeanModelAnalysis<>(SampleModel.class, "status", Arrays.asList(typeFieldPredicate));
         defaultOrderExecutor = new DefaultOrderExecutor<>();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();

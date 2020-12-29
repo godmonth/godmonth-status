@@ -16,12 +16,20 @@
 -->
 
     <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis"
-          p:modelClass="com.godmonth.status.test.sample.domain.SampleModel"/>
+          p:modelClass="com.godmonth.status.test.sample.domain.SampleModel" init-method="init"/>
 
     <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
-          p:advancerMappings-ref="sampleModelAdvancerMappings" p:txStatusTransitor-ref="sampleModelStatusTransitor"
-          p:modelAnalysis-ref="sampleModelAnalysis"/>
-
+          p:txStatusTransitor-ref="sampleModelStatusTransitor"
+          p:modelAnalysis-ref="sampleModelAnalysis">
+        <property name="advancerFunctions">
+            <bean class="com.google.common.base.Functions" factory-method="forMap">
+                <constructor-arg ref="sampleModelAdvancerMappings"/>
+                <constructor-arg>
+                    <null/>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
     <bean id="sampleModelAdvancerMappings" class="com.godmonth.util.collections.List2MapFactoryBean"
           p:propertyPath="key">
         <property name="sourceList">
