@@ -2,7 +2,6 @@ package com.godmonth.status.test.sample.db2;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
@@ -21,7 +20,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Map;
@@ -46,7 +44,6 @@ public class RepoConfig2 {
         EntityManagerFactoryBuilder builder = new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties.getProperties(), null);
         HibernateProperties hibernateProperties = new HibernateProperties();
         Map<String, Object> properties = hibernateProperties.determineHibernateProperties(jpaProperties.getProperties(), new HibernateSettings());
-//        properties.put("hibernate.hbm2ddl.auto", "create");
         LocalContainerEntityManagerFactoryBean build = builder.dataSource(userDataSource).properties(properties).packages("com.godmonth.status.test.sample.domain").build();
         return build;
     }
