@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.godmonth.status.analysis.intf.StateMachineAnalysis;
 import lombok.Builder;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.core.io.Resource;
 
@@ -19,20 +19,19 @@ import java.util.function.Function;
 
 public class JsonDefinitionBuilder {
 
-
     @Builder
-    private static <STATUS, TRIGGER> Function<STATUS, Function<TRIGGER, STATUS>> build(Class<STATUS> statusClass, Class<TRIGGER> triggerClass, String jsonString, Resource resource) throws IOException {
+    private static <STATUS, TRIGGER> Function<STATUS, Function<TRIGGER, STATUS>> build(StateMachineAnalysis stateMachineAnalysis, Resource resource) throws IOException {
+        return build1(stateMachineAnalysis.getModelAnalysis().getStatusClass(), stateMachineAnalysis.getTriggerClass(), resource);
+    }
+
+    private static <STATUS, TRIGGER> Function<STATUS, Function<TRIGGER, STATUS>> build1(Class<STATUS> statusClass, Class<TRIGGER> triggerClass, Resource resource) throws IOException {
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         JavaType javaType = typeFactory.constructParametricType(StatusMachineDefinition.class, statusClass, triggerClass);
         CollectionType collectionType = typeFactory.constructCollectionType(List.class, javaType);
         List<StatusMachineDefinition> statusDefinitions = null;
         ObjectMapper objectMapper = new ObjectMapper();
-        if (StringUtils.isNotBlank(jsonString)) {
-            statusDefinitions = objectMapper.readValue(jsonString, collectionType);
-        } else {
-            try (InputStream inputStream = resource.getInputStream()) {
-                statusDefinitions = objectMapper.readValue(inputStream, collectionType);
-            }
+        try (InputStream inputStream = resource.getInputStream()) {
+            statusDefinitions = objectMapper.readValue(inputStream, collectionType);
         }
 
         Map<STATUS, Function<TRIGGER, STATUS>> statusConfigs = new HashMap<>();

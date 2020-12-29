@@ -1,5 +1,6 @@
 package com.godmonth.status.builder.transitor;
 
+import com.godmonth.status.analysis.intf.StateMachineAnalysis;
 import lombok.Setter;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.core.io.Resource;
@@ -8,15 +9,13 @@ import java.util.function.Function;
 
 @Setter
 public class JsonDefinitionFactoryBean<STATUS, TRIGGER> implements FactoryBean<Function<STATUS, Function<TRIGGER, STATUS>>> {
-    private Class<STATUS> statusClass;
-    private Class<TRIGGER> triggerClass;
-    private String jsonString;
+    private StateMachineAnalysis stateMachineAnalysis;
     private Resource resource;
 
 
     @Override
     public Function<STATUS, Function<TRIGGER, STATUS>> getObject() throws Exception {
-        return JsonDefinitionBuilder.<STATUS, TRIGGER>builder().statusClass(statusClass).triggerClass(triggerClass).jsonString(jsonString).resource(resource).build();
+        return JsonDefinitionBuilder.<STATUS, TRIGGER>builder().stateMachineAnalysis(stateMachineAnalysis).resource(resource).build();
     }
 
     @Override

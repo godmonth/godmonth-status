@@ -5,7 +5,7 @@ package com.godmonth.status.analysis.intf;
  *
  * @author shenyue
  */
-public interface StatusMachineAnalysis {
+public interface StateMachineAnalysis {
     ModelAnalysis getModelAnalysis();
 
     Class getTriggerClass();

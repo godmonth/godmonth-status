@@ -1,4 +1,4 @@
-package com.godmonth.status.analysis.impl;
+package com.godmonth.status.analysis.impl.model;
 
 import com.godmonth.status.analysis.intf.ModelAnalysis;
 import org.apache.commons.lang3.AnnotationUtils;

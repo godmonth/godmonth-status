@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class Abc {
     @Status
-    private String abc;
+    private AbcStatus abc;
 }

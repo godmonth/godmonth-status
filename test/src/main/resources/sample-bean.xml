@@ -2,25 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <!--不使用-->
-    <!--  <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.SimpleBeanModelAnalysis"
+    <!--  <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.model.SimpleBeanModelAnalysis"
             p:modelClass="SampleModel" p:statusPropertyName="status">
           <property name="predicateList">
-              <bean class="com.godmonth.status.analysis.impl.TypeFieldPredicate" p:propertyName="type"
+              <bean class="com.godmonth.status.analysis.impl.model.TypeFieldPredicate" p:propertyName="type"
                     p:expectedValue="test"/>
           </property>
       </bean>
 -->
 
-    <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis"
-          p:modelClass="com.godmonth.status.test.sample.domain.SampleModel" init-method="init"/>
-
+    <bean id="sampleModelAnalysis" class="com.godmonth.status.analysis.impl.model.AnnotationBeanModelAnalysis"
+          c:_0="com.godmonth.status.test.sample.domain.SampleModel"/>
+    <bean id="sampleStateMachineAnalysis" class="com.godmonth.status.analysis.impl.sm.AnnotationStateMachineAnalysis"
+          c:_0-ref="sampleModelAnalysis"/>
     <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
-          p:txStatusTransitor-ref="sampleModelStatusTransitor"
-          p:modelAnalysis-ref="sampleModelAnalysis">
+          p:txStatusTransitor-ref="sampleModelStatusTransitor" p:modelAnalysis-ref="sampleModelAnalysis">
         <property name="advancerFunctions">
             <bean class="com.google.common.base.Functions" factory-method="forMap">
                 <constructor-arg ref="sampleModelAdvancerMappings"/>
@@ -53,8 +54,7 @@
             <bean class="com.godmonth.status.transitor.core.impl.SimpleStatusTransitor">
                 <constructor-arg>
                     <bean class="com.godmonth.status.builder.transitor.JsonDefinitionFactoryBean"
-                          p:statusClass="com.godmonth.status.test.sample.domain.SampleStatus"
-                          p:triggerClass="com.godmonth.status.test.sample.machine.trigger.SampleTrigger"
+                          p:stateMachineAnalysis-ref="sampleStateMachineAnalysis"
                           p:resource="classpath:/sample-status.json"/>
                 </constructor-arg>
             </bean>

@@ -1,8 +1,9 @@
 package com.godmonth.status.test.sample.machine.cfg2;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
-import com.godmonth.status.analysis.impl.AnnotationBeanModelAnalysis;
-import com.godmonth.status.analysis.impl.TypeFieldPredicate;
+import com.godmonth.status.analysis.impl.model.AnnotationBeanModelAnalysis;
+import com.godmonth.status.analysis.impl.model.TypeFieldPredicate;
+import com.godmonth.status.analysis.impl.sm.AnnotationStateMachineAnalysis;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.builder.advancer.AdvancerFunctionBuilder;
 import com.godmonth.status.builder.entry.EntryFunctionBuilder;
@@ -50,12 +51,17 @@ public class SampleOrderExecutorConfig2 {
 
     @Bean
     public ModelAnalysis<SampleModel> sampleModelModelAnalysis() {
-        return AnnotationBeanModelAnalysis.<SampleModel>builder().modelClass(SampleModel.class).predicateList(Arrays.asList(TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build())).build();
+        return AnnotationBeanModelAnalysis.<SampleModel>annoBuilder().modelClass(SampleModel.class).predicateList(Arrays.asList(TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build())).build();
     }
 
     @Bean
-    public StatusTransitor<SampleStatus, SampleTrigger> sampleStatusStatusTransitor(@Value("classpath:/sample-status.json") Resource configResource) throws IOException {
-        Function<SampleStatus, Function<SampleTrigger, SampleStatus>> function = JsonDefinitionBuilder.<SampleStatus, SampleTrigger>builder().resource(configResource).statusClass(SampleStatus.class).triggerClass(SampleTrigger.class).build();
+    public AnnotationStateMachineAnalysis sampleStateMachineAnalysis(@Qualifier("sampleModelModelAnalysis") ModelAnalysis<SampleModel> sampleModelModelAnalysis) {
+        return AnnotationStateMachineAnalysis.annoBuilder().modelAnalysis(sampleModelModelAnalysis).build();
+    }
+
+    @Bean
+    public StatusTransitor<SampleStatus, SampleTrigger> sampleStatusStatusTransitor(@Value("classpath:/sample-status.json") Resource configResource, @Qualifier("sampleStateMachineAnalysis") AnnotationStateMachineAnalysis annotationStateMachineAnalysis) throws IOException {
+        Function<SampleStatus, Function<SampleTrigger, SampleStatus>> function = JsonDefinitionBuilder.<SampleStatus, SampleTrigger>builder().resource(configResource).stateMachineAnalysis(annotationStateMachineAnalysis).build();
         return new SimpleStatusTransitor(function);
     }
 

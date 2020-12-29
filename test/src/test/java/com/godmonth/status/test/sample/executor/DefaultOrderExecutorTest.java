@@ -2,8 +2,8 @@ package com.godmonth.status.test.sample.executor;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
-import com.godmonth.status.analysis.impl.SimpleBeanModelAnalysis;
-import com.godmonth.status.analysis.impl.TypeFieldPredicate;
+import com.godmonth.status.analysis.impl.model.SimpleBeanModelAnalysis;
+import com.godmonth.status.analysis.impl.model.TypeFieldPredicate;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
