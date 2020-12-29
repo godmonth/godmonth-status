@@ -14,7 +14,7 @@
 
     <modules>
         <module>annotations</module>
-        <module>model-analysis</module>
+        <module>analysis</module>
         <module>transitor-core</module>
         <module>transitor-tx</module>
         <module>merger-jpa</module>

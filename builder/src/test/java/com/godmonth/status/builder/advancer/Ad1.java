@@ -14,7 +14,7 @@ import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
  *
  * @author shenyue
  */
-@Advancer(modelClass = SampleModel.class)
+@Advancer(SampleModel.class)
 public class Ad1 extends AbstractAdvancer<SampleModel, Void, SampleTrigger> {
     {
         availableStatus = SampleStatus.CREATED;

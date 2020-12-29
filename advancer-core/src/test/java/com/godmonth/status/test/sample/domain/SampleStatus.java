@@ -6,6 +6,7 @@ package com.godmonth.status.test.sample.domain;
  * @author shenyue
  *
  */
+
 public enum SampleStatus {
 	/**
 	 * 已创建

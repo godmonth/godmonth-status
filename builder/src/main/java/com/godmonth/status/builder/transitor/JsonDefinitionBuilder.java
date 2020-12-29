@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 
 public class JsonDefinitionBuilder {
- 
+
 
     @Builder
     private static <STATUS, TRIGGER> Function<STATUS, Function<TRIGGER, STATUS>> build(Class<STATUS> statusClass, Class<TRIGGER> triggerClass, String jsonString, Resource resource) throws IOException {

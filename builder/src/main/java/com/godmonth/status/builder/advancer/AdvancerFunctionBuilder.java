@@ -39,7 +39,7 @@ public class AdvancerFunctionBuilder {
                     Class<?> aClass = Class.forName(topLevelClass.getName());
                     if (StatusAdvancer.class.isAssignableFrom(aClass)) {
                         Advancer annotation = AnnotationUtils.findAnnotation(aClass, Advancer.class);
-                        if (annotation != null && modelClass.equals(annotation.modelClass())) {
+                        if (annotation != null && modelClass.equals(annotation.value())) {
                             if (predicate != null && !predicate.test(aClass)) {
                                 continue;
                             }

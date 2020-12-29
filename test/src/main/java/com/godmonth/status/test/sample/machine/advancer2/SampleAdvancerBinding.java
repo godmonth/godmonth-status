@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  *
  * @author shenyue
  */
-@Advancer(modelClass = SampleModel.class)
+@Advancer(SampleModel.class)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
