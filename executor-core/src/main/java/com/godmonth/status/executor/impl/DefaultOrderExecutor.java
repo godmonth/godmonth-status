@@ -15,6 +15,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -31,6 +33,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 
     @Setter
     private Function<Object, StatusAdvancer> advancerFunctions;
+
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
     @Builder.Default
@@ -39,9 +42,19 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     @Setter
     private ModelAnalysis<MODEL> modelAnalysis;
 
-    public void setAdvancerMappings(Map<Object, StatusAdvancer<MODEL, INST, TRIGGER>> map) {
-        advancerFunctions = map::get;
+    public static Function<Object, StatusAdvancer> convert(List<StatusAdvancer> advancers) {
+        Map<Object, StatusAdvancer> advancerMap = new HashMap<>();
+        for (StatusAdvancer advancer : advancers) {
+            advancerMap.put(advancer.getKey(), advancer);
+        }
+        return advancerMap::get;
     }
+
+
+    public void setAdvancerList(List<StatusAdvancer> advancerList) {
+        setAdvancerFunctions(convert(advancerList));
+    }
+
 
     @Override
     public Future<SyncResult<MODEL, ?>> executeAsync(final MODEL model, final INST instruction, final Object message) {
@@ -109,5 +122,14 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
         }
     }
 
+    public static class DefaultOrderExecutorBuilder<MODEL, INST, TRIGGER> {
+        private Function<Object, StatusAdvancer> advancerFunctions;
+
+        public DefaultOrderExecutorBuilder statusAdvancerList(List<StatusAdvancer> entryBindList) {
+            this.advancerFunctions = convert(entryBindList);
+            return this;
+        }
+
+    }
 
 }

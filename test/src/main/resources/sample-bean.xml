@@ -59,23 +59,17 @@
                 </constructor-arg>
             </bean>
         </property>
-        <property name="statusEntryFunction">
-            <bean class="com.google.common.base.Functions" factory-method="forMap">
-                <constructor-arg>
-                    <map>
-                        <entry>
-                            <key>
-                                <util:constant
-                                        static-field="com.godmonth.status.test.sample.domain.SampleStatus.PAID"/>
-                            </key>
-                            <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
-                        </entry>
-                    </map>
-                </constructor-arg>
-                <constructor-arg>
-                    <null/>
-                </constructor-arg>
-            </bean>
+        <property name="statusEntryBindList">
+            <list>
+                <bean class="com.godmonth.status.transitor.tx.intf.StatusEntryBinding">
+                    <property name="previousStatus">
+                        <util:constant static-field="com.godmonth.status.test.sample.domain.SampleStatus.PAID"/>
+                    </property>
+                    <property name="statusEntry">
+                        <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
+                    </property>
+                </bean>
+            </list>
         </property>
     </bean>
 

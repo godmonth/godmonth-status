@@ -23,7 +23,7 @@ class AdvancerListBuilderTest {
     void name() throws IOException, ClassNotFoundException {
         AutowireCapableBeanFactory factory = Mockito.mock(AutowireCapableBeanFactory.class);
         Mockito.when(factory.autowire(Mockito.any(), Mockito.anyInt(), Mockito.anyBoolean())).thenReturn(statusAdvancer);
-        Function<Object, StatusAdvancer> function = AdvancerFunctionBuilder.builder().autowireCapableBeanFactory(factory).modelClass(SampleModel.class).packageName("com.godmonth.status.builder.advancer").build();
+        Function<Object, StatusAdvancer> function = AdvancerListBuilder.builder().autowireCapableBeanFactory(factory).modelClass(SampleModel.class).packageName("com.godmonth.status.builder.advancer").build();
         SampleModel sampleModel = new SampleModel();
         sampleModel.setStatus(SampleStatus.CREATED);
         StatusAdvancer apply = function.apply(SampleStatus.CREATED);

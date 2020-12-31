@@ -3,6 +3,7 @@ package com.godmonth.status.transitor.tx.impl;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import com.godmonth.status.transitor.tx.intf.StatusEntry;
+import com.godmonth.status.transitor.tx.intf.StatusEntryBinding;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
@@ -15,6 +16,9 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionOperations;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Slf4j
@@ -27,13 +31,25 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
 
     protected ModelAnalysis<MODEL> modelAnalysis;
 
-    private TransactionOperations transactionOperations;
+    protected StatusTransitor<STATUS, TRIGGER> statusTransitor;
 
-    private StatusTransitor<STATUS, TRIGGER> statusTransitor;
+    protected Function<STATUS, StatusEntry<MODEL, Object>> statusEntryFunction;
 
-    private Function<STATUS, StatusEntry<MODEL, Object>> statusEntryFunction;
+    protected TransactionOperations transactionOperations;
 
-    private Merger<MODEL> modelMerger;
+    protected Merger<MODEL> modelMerger;
+
+    public static <STATUS, MODEL> Function<STATUS, StatusEntry<MODEL, Object>> convert(List<StatusEntryBinding<STATUS>> entryBindList) {
+        Map<STATUS, StatusEntry<MODEL, Object>> statusStatusEntryMap = new HashMap<>();
+        for (StatusEntryBinding<STATUS> binding : entryBindList) {
+            statusStatusEntryMap.put(binding.getPreviousStatus(), binding.getStatusEntry());
+        }
+        return statusStatusEntryMap::get;
+    }
+
+    public void setStatusEntryBindList(List<StatusEntryBinding<STATUS>> entryBindList) {
+        setStatusEntryFunction(convert(entryBindList));
+    }
 
     @Override
     public MODEL transit(MODEL model, TriggerBehavior<TRIGGER, MODEL> triggerBehavior) {
@@ -71,5 +87,15 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
                 statusEntry.nextStatusEntry(transitedResult);
             }
         }
+    }
+
+    public static class TxStatusTransitorImplBuilder<MODEL, STATUS> {
+        protected Function<STATUS, StatusEntry<MODEL, Object>> statusEntryFunction;
+
+        public TxStatusTransitorImplBuilder statusEntryBindList(List<StatusEntryBinding<STATUS>> entryBindList) {
+            this.statusEntryFunction = convert(entryBindList);
+            return this;
+        }
+
     }
 }
