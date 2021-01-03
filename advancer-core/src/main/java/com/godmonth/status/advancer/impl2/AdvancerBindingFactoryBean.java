@@ -1,8 +1,7 @@
 package com.godmonth.status.advancer.impl2;
 
 import com.godmonth.status.advancer.intf.AdvancerBinding;
-import com.godmonth.status.advancer.intf.StatusAdvancer;
-import lombok.AccessLevel;
+import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.FactoryBean;
@@ -11,13 +10,16 @@ import javax.annotation.PostConstruct;
 
 @Setter
 public class AdvancerBindingFactoryBean implements FactoryBean<AdvancerBinding> {
+
+    @Setter
     protected Object availableStatus;
 
+    @Setter
     protected Object expectedInstruction;
 
-    protected StatusAdvancer statusAdvancer;
+    @Setter
+    protected StatusAdvancer2 statusAdvancer;
 
-    @Setter(value = AccessLevel.NONE)
     protected AdvancerBinding advancerBinding;
 
     public Object getKey() {
