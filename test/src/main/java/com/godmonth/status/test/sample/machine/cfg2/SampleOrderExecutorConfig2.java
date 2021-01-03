@@ -15,7 +15,6 @@ import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
 import com.godmonth.status.transitor.core.impl.SimpleStatusTransitor;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
-import com.godmonth.status.transitor.tx.impl.Merger;
 import com.godmonth.status.transitor.tx.impl.TxStatusTransitorImpl;
 import com.godmonth.status.transitor.tx.intf.StatusEntryBinding;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
@@ -43,11 +42,6 @@ import java.util.function.Function;
 @Configuration
 public class SampleOrderExecutorConfig2 {
 
-    //多个执行器可以公用
-    @Bean
-    public Merger merger(EntityManager entityManager) {
-        return entityManager::merge;
-    }
 
     @Bean
     public StateMachineAnalysis sampleStateMachineAnalysis() {
@@ -72,14 +66,14 @@ public class SampleOrderExecutorConfig2 {
     }
 
     @Bean
-    public TxStatusTransitor sampleStatusTxStatusTransitor(Merger merger, TransactionOperations transactionOperations, @Qualifier("sampleStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis, AutowireCapableBeanFactory beanFactory) throws IOException, ClassNotFoundException {
+    public TxStatusTransitor sampleStatusTxStatusTransitor(EntityManager entityManager, TransactionOperations transactionOperations, @Qualifier("sampleStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis, AutowireCapableBeanFactory beanFactory) throws IOException, ClassNotFoundException {
         List<StatusEntryBinding> bindingList = StatusEntryBindingListBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample.machine.entry2").statusClass(SampleStatus.class).build();
-        return TxStatusTransitorImpl.builder().modelMerger(merger).modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).statusTransitor(statusTransitor).statusEntryBindList(bindingList).build();
+        return TxStatusTransitorImpl.builder().modelMerger(entityManager::merge).modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).statusTransitor(statusTransitor).statusEntryBindList(bindingList).build();
     }
 
     @Bean
     public StatusTransitor<SampleStatus, SampleTrigger> sampleStatusTransitor(@Value("classpath:/sample-status.json") Resource configResource, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis) throws IOException {
-        Function<SampleStatus, Function<SampleTrigger, SampleStatus>> function = JsonDefinitionBuilder.<SampleStatus, SampleTrigger>builder().resource(configResource).stateMachineAnalysis(sampleStateMachineAnalysis).build();
+        Function<SampleStatus, Function<SampleTrigger, SampleStatus>> function = JsonDefinitionBuilder.<SampleStatus, SampleTrigger>builder().resource(configResource).statusClass(sampleStateMachineAnalysis.getModelAnalysis().getStatusClass()).triggerClass(sampleStateMachineAnalysis.getTriggerClass()).build();
         return new SimpleStatusTransitor(function);
     }
 
