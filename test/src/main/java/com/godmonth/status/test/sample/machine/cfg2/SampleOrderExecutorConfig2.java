@@ -42,7 +42,6 @@ import java.util.function.Function;
 @Configuration
 public class SampleOrderExecutorConfig2 {
 
-
     @Bean
     public StateMachineAnalysis sampleStateMachineAnalysis() {
         AnnotationBeanModelAnalysis modelAnalysis = AnnotationBeanModelAnalysis.<SampleModel>annoBuilder().modelClass(SampleModel.class).predicateList(Arrays.asList(TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build())).build();
@@ -51,7 +50,7 @@ public class SampleOrderExecutorConfig2 {
 
 
     /**
-     * 推进器可以根据需求灵活的定义
+     * advancer package 可以定义在参数
      *
      * @param beanFactory
      * @param txStatusTransitor
@@ -65,10 +64,22 @@ public class SampleOrderExecutorConfig2 {
         return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).statusAdvancerList(advancerList).txStatusTransitor(txStatusTransitor).build();
     }
 
+    /**
+     * entry package 可以定义在参数
+     *
+     * @param entityManager
+     * @param transactionOperations
+     * @param statusTransitor
+     * @param sampleStateMachineAnalysis
+     * @param beanFactory
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @Bean
     public TxStatusTransitor sampleStatusTxStatusTransitor(EntityManager entityManager, TransactionOperations transactionOperations, @Qualifier("sampleStatusTransitor") StatusTransitor statusTransitor, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis, AutowireCapableBeanFactory beanFactory) throws IOException, ClassNotFoundException {
-        List<StatusEntryBinding> bindingList = StatusEntryBindingListBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample.machine.entry2").statusClass(SampleStatus.class).build();
-        return TxStatusTransitorImpl.builder().modelMerger(entityManager::merge).modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).statusTransitor(statusTransitor).statusEntryBindList(bindingList).build();
+        List<StatusEntryBinding> bindingList = StatusEntryBindingListBuilder.<SampleStatus>builder().autowireCapableBeanFactory(beanFactory).packageName("com.godmonth.status.test.sample.machine.entry2").statusClass(sampleStateMachineAnalysis.getModelAnalysis().getStatusClass()).build();
+        return TxStatusTransitorImpl.builder().modelMerger(entityManager::merge).transactionOperations(transactionOperations).modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).statusTransitor(statusTransitor).statusEntryBindList(bindingList).build();
     }
 
     @Bean
