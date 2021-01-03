@@ -89,7 +89,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
         }
     }
 
-    public static class TxStatusTransitorImplBuilder<MODEL, STATUS> {
+    public static class TxStatusTransitorImplBuilder<MODEL, STATUS, TRIGGER> {
         protected Function<STATUS, StatusEntry<MODEL, Object>> statusEntryFunction;
 
         public TxStatusTransitorImplBuilder statusEntryBindList(List<StatusEntryBinding<STATUS>> entryBindList) {
