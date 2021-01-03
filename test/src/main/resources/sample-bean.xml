@@ -24,16 +24,14 @@
     <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
           p:txStatusTransitor-ref="sampleModelStatusTransitor" p:modelAnalysis-ref="sampleModelAnalysis">
         <property name="advancerBindingList">
-            <list>
-                <bean class="com.godmonth.status.advancer.intf.AdvancerBinding">
-
-                    <property name="statusAdvancer">
+            <bean class="com.godmonth.status.builder.advancer.OldAdvancerConverter" factory-method="convert2Binding">
+                <constructor-arg>
+                    <list>
                         <bean class="com.godmonth.status.test.sample.machine.advancer.PayAdvancer"/>
-                    </property>
-                </bean>
-                <bean class="com.godmonth.status.test.sample.machine.advancer.PayAdvancer"/>
-                <bean class="com.godmonth.status.test.sample.machine.advancer.CheckAdvancer"/>
-            </list>
+                        <bean class="com.godmonth.status.test.sample.machine.advancer.CheckAdvancer"/>
+                    </list>
+                </constructor-arg>
+            </bean>
         </property>
     </bean>
 

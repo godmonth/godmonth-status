@@ -6,6 +6,7 @@ import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.db1.RepoConfig;
 import com.godmonth.status.test.sample.repo.SampleModelRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -38,5 +39,6 @@ public class Sample2Test {
         SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
         SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(sampleModel1, "eee", "fff");
         System.out.println(execute);
+        Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
     }
 }

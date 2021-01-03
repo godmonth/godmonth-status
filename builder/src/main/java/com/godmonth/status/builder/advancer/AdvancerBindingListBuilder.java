@@ -1,7 +1,7 @@
 package com.godmonth.status.builder.advancer;
 
 import com.godmonth.status.advancer.intf.AdvancerBinding;
-import com.godmonth.status.advancer.intf.StatusAdvancer;
+import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import com.godmonth.status.annotations.AdvancerBindingAnnotation;
 import com.godmonth.status.annotations.InstructionBindingAnnotation;
 import com.godmonth.status.annotations.ModelBinding;
@@ -58,7 +58,7 @@ public class AdvancerBindingListBuilder {
         AdvancerBindingAnnotation advAnno = AnnotationUtils.findAnnotation(aClass, AdvancerBindingAnnotation.class);
         InstructionBindingAnnotation instAnno = AnnotationUtils.findAnnotation(aClass, InstructionBindingAnnotation.class);
         Validate.notNull(advAnno, "AdvancerBindingAnnotation is null");
-        StatusAdvancer statusAdvancer = (StatusAdvancer) autowireCapableBeanFactory.autowire(aClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
+        StatusAdvancer2 statusAdvancer = (StatusAdvancer2) autowireCapableBeanFactory.autowire(aClass, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
         AdvancerBinding advancerBinding = new AdvancerBinding();
         advancerBinding.setStatusAdvancer(statusAdvancer);
         Object statusValue = AdvancerBindingAnnotationUtils.parseStatusValue(advAnno);

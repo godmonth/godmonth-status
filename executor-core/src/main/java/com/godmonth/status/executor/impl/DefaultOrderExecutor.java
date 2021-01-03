@@ -2,7 +2,7 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.AdvancerBinding;
-import com.godmonth.status.advancer.intf.StatusAdvancer;
+import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.executor.intf.OrderExecutor;
@@ -32,7 +32,8 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
-    private Function<Object, StatusAdvancer> advancerFunctions;
+    @Setter
+    private Function<Object, StatusAdvancer2> advancerFunctions;
 
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
@@ -44,8 +45,8 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     @Setter
     private ModelAnalysis<MODEL> modelAnalysis;
 
-    public static Function<Object, StatusAdvancer> convert(List<AdvancerBinding> advancerBindings) {
-        Map<Object, StatusAdvancer> advancerMap = new HashMap<>();
+    public static Function<Object, StatusAdvancer2> convert(List<AdvancerBinding> advancerBindings) {
+        Map<Object, StatusAdvancer2> advancerMap = new HashMap<>();
         for (AdvancerBinding advancerBinding : advancerBindings) {
             advancerMap.put(advancerBinding.getKey(), advancerBinding.getStatusAdvancer());
         }
@@ -77,7 +78,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
             Object status = modelAnalysis.getStatus(model);
             logger.trace("status:{}", status);
 
-            StatusAdvancer<MODEL, INST, TRIGGER> advancer = null;
+            StatusAdvancer2<MODEL, INST, TRIGGER> advancer = null;
             if (instruction != null) {
                 advancer = advancerFunctions.apply(Pair.of(status, instruction));
             }
@@ -124,7 +125,7 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     }
 
     public static class DefaultOrderExecutorBuilder<MODEL, INST, TRIGGER> {
-        private Function<Object, StatusAdvancer> advancerFunctions;
+        private Function<Object, StatusAdvancer2> advancerFunctions;
 
         public DefaultOrderExecutorBuilder advancerBindingList(List<AdvancerBinding> advancerBindingList) {
             this.advancerFunctions = convert(advancerBindingList);

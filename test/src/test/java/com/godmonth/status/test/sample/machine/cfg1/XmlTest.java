@@ -2,10 +2,11 @@ package com.godmonth.status.test.sample.machine.cfg1;
 
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.test.sample.db1.RepoConfig;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
-import com.godmonth.status.test.sample.db1.RepoConfig;
 import com.godmonth.status.test.sample.repo.SampleModelRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -39,5 +40,6 @@ public class XmlTest {
         SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
         SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel1, "eee", "fff");
         System.out.println(execute);
+        Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
     }
 }

@@ -1,7 +1,7 @@
 package com.godmonth.status.builder.advancer;
 
 import com.godmonth.status.advancer.intf.AdvancerBinding;
-import com.godmonth.status.advancer.intf.StatusAdvancer;
+import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import com.godmonth.status.builder.domain.SampleModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author shenyue
  */
 class AdvancerBindingListBuilderTest {
-    private StatusAdvancer statusAdvancer = new PayAdvancer();
+    private StatusAdvancer2 statusAdvancer = new PayAdvancer();
 
     @Test
     void name() throws IOException, ClassNotFoundException {

@@ -1,6 +1,6 @@
 package com.godmonth.status.test.sample.machine.cfg2;
 
-import com.godmonth.status.advancer.intf.StatusAdvancer;
+import com.godmonth.status.advancer.intf.AdvancerBinding;
 import com.godmonth.status.analysis.impl.model.AnnotationBeanModelAnalysis;
 import com.godmonth.status.analysis.impl.model.TypeFieldPredicate;
 import com.godmonth.status.analysis.impl.sm.AnnotationStateMachineAnalysis;
@@ -60,8 +60,8 @@ public class SampleOrderExecutorConfig2 {
      */
     @Bean
     public OrderExecutor<SampleModel, String> sampleModelOrderExecutor(AutowireCapableBeanFactory beanFactory, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis, @Qualifier("sampleStatusTxStatusTransitor") TxStatusTransitor txStatusTransitor) throws IOException, ClassNotFoundException {
-        List<StatusAdvancer> advancerList = AdvancerBindingListBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample.machine.advancer2").build();
-        return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).statusAdvancerList(advancerList).txStatusTransitor(txStatusTransitor).build();
+        List<AdvancerBinding> advancerBindingList = AdvancerBindingListBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample.machine.advancer2").build();
+        return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).advancerBindingList(advancerBindingList).txStatusTransitor(txStatusTransitor).build();
     }
 
     /**

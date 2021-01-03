@@ -57,6 +57,9 @@ public class Sample3Test {
         sampleModel.setType("test");
         SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
         SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(sampleModel1, "eee", "fff");
+        Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
+
+
         System.out.println(execute);
         {
             Connection connection = dataSource2.getConnection();
