@@ -15,7 +15,7 @@ public class JsonDefinitionFactoryBean<STATUS, TRIGGER> implements FactoryBean<F
 
     @Override
     public Function<STATUS, Function<TRIGGER, STATUS>> getObject() throws Exception {
-        return JsonDefinitionBuilder.<STATUS, TRIGGER>builder().stateMachineAnalysis(stateMachineAnalysis).resource(resource).build();
+        return JsonDefinitionBuilder.<STATUS, TRIGGER>builder().statusClass(stateMachineAnalysis.getModelAnalysis().getStatusClass()).triggerClass(stateMachineAnalysis.getTriggerClass()).resource(resource).build();
     }
 
     @Override
