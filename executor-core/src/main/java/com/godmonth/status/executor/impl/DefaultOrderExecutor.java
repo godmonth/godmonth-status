@@ -1,6 +1,7 @@
 package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.advancer.intf.AdvancedResult;
+import com.godmonth.status.advancer.intf.AdvancerBinding;
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
@@ -31,28 +32,28 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
-    @Setter
     private Function<Object, StatusAdvancer> advancerFunctions;
 
     @Setter
     private TxStatusTransitor<MODEL, TRIGGER> txStatusTransitor;
+
     @Builder.Default
     @Setter
     private ExecutorService executorService = Executors.newCachedThreadPool();
+
     @Setter
     private ModelAnalysis<MODEL> modelAnalysis;
 
-    public static Function<Object, StatusAdvancer> convert(List<StatusAdvancer> advancers) {
+    public static Function<Object, StatusAdvancer> convert(List<AdvancerBinding> advancerBindings) {
         Map<Object, StatusAdvancer> advancerMap = new HashMap<>();
-        for (StatusAdvancer advancer : advancers) {
-            advancerMap.put(advancer.getKey(), advancer);
+        for (AdvancerBinding advancerBinding : advancerBindings) {
+            advancerMap.put(advancerBinding.getKey(), advancerBinding.getStatusAdvancer());
         }
         return advancerMap::get;
     }
 
-
-    public void setAdvancerList(List<StatusAdvancer> advancerList) {
-        setAdvancerFunctions(convert(advancerList));
+    public void setAdvancerBindingList(List<AdvancerBinding> advancerBindingList) {
+        this.advancerFunctions = convert(advancerBindingList);
     }
 
 
@@ -125,8 +126,8 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     public static class DefaultOrderExecutorBuilder<MODEL, INST, TRIGGER> {
         private Function<Object, StatusAdvancer> advancerFunctions;
 
-        public DefaultOrderExecutorBuilder statusAdvancerList(List<StatusAdvancer> entryBindList) {
-            this.advancerFunctions = convert(entryBindList);
+        public DefaultOrderExecutorBuilder advancerBindingList(List<AdvancerBinding> advancerBindingList) {
+            this.advancerFunctions = convert(advancerBindingList);
             return this;
         }
 

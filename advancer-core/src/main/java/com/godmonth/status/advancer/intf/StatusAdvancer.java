@@ -2,14 +2,11 @@ package com.godmonth.status.advancer.intf;
 
 /**
  * 状态推进器
- * 
- * @author shenyue
  *
- * @param <MODEL>
- *            MODEL
+ * @param <MODEL> MODEL
+ * @author shenyue
  */
-public interface StatusAdvancer<MODEL, INST, TRIGGER> {
-	AdvancedResult<MODEL, TRIGGER> advance(MODEL model, INST instruction, Object message);
-
-	Object getKey();
+@Deprecated
+public interface StatusAdvancer<MODEL, INST, TRIGGER> extends StatusAdvancer2<MODEL, INST, TRIGGER> {
+    Object getKey();
 }

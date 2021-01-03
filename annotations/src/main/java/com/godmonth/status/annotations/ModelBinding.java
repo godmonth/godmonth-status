@@ -1,7 +1,4 @@
-package com.godmonth.status.test.sample.machine.advancer2;
-
-import com.godmonth.status.annotations.Advancer;
-import com.godmonth.status.test.sample.domain.SampleModel;
+package com.godmonth.status.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -14,9 +11,10 @@ import java.lang.annotation.Target;
  *
  * @author shenyue
  */
-@Advancer(SampleModel.class)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface SampleAdvancerBinding {
+public @interface ModelBinding {
+    Class value();
+
 }

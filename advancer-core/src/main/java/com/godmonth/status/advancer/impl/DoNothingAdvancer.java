@@ -7,7 +7,9 @@ import lombok.Setter;
 
 /**
  * @author shenyue
+ * @deprecated use {@link com.godmonth.status.advancer.intf.StatusAdvancer2}
  */
+@Deprecated
 public class DoNothingAdvancer<MODEL, INST, TRIGGER> extends InstructionAdvancer<MODEL, INST, TRIGGER> {
     @Setter
     protected TRIGGER trigger;
@@ -18,6 +20,5 @@ public class DoNothingAdvancer<MODEL, INST, TRIGGER> extends InstructionAdvancer
     protected AdvancedResult<MODEL, TRIGGER> doAdvance(MODEL model, Object message) {
         return new AdvancedResult<>(new TriggerBehavior<TRIGGER, MODEL>(trigger), nextOperation);
     }
-
 
 }
