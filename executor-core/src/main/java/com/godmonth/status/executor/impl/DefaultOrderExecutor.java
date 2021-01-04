@@ -1,5 +1,6 @@
 package com.godmonth.status.executor.impl;
 
+import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.AdvancerBinding;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
@@ -89,7 +90,8 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
             if (advancer == null) {
                 return new SyncResult<MODEL, Object>(model);
             }
-            advancedResult = advancer.advance(model, instruction, message);
+            AdvanceRequest<MODEL, INST> advanceRequest = AdvanceRequest.<MODEL, INST>builder().model(model).instruction(instruction).message(message).build();
+            advancedResult = advancer.advance(advanceRequest);
             logger.trace("advancedResult:{}", advancedResult);
             if (advancedResult == null) {
                 return new SyncResult<MODEL, Object>(model);

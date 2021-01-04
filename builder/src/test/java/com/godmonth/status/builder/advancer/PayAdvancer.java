@@ -1,5 +1,6 @@
 package com.godmonth.status.builder.advancer;
 
+import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import com.godmonth.status.annotations.AdvancerBindingAnnotation;
@@ -17,7 +18,7 @@ import com.godmonth.status.builder.domain.SampleStatus;
 public class PayAdvancer implements StatusAdvancer2 {
 
     @Override
-    public AdvancedResult advance(Object o, Object instruction, Object message) {
+    public AdvancedResult advance(AdvanceRequest advanceRequest) {
         return null;
     }
 }
