@@ -7,5 +7,5 @@ package com.godmonth.status.advancer.intf;
  * @author shenyue
  */
 public interface StatusAdvancer2<MODEL, INST, TRIGGER> {
-    AdvancedResult<MODEL, TRIGGER> advance(MODEL model, INST instruction, Object message);
+    AdvancedResult<MODEL, TRIGGER> advance(AdvanceRequest<MODEL, INST> advanceRequest);
 }

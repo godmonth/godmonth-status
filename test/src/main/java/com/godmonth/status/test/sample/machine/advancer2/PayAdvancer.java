@@ -1,5 +1,6 @@
 package com.godmonth.status.test.sample.machine.advancer2;
 
+import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import com.godmonth.status.annotations.AdvancerBindingAnnotation;
@@ -22,10 +23,10 @@ public class PayAdvancer implements StatusAdvancer2<SampleModel, String, SampleT
     private String value;
 
     @Override
-    public AdvancedResult<SampleModel, SampleTrigger> advance(SampleModel model, String instruction, Object message)
+    public AdvancedResult<SampleModel, SampleTrigger> advance(AdvanceRequest<SampleModel, String> advanceRequest)
             throws IllegalStateException {
         System.out.println(value);
-        if ("eee".equals(instruction) && "fff".equals(message)) {
+        if ("eee".equals(advanceRequest.getInstruction()) && "fff".equals(advanceRequest.getMessage())) {
             return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
         }
         return null;

@@ -1,5 +1,7 @@
 package com.godmonth.status.advancer.impl;
 
+import com.godmonth.status.advancer.intf.AdvanceRequest;
+import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,6 +20,13 @@ public abstract class AbstractAdvancer<MODEL, INST, TRIGGER> implements StatusAd
     protected INST expectedInstruction;
 
     @Override
+    public AdvancedResult<MODEL, TRIGGER> advance(AdvanceRequest<MODEL, INST> advanceRequest) {
+        return advance(advanceRequest.getModel(), advanceRequest.getInstruction(), advanceRequest.getMessage());
+    }
+
+    protected abstract AdvancedResult<MODEL, TRIGGER> advance(MODEL model, INST instruction, Object message);
+
+    @Override
     public Object getKey() {
         if (expectedInstruction != null) {
             return Pair.of(availableStatus, expectedInstruction);
@@ -25,5 +34,6 @@ public abstract class AbstractAdvancer<MODEL, INST, TRIGGER> implements StatusAd
             return availableStatus;
         }
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.godmonth.status.advancer.impl2;
 
+import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import lombok.Setter;
@@ -14,10 +15,10 @@ public abstract class InstructionAdvancer2<MODEL, INST, TRIGGER> implements Stat
     protected INST expectedInstruction;
 
     @Override
-    final public AdvancedResult<MODEL, TRIGGER> advance(MODEL model, INST instruction, Object message) {
-        Validate.notNull(instruction, "instruction is null");
-        Validate.isTrue(expectedInstruction == instruction, "expected instruction not equals input instruction.");
-        return doAdvance(model, message);
+    public AdvancedResult<MODEL, TRIGGER> advance(AdvanceRequest<MODEL, INST> advanceRequest) {
+        Validate.notNull(advanceRequest.getInstruction(), "instruction is null");
+        Validate.isTrue(expectedInstruction == advanceRequest.getInstruction(), "expected instruction not equals input instruction.");
+        return doAdvance(advanceRequest.getModel(), advanceRequest.getMessage());
     }
 
     protected abstract AdvancedResult<MODEL, TRIGGER> doAdvance(MODEL model, Object message);
