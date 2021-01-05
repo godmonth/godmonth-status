@@ -2,6 +2,7 @@ package com.godmonth.status.advancer.intf;
 
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -10,22 +11,24 @@ import lombok.Data;
  * @param <MODEL>
  * @author shenyue
  */
+@Builder
 @Data
 @AllArgsConstructor
 public class AdvancedResult<MODEL, TRIGGER> {
+    /**
+     * 推进的同步结果
+     */
+    public SyncData syncData;
+
     /**
      * 跃迁参数
      */
     private TriggerBehavior<TRIGGER, MODEL> triggerBehavior;
     /**
-     * 同步结果
-     */
-    private SyncResult<MODEL, ?> syncResult;
-    /**
      * 跃迁完成后动作
      */
+    @Builder.Default
     private NextOperation nextOperation = NextOperation.ADVANCE;
-
     /**
      * 丢弃指令
      */
@@ -61,12 +64,17 @@ public class AdvancedResult<MODEL, TRIGGER> {
     }
 
     /**
+     * use setSyncData
+     *
      * @param syncResult
-     * @deprecated use builder
      */
-    public AdvancedResult(SyncResult<MODEL, ?> syncResult) {
-        this.syncResult = syncResult;
-        this.nextOperation = NextOperation.PAUSE;
+    @Deprecated
+    public void setSyncResult(SyncResult syncResult) {
+        if (syncResult != null) {
+            syncData = SyncData.builder().symbol(syncResult.getSymbol()).value(syncResult.getValue()).build();
+        } else {
+            syncData = null;
+        }
     }
 
 }

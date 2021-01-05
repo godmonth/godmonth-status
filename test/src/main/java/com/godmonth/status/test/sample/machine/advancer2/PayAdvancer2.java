@@ -2,7 +2,9 @@ package com.godmonth.status.test.sample.machine.advancer2;
 
 import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
+import com.godmonth.status.advancer.intf.NextOperation;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
+import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.annotations.Advancer;
 import com.godmonth.status.annotations.binding.ModelBinding;
 import com.godmonth.status.annotations.binding.StatusBinding;
@@ -28,8 +30,10 @@ public class PayAdvancer2 implements StatusAdvancer2<SampleModel, String, Sample
     public AdvancedResult<SampleModel, SampleTrigger> advance(AdvanceRequest<SampleModel, String> advanceRequest)
             throws IllegalStateException {
         System.out.println(value);
+
         if ("pay".equals(advanceRequest.getInstruction()) && "balance".equals(advanceRequest.getMessage())) {
-            return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
+            SyncResult<SampleModel, Object> syncResult = SyncResult.<SampleModel, Object>builder().symbol("payment order no:444555666").value("dfsafsda").build();
+            return AdvancedResult.<SampleModel, SampleTrigger>builder().triggerBehavior(new TriggerBehavior<>(SampleTrigger.PAY)).syncResult(syncResult).nextOperation(NextOperation.PAUSE).build();
         }
         return null;
 

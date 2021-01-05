@@ -1,6 +1,5 @@
 package com.godmonth.status.executor.intf;
 
-import com.godmonth.status.advancer.intf.SyncResult;
 
 import java.util.concurrent.Future;
 

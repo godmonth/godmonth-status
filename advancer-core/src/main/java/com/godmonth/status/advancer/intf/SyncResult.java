@@ -3,7 +3,6 @@ package com.godmonth.status.advancer.intf;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 /**
  * 同步结果
@@ -11,16 +10,16 @@ import lombok.experimental.SuperBuilder;
  * @param <SYMBOL>
  * @author shenyue
  */
+@Deprecated
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SyncResult<MODEL, SYMBOL> {
-    private MODEL model;
+    protected MODEL model;
 
-    private SYMBOL symbol;
+    protected SYMBOL symbol;
 
-    private Object value;
+    protected Object value;
 
     /**
      * @param model

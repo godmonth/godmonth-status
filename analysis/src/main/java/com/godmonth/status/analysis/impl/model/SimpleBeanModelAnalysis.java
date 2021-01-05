@@ -34,7 +34,7 @@ public class SimpleBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
     public SimpleBeanModelAnalysis(Class<MODEL> modelClass, String statusPropertyName, List<Predicate<MODEL>> predicateList) {
         this.modelClass = modelClass;
         this.statusPropertyName = statusPropertyName;
-        this.predicateList = predicateList;
+//        this.predicateList = predicateList;
         initStatusClass();
     }
 
@@ -49,9 +49,9 @@ public class SimpleBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
     public void validate(MODEL model) {
         Validate.isTrue(modelClass.equals(model.getClass()), "modeClass mismatched,expected:%s,actual:%s", modelClass, model.getClass());
         if (predicateList != null) {
-            for (Predicate<MODEL> modelPredicate : predicateList) {
-                modelPredicate.test(model);
-            }
+//            for (Predicate<MODEL> modelPredicate : predicateList) {
+//                modelPredicate.test(model);
+//            }
         }
     }
 
