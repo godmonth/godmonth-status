@@ -6,5 +6,5 @@ package com.godmonth.status.test.sample.machine.inst;
  * @author shenyue
  */
 public enum SampleInstruction {
-    AAA
+    DELIVER, EVALUATE
 }

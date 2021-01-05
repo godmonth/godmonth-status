@@ -3,8 +3,8 @@ package com.godmonth.status.test.sample.machine.advancer2;
 import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
-import com.godmonth.status.annotations.AdvancerBindingAnnotation;
-import com.godmonth.status.annotations.ModelBinding;
+import com.godmonth.status.annotations.binding.ModelBinding;
+import com.godmonth.status.annotations.binding.StatusBinding;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 @ModelBinding(SampleModel.class)
-@AdvancerBindingAnnotation(statusClass = SampleStatus.class, statusValue = "CREATED")
-public class PayAdvancer implements StatusAdvancer2<SampleModel, String, SampleTrigger> {
+@StatusBinding(statusClass = SampleStatus.class, statusValue = "CREATED")
+public class PayAdvancer2 implements StatusAdvancer2<SampleModel, String, SampleTrigger> {
     @Autowired
     private SampleModelRepository sampleModelRepository;
 
@@ -26,7 +26,7 @@ public class PayAdvancer implements StatusAdvancer2<SampleModel, String, SampleT
     public AdvancedResult<SampleModel, SampleTrigger> advance(AdvanceRequest<SampleModel, String> advanceRequest)
             throws IllegalStateException {
         System.out.println(value);
-        if ("eee".equals(advanceRequest.getInstruction()) && "fff".equals(advanceRequest.getMessage())) {
+        if ("pay".equals(advanceRequest.getInstruction()) && "balance".equals(advanceRequest.getMessage())) {
             return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY));
         }
         return null;

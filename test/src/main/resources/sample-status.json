@@ -7,5 +7,23 @@
         "nextStatus": "PAID"
       }
     ]
+  },
+  {
+    "status": "PAID",
+    "triggers": [
+      {
+        "trigger": "DELIVER",
+        "nextStatus": "DELIVERED"
+      }
+    ]
+  },
+  {
+    "status": "DELIVERED",
+    "triggers": [
+      {
+        "trigger": "EVALUATE",
+        "nextStatus": "EVALUATED"
+      }
+    ]
   }
 ]

@@ -1,10 +1,12 @@
 package com.godmonth.status.test.sample.machine.cfg2;
 
 import com.godmonth.status.advancer.intf.SyncResult;
-import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.executor.intf.ExecutionRequest;
+import com.godmonth.status.executor.intf.OrderExecutor2;
+import com.godmonth.status.test.sample.db1.RepoConfig;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
-import com.godmonth.status.test.sample.db1.RepoConfig;
+import com.godmonth.status.test.sample.machine.inst.SampleInstruction;
 import com.godmonth.status.test.sample.repo.SampleModelRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +28,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class Sample2Test {
 
     @Autowired
-    private OrderExecutor<SampleModel, String> sampleModelOrderExecutor;
+    private OrderExecutor2<SampleModel, Object> sampleModelOrderExecutor;
 
     @Autowired
     private SampleModelRepository sampleModelRepository;
@@ -36,9 +38,26 @@ public class Sample2Test {
         SampleModel sampleModel = new SampleModel();
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
-        SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
-        SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(sampleModel1, "eee", "fff");
-        System.out.println(execute);
-        Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
+        sampleModel = sampleModelRepository.save(sampleModel);
+        {
+            ExecutionRequest<SampleModel, Object> req = ExecutionRequest.<SampleModel, Object>builder().model(sampleModel).instruction("pay").message("balance").build();
+            SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(req);
+            System.out.println(execute);
+            Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
+            sampleModel = execute.getModel();
+        }
+        {
+            ExecutionRequest<SampleModel, Object> req = ExecutionRequest.<SampleModel, Object>builder().model(sampleModel).instruction(SampleInstruction.DELIVER).message("yunda").build();
+            SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(req);
+            System.out.println(execute);
+            Assertions.assertEquals(SampleStatus.DELIVERED, execute.getModel().getStatus());
+            sampleModel = execute.getModel();
+        }
+        {
+            ExecutionRequest<SampleModel, Object> req = ExecutionRequest.<SampleModel, Object>builder().model(sampleModel).instruction(SampleInstruction.EVALUATE).message("5").build();
+            SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(req);
+            System.out.println(execute);
+            Assertions.assertEquals(SampleStatus.EVALUATED, execute.getModel().getStatus());
+        }
     }
 }

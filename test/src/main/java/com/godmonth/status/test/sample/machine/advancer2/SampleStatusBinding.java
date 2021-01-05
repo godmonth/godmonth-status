@@ -1,4 +1,6 @@
-package com.godmonth.status.annotations;
+package com.godmonth.status.test.sample.machine.advancer2;
+
+import com.godmonth.status.test.sample.domain.SampleStatus;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -14,7 +16,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ModelBinding {
-    Class value();
-
+public @interface SampleStatusBinding {
+    SampleStatus value();
 }

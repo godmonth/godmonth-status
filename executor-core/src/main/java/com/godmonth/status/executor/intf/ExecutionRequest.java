@@ -1,4 +1,4 @@
-package com.godmonth.status.advancer.intf;
+package com.godmonth.status.executor.intf;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +10,10 @@ import lombok.Data;
  */
 @Builder
 @Data
-public class AdvanceRequest<MODEL, INST> {
+public class ExecutionRequest<MODEL, INST> {
     private MODEL model;
+
     private INST instruction;
+
     private Object message;
 }

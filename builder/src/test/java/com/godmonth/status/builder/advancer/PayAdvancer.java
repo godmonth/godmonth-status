@@ -3,8 +3,8 @@ package com.godmonth.status.builder.advancer;
 import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
-import com.godmonth.status.annotations.AdvancerBindingAnnotation;
-import com.godmonth.status.annotations.ModelBinding;
+import com.godmonth.status.annotations.binding.ModelBinding;
+import com.godmonth.status.annotations.binding.StatusBinding;
 import com.godmonth.status.builder.domain.SampleModel;
 import com.godmonth.status.builder.domain.SampleStatus;
 
@@ -14,7 +14,7 @@ import com.godmonth.status.builder.domain.SampleStatus;
  * @author shenyue
  */
 @ModelBinding(SampleModel.class)
-@AdvancerBindingAnnotation(statusClass = SampleStatus.class, statusValue = "CREATED")
+@StatusBinding(statusClass = SampleStatus.class, statusValue = "CREATED")
 public class PayAdvancer implements StatusAdvancer2 {
 
     @Override

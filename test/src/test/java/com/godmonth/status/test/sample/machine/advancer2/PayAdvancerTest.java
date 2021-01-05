@@ -1,6 +1,6 @@
 package com.godmonth.status.test.sample.machine.advancer2;
 
-import com.godmonth.status.annotations.AdvancerBindingAnnotation;
+import com.godmonth.status.annotations.binding.StatusBinding;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -12,7 +12,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 class PayAdvancerTest {
     @Test
     void name() {
-        AdvancerBindingAnnotation annotation = AnnotationUtils.findAnnotation(PayAdvancer.class, AdvancerBindingAnnotation.class);
+        StatusBinding annotation = AnnotationUtils.findAnnotation(PayAdvancer2.class, StatusBinding.class);
         System.out.println(annotation);
     }
 }

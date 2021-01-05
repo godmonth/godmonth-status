@@ -56,13 +56,13 @@
         </property>
         <property name="statusEntryBindList">
             <list>
-                <bean class="com.godmonth.status.transitor.tx.intf.StatusEntryBinding">
-                    <property name="previousStatus">
+                <bean class="org.apache.commons.lang3.tuple.Pair" factory-method="of">
+                    <constructor-arg>
                         <util:constant static-field="com.godmonth.status.test.sample.domain.SampleStatus.PAID"/>
-                    </property>
-                    <property name="statusEntry">
+                    </constructor-arg>
+                    <constructor-arg>
                         <bean class="com.godmonth.status.test.sample.machine.entry.EchoStatusEntry"/>
-                    </property>
+                    </constructor-arg>
                 </bean>
             </list>
         </property>

@@ -1,5 +1,5 @@
 package com.godmonth.status.test.sample.machine.trigger;
 
 public enum SampleTrigger {
-	PAY
+    PAY, DELIVER, EVALUATE
 }

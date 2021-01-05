@@ -30,7 +30,7 @@ public class XmlTest {
     private SampleModelRepository sampleModelRepository;
 
     @Resource(name = "sampleModelExecutor")
-    private OrderExecutor<SampleModel, String> sampleModelExecutor;
+    private OrderExecutor<SampleModel, Object> sampleModelExecutor;
 
     @Test
     void name() {
@@ -38,7 +38,7 @@ public class XmlTest {
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
         SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
-        SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel1, "eee", "fff");
+        SyncResult<SampleModel, ?> execute = sampleModelExecutor.execute(sampleModel1, "pay", "balance");
         System.out.println(execute);
         Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
     }

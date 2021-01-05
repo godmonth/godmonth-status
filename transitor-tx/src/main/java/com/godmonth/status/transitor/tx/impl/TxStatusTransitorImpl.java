@@ -3,7 +3,6 @@ package com.godmonth.status.transitor.tx.impl;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
 import com.godmonth.status.transitor.core.intf.StatusTransitor;
 import com.godmonth.status.transitor.tx.intf.StatusEntry;
-import com.godmonth.status.transitor.tx.intf.StatusEntryBinding;
 import com.godmonth.status.transitor.tx.intf.TransitedResult;
 import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
@@ -13,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionOperations;
 
@@ -39,15 +39,15 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
 
     protected Merger<MODEL> modelMerger;
 
-    public static <STATUS, MODEL> Function<STATUS, StatusEntry<MODEL, Object>> convert(List<StatusEntryBinding<STATUS>> entryBindList) {
+    public static <STATUS, MODEL> Function<STATUS, StatusEntry<MODEL, Object>> convert(List<Pair<STATUS, StatusEntry>> entryBindList) {
         Map<STATUS, StatusEntry<MODEL, Object>> statusStatusEntryMap = new HashMap<>();
-        for (StatusEntryBinding<STATUS> binding : entryBindList) {
-            statusStatusEntryMap.put(binding.getPreviousStatus(), binding.getStatusEntry());
+        for (Pair<STATUS, StatusEntry> binding : entryBindList) {
+            statusStatusEntryMap.put(binding.getKey(), binding.getValue());
         }
         return statusStatusEntryMap::get;
     }
 
-    public void setStatusEntryBindList(List<StatusEntryBinding<STATUS>> entryBindList) {
+    public void setStatusEntryBindList(List<Pair<STATUS, StatusEntry>> entryBindList) {
         setStatusEntryFunction(convert(entryBindList));
     }
 
@@ -92,7 +92,7 @@ public class TxStatusTransitorImpl<MODEL, STATUS, TRIGGER>
     public static class TxStatusTransitorImplBuilder<MODEL, STATUS, TRIGGER> {
         protected Function<STATUS, StatusEntry<MODEL, Object>> statusEntryFunction;
 
-        public TxStatusTransitorImplBuilder statusEntryBindList(List<StatusEntryBinding<STATUS>> entryBindList) {
+        public TxStatusTransitorImplBuilder statusEntryBindList(List<Pair<STATUS, StatusEntry>> entryBindList) {
             this.statusEntryFunction = convert(entryBindList);
             return this;
         }

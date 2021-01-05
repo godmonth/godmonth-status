@@ -2,11 +2,12 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
-import com.godmonth.status.advancer.intf.AdvancerBinding;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.analysis.intf.ModelAnalysis;
+import com.godmonth.status.executor.intf.ExecutionRequest;
 import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.executor.intf.OrderExecutor2;
 import com.godmonth.status.transitor.tx.intf.TxStatusTransitor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ import java.util.function.Function;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST> {
+public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST>, OrderExecutor2<MODEL, INST> {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutor.class);
 
@@ -46,15 +47,15 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
     @Setter
     private ModelAnalysis<MODEL> modelAnalysis;
 
-    public static Function<Object, StatusAdvancer2> convert(List<AdvancerBinding> advancerBindings) {
+    public static Function<Object, StatusAdvancer2> convert(List<Pair<Object, StatusAdvancer2>> advancerBindings) {
         Map<Object, StatusAdvancer2> advancerMap = new HashMap<>();
-        for (AdvancerBinding advancerBinding : advancerBindings) {
-            advancerMap.put(advancerBinding.getKey(), advancerBinding.getStatusAdvancer());
+        for (Pair<Object, StatusAdvancer2> advancerBinding : advancerBindings) {
+            advancerMap.put(advancerBinding.getKey(), advancerBinding.getValue());
         }
         return advancerMap::get;
     }
 
-    public void setAdvancerBindingList(List<AdvancerBinding> advancerBindingList) {
+    public void setAdvancerBindingList(List<Pair<Object, StatusAdvancer2>> advancerBindingList) {
         this.advancerFunctions = convert(advancerBindingList);
     }
 
@@ -126,10 +127,20 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor
         }
     }
 
+    @Override
+    public SyncResult<MODEL, ?> execute(ExecutionRequest<MODEL, INST> req) {
+        return execute(req.getModel(), req.getInstruction(), req.getMessage());
+    }
+
+    @Override
+    public Future<SyncResult<MODEL, ?>> executeAsync(ExecutionRequest<MODEL, INST> req) {
+        return executeAsync(req.getModel(), req.getInstruction(), req.getMessage());
+    }
+
     public static class DefaultOrderExecutorBuilder<MODEL, INST, TRIGGER> {
         private Function<Object, StatusAdvancer2> advancerFunctions;
 
-        public DefaultOrderExecutorBuilder advancerBindingList(List<AdvancerBinding> advancerBindingList) {
+        public DefaultOrderExecutorBuilder advancerBindingList(List<Pair<Object, StatusAdvancer2>> advancerBindingList) {
             this.advancerFunctions = convert(advancerBindingList);
             return this;
         }

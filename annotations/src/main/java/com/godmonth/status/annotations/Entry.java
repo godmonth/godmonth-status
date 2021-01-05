@@ -7,18 +7,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>定义在状态的枚举上，让引擎知道该状态所关联的跃迁触发器定义</p >
+ * <p>激活状态入口</p >
  *
  * @author shenyue
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Trigger {
-    /**
-     * trigger的类
-     *
-     * @return
-     */
-    Class value();
+public @interface Entry {
 }

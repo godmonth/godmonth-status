@@ -1,7 +1,9 @@
 package com.godmonth.status.advancer.intf;
 
+import com.godmonth.status.annotations.binding.ModelBinding;
+
 /**
- * 状态推进器.不再关联key,使用 {@link com.godmonth.status.annotations.ModelBinding} 和 {{@link AdvancerBinding}} 关联.
+ * 状态推进器.不再关联key,使用 {@link ModelBinding} 和 {{@link AdvancerBinding}} 关联.
  *
  * @param <MODEL> MODEL
  * @author shenyue

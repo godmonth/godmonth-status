@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StatusEntryBinding<STATUS> {
-    private STATUS previousStatus;
+
+    private STATUS status;
+    
     private StatusEntry statusEntry;
 
 }

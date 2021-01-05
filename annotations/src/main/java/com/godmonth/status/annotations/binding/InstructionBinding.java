@@ -1,4 +1,4 @@
-package com.godmonth.status.annotations;
+package com.godmonth.status.annotations.binding;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,18 +7,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>定义在状态的枚举上，让引擎知道该状态所关联的跃迁触发器定义</p >
- *
- * @author shenyue
+ * 非空指令
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Trigger {
+public @interface InstructionBinding {
     /**
-     * trigger的类
+     * 只能是string或者枚举
      *
      * @return
      */
-    Class value();
+    Class instructionClass();
+
+    String instructionValue();
 }

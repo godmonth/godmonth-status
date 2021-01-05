@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * @param <MODEL>
  * @param <INST>
  * @param <TRIGGER>
- * @deprecated use {@link com.godmonth.status.advancer.intf.StatusAdvancer2}
+ * @deprecated use {@link StatusAdvancer}
  */
 @Deprecated
 public abstract class AbstractAdvancer<MODEL, INST, TRIGGER> implements StatusAdvancer<MODEL, INST, TRIGGER> {
