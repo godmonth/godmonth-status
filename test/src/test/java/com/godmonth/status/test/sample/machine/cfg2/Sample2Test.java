@@ -1,8 +1,8 @@
 package com.godmonth.status.test.sample.machine.cfg2;
 
-import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.ExecutionRequest;
 import com.godmonth.status.executor.intf.OrderExecutor2;
+import com.godmonth.status.executor.intf.SyncResult;
 import com.godmonth.status.test.sample.db1.RepoConfig;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;

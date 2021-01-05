@@ -1,11 +1,9 @@
 package com.godmonth.status.executor.intf;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 /**
  * 同步结果
@@ -16,7 +14,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @ToString(callSuper = true)
 @NoArgsConstructor
-@AllArgsConstructor
 public class SyncResult<MODEL, SYMBOL> extends com.godmonth.status.advancer.intf.SyncResult<MODEL, SYMBOL> {
 
     /**

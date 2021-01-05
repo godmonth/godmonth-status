@@ -2,14 +2,11 @@ package com.godmonth.status.executor.impl;
 
 import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.executor.intf.OrderExecutor;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class OldDefaultOrderExecutor<MODEL, INST, TRIGGER> extends DefaultOrderExecutor<MODEL, INST, TRIGGER> implements OrderExecutor<MODEL, INST> {
 
 

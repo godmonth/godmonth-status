@@ -21,7 +21,7 @@
     <bean id="sampleStateMachineAnalysis" class="com.godmonth.status.analysis.impl.sm.AnnotationStateMachineAnalysis"
           c:_0-ref="sampleModelAnalysis"/>
 
-    <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.DefaultOrderExecutor"
+    <bean id="sampleModelExecutor" class="com.godmonth.status.executor.impl.OldDefaultOrderExecutor"
           p:txStatusTransitor-ref="sampleModelStatusTransitor" p:modelAnalysis-ref="sampleModelAnalysis">
         <property name="advancerBindingList">
             <bean class="com.godmonth.status.builder.advancer.OldAdvancerConverter" factory-method="convert2Binding">

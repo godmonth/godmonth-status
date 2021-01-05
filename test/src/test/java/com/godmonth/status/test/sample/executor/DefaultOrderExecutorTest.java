@@ -1,10 +1,13 @@
 package com.godmonth.status.test.sample.executor;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer;
-import com.godmonth.status.advancer.intf.SyncResult;
 import com.godmonth.status.analysis.impl.model.SimpleBeanModelAnalysis;
 import com.godmonth.status.analysis.impl.model.TypeFieldPredicate;
-import com.godmonth.status.executor.impl.DefaultOrderExecutor;
+import com.godmonth.status.executor.impl.OldDefaultOrderExecutor;
+import com.godmonth.status.executor.intf.ExecutionRequest;
+import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.executor.intf.OrderExecutor2;
+import com.godmonth.status.executor.intf.SyncResult;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.machine.advancer.CheckAdvancer;
@@ -31,13 +34,14 @@ public class DefaultOrderExecutorTest {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultOrderExecutorTest.class);
 
-    private static DefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor;
+    private static OrderExecutor<SampleModel, String> orderExecutor;
+    private static OrderExecutor2<SampleModel, String> orderExecutor2;
 
     @BeforeAll
     public static void prepare() {
         TypeFieldPredicate typeFieldPredicate = TypeFieldPredicate.builder().propertyName("type").expectedValue("test").build();
         SimpleBeanModelAnalysis<SampleModel> analysis = new SimpleBeanModelAnalysis<>(SampleModel.class, "status", Arrays.asList(typeFieldPredicate));
-        defaultOrderExecutor = new DefaultOrderExecutor<>();
+        OldDefaultOrderExecutor<SampleModel, String, SampleTrigger> defaultOrderExecutor = new OldDefaultOrderExecutor<>();
         defaultOrderExecutor.setModelAnalysis(analysis);
         Map<SampleStatus, StatusAdvancer<SampleModel, String, SampleTrigger>> advancers = new HashMap<>();
         advancers.put(SampleStatus.CREATED, new PayAdvancer());
@@ -56,6 +60,8 @@ public class DefaultOrderExecutorTest {
         txStatusTransitor.setTransactionOperations(TransactionOperations.withoutTransaction());
         defaultOrderExecutor.setTxStatusTransitor(txStatusTransitor);
 
+        orderExecutor = defaultOrderExecutor;
+        orderExecutor2 = defaultOrderExecutor;
     }
 
     private static void print(TransitedResult transitedResult) {
@@ -67,7 +73,7 @@ public class DefaultOrderExecutorTest {
         SampleModel sampleModel = new SampleModel();
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
-        SyncResult<SampleModel, ?> execute = defaultOrderExecutor.execute(sampleModel, "eee", "fff");
+        final com.godmonth.status.advancer.intf.SyncResult<SampleModel, ?> execute = orderExecutor.execute(sampleModel, "eee", "fff");
         Assertions.assertEquals(execute.getModel().getStatus(), SampleStatus.PAID);
     }
 
@@ -76,7 +82,8 @@ public class DefaultOrderExecutorTest {
         SampleModel sampleModel = new SampleModel();
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
-        SyncResult<SampleModel, ?> execute = defaultOrderExecutor.execute(sampleModel, null, null);
+        final ExecutionRequest<SampleModel, String> request = ExecutionRequest.<SampleModel, String>builder().model(sampleModel).instruction("eee").message("fff").build();
+        final SyncResult<SampleModel, ?> execute = orderExecutor2.execute(request);
         Assertions.assertEquals(execute.getModel().getStatus(), SampleStatus.CREATED);
     }
 }

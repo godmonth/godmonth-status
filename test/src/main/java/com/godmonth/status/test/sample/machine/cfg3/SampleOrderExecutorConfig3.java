@@ -9,7 +9,7 @@ import com.godmonth.status.builder.advancer.AdvancerBindingListBuilder;
 import com.godmonth.status.builder.entry.StatusEntryBindingListBuilder;
 import com.godmonth.status.builder.transitor.JsonDefinitionBuilder;
 import com.godmonth.status.executor.impl.DefaultOrderExecutor;
-import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.executor.intf.OrderExecutor2;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
 import com.godmonth.status.test.sample.machine.trigger.SampleTrigger;
@@ -59,9 +59,10 @@ public class SampleOrderExecutorConfig3 {
      * @throws ClassNotFoundException
      */
     @Bean
-    public OrderExecutor<SampleModel, String> sampleModelOrderExecutor(AutowireCapableBeanFactory beanFactory, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis, @Qualifier("sampleStatusTxStatusTransitor") TxStatusTransitor txStatusTransitor) throws IOException, ClassNotFoundException {
+    public OrderExecutor2<SampleModel, Object> sampleModelOrderExecutor(AutowireCapableBeanFactory beanFactory, @Qualifier("sampleStateMachineAnalysis") StateMachineAnalysis sampleStateMachineAnalysis, @Qualifier("sampleStatusTxStatusTransitor") TxStatusTransitor txStatusTransitor) throws IOException, ClassNotFoundException {
         List<Pair<Object, StatusAdvancer2>> pairList = AdvancerBindingListBuilder.builder().autowireCapableBeanFactory(beanFactory).modelClass(SampleModel.class).packageName("com.godmonth.status.test.sample.machine.advancer2").build();
-        return DefaultOrderExecutor.<SampleModel, Void, Object>builder().modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).advancerBindingList(pairList).txStatusTransitor(txStatusTransitor).build();
+        OrderExecutor2<SampleModel, Object> oe = DefaultOrderExecutor.<SampleModel, Object, Object>builder().modelAnalysis(sampleStateMachineAnalysis.getModelAnalysis()).advancerBindingList(pairList).txStatusTransitor(txStatusTransitor).build();
+        return oe;
     }
 
 
