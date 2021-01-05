@@ -4,6 +4,7 @@ import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 推进结果.当跃迁参数为空时,查看同步结果
@@ -14,6 +15,7 @@ import lombok.Data;
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AdvancedResult<MODEL, TRIGGER> {
     /**
      * 推进的同步结果
@@ -37,15 +39,18 @@ public class AdvancedResult<MODEL, TRIGGER> {
     /**
      * @param triggerBehavior
      */
-
+    @Deprecated
     public AdvancedResult(TriggerBehavior<TRIGGER, MODEL> triggerBehavior) {
         this.triggerBehavior = triggerBehavior;
+        //必须写一次
+        nextOperation = NextOperation.ADVANCE;
     }
 
     /**
      * @param triggerBehavior
      * @param nextOperation
      */
+    @Deprecated
     public AdvancedResult(TriggerBehavior<TRIGGER, MODEL> triggerBehavior, NextOperation nextOperation) {
         this.triggerBehavior = triggerBehavior;
         this.nextOperation = nextOperation;
@@ -75,6 +80,8 @@ public class AdvancedResult<MODEL, TRIGGER> {
         } else {
             syncData = null;
         }
+        //必须写一次
+        nextOperation = NextOperation.ADVANCE;
     }
 
 }

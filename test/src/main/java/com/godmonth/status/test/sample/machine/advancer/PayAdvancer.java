@@ -17,7 +17,7 @@ public class PayAdvancer extends AbstractAdvancer<SampleModel, String, SampleTri
     public AdvancedResult<SampleModel, SampleTrigger> advance(SampleModel model, String instruction, Object message)
             throws IllegalStateException {
         System.out.println("advanced");
-        if ("eee".equals(instruction) && "fff".equals(message)) {
+        if ("pay".equals(instruction) && "balance".equals(message)) {
             return new AdvancedResult<>(new TriggerBehavior<>(SampleTrigger.PAY, new TransitionCallback<SampleModel, Object>() {
                 @Override
                 public Object beforeMerge(SampleModel sampleModel) {

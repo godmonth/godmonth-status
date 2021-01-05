@@ -12,7 +12,12 @@ public class OldDefaultOrderExecutor<MODEL, INST, TRIGGER> extends DefaultOrderE
 
     @Override
     public SyncResult<MODEL, ?> execute(MODEL model, INST instruction, Object param) {
-        return execute1(model, instruction, param);
+        final com.godmonth.status.executor.intf.SyncResult<MODEL, ?> modelSyncResult = execute1(model, instruction, param);
+        SyncResult<MODEL, Object> syncResult = new SyncResult<MODEL, Object>();
+        syncResult.setModel(modelSyncResult.getModel());
+        syncResult.setSymbol(modelSyncResult.getSymbol());
+        syncResult.setValue(modelSyncResult.getValue());
+        return syncResult;
     }
 
 

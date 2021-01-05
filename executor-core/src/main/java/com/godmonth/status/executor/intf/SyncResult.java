@@ -1,9 +1,9 @@
 package com.godmonth.status.executor.intf;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * 同步结果
@@ -11,35 +11,15 @@ import lombok.ToString;
  * @param <SYMBOL>
  * @author shenyue
  */
+@Builder
 @Data
-@ToString(callSuper = true)
 @NoArgsConstructor
-public class SyncResult<MODEL, SYMBOL> extends com.godmonth.status.advancer.intf.SyncResult<MODEL, SYMBOL> {
+@AllArgsConstructor
+public class SyncResult<MODEL, SYMBOL> {
+    protected MODEL model;
 
-    /**
-     * @param model
-     */
-    public SyncResult(MODEL model) {
-        this.model = model;
-    }
+    protected SYMBOL symbol;
 
-    /**
-     * @param model
-     * @param symbol
-     */
-    public SyncResult(MODEL model, SYMBOL symbol) {
-        this.model = model;
-        this.symbol = symbol;
-    }
+    protected Object value;
 
-    /**
-     * @param model
-     * @param symbol
-     */
-    @Builder
-    public SyncResult(MODEL model, SYMBOL symbol, Object value) {
-        this.model = model;
-        this.symbol = symbol;
-        this.value = value;
-    }
 }
