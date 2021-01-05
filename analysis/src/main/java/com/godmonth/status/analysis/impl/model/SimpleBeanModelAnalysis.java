@@ -22,7 +22,7 @@ public class SimpleBeanModelAnalysis<MODEL> implements ModelAnalysis<MODEL> {
 
     protected String statusPropertyName;
 
-    protected List<Predicate<MODEL>> predicateList;
+    protected List<Predicate<Class>> predicateList;
 
     protected Class statusClass;
 
