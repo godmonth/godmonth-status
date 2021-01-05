@@ -9,7 +9,7 @@ import org.springframework.beans.factory.FactoryBean;
 import javax.annotation.PostConstruct;
 
 @Setter
-public class AdvancerBindingFactoryBean implements FactoryBean<AdvancerBinding> {
+public class AdvancerBindingFactoryBean implements FactoryBean<Pair<Object, StatusAdvancer2>> {
 
     @Setter
     protected Object availableStatus;
@@ -20,10 +20,9 @@ public class AdvancerBindingFactoryBean implements FactoryBean<AdvancerBinding> 
     @Setter
     protected StatusAdvancer2 statusAdvancer;
 
-    protected AdvancerBinding advancerBinding;
+    protected Pair<Object, StatusAdvancer2> advancerBinding;
 
     public Object getKey() {
-
         if (expectedInstruction != null) {
             return Pair.of(availableStatus, expectedInstruction);
         } else {
@@ -34,11 +33,11 @@ public class AdvancerBindingFactoryBean implements FactoryBean<AdvancerBinding> 
     @PostConstruct
     public void init() {
         Object key = getKey();
-        advancerBinding = AdvancerBinding.builder().key(key).statusAdvancer(statusAdvancer).build();
+        advancerBinding = Pair.of(key, statusAdvancer);
     }
 
     @Override
-    public AdvancerBinding getObject() throws Exception {
+    public Pair<Object, StatusAdvancer2> getObject() throws Exception {
         return advancerBinding;
     }
 
