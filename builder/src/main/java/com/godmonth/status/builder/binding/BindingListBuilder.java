@@ -13,7 +13,6 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +27,7 @@ import java.util.function.Predicate;
 @Slf4j
 public class BindingListBuilder {
     @Builder
-    private static <T> List<Pair<Object, T>> build(, ClassLoader classLoader, @NonNull @Singular Set<String> packageNames, @NonNull Annotation enableAnnotation, Class ancestorClass, Class modelClass, Predicate<Class> predicate, Function<Class, Object> keyFinder, @NonNull AutowireCapableBeanFactory autowireCapableBeanFactory) throws IOException, ClassNotFoundException {
+    private static <T> List<Pair<Object, T>> build(ClassLoader classLoader, @NonNull @Singular Set<String> packageNames, Class enableAnnotationClass, Class ancestorClass, Class modelClass, Predicate<Class> predicate, Function<Class, Object> keyFinder, @NonNull AutowireCapableBeanFactory autowireCapableBeanFactory) throws IOException, ClassNotFoundException {
         Validate.notEmpty(packageNames, "packageNames is empty");
         keyFinder = keyFinder != null ? keyFinder : BindingKeyUtils::getBindingKey;
         List<Pair<Object, T>> list = new ArrayList<>();
@@ -39,6 +38,9 @@ public class BindingListBuilder {
                 Class<?> aClass = Class.forName(topLevelClass.getName());
 
                 //检查激活标志
+                if (enableAnnotationClass != null && AnnotationUtils.findAnnotation(aClass, enableAnnotationClass) == null) {
+                    continue;
+                }
 
                 //检查父类
                 if (ancestorClass != null && !ancestorClass.isAssignableFrom(aClass)) {
@@ -52,10 +54,12 @@ public class BindingListBuilder {
                         continue;
                     }
                 }
+
                 //过滤断言
                 if (predicate != null && !predicate.test(aClass)) {
                     continue;
                 }
+
                 Pair<Object, T> pair = createByAnnotation(aClass, autowireCapableBeanFactory, keyFinder);
                 if (pair != null) {
                     list.add(pair);

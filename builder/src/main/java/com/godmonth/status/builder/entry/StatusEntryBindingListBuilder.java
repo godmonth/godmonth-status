@@ -1,5 +1,6 @@
 package com.godmonth.status.builder.entry;
 
+import com.godmonth.status.annotations.Entry;
 import com.godmonth.status.builder.binding.BindingListBuilder;
 import com.godmonth.status.transitor.tx.intf.StatusEntry;
 import lombok.Builder;
@@ -24,6 +25,6 @@ public class StatusEntryBindingListBuilder {
 
     @Builder
     private static List<Pair<Object, StatusEntry>> build(@Singular Set<String> packageNames, Class modelClass, Predicate<Class> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Function<Class, Object> keyFinder) throws IOException, ClassNotFoundException {
-        return BindingListBuilder.<StatusEntry>builder().packageNames(packageNames).ancestorClass(StatusEntry.class).modelClass(modelClass).predicate(predicate).autowireCapableBeanFactory(autowireCapableBeanFactory).keyFinder(keyFinder).build();
+        return BindingListBuilder.<StatusEntry>builder().enableAnnotationClass(Entry.class).packageNames(packageNames).ancestorClass(StatusEntry.class).modelClass(modelClass).predicate(predicate).autowireCapableBeanFactory(autowireCapableBeanFactory).keyFinder(keyFinder).build();
     }
 }

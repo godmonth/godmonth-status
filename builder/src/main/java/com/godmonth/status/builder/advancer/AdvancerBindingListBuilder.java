@@ -1,6 +1,7 @@
 package com.godmonth.status.builder.advancer;
 
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
+import com.godmonth.status.annotations.Advancer;
 import com.godmonth.status.builder.binding.BindingListBuilder;
 import lombok.Builder;
 import lombok.Singular;
@@ -24,7 +25,7 @@ public class AdvancerBindingListBuilder {
 
     @Builder
     private static List<Pair<Object, StatusAdvancer2>> build(@Singular Set<String> packageNames, Class modelClass, Predicate<Class> predicate, AutowireCapableBeanFactory autowireCapableBeanFactory, Function<Class, Object> keyFinder) throws IOException, ClassNotFoundException {
-        return BindingListBuilder.<StatusAdvancer2>builder().packageNames(packageNames).ancestorClass(StatusAdvancer2.class).modelClass(modelClass).predicate(predicate).autowireCapableBeanFactory(autowireCapableBeanFactory).keyFinder(keyFinder).build();
+        return BindingListBuilder.<StatusAdvancer2>builder().enableAnnotationClass(Advancer.class).packageNames(packageNames).ancestorClass(StatusAdvancer2.class).modelClass(modelClass).predicate(predicate).autowireCapableBeanFactory(autowireCapableBeanFactory).keyFinder(keyFinder).build();
     }
 
 

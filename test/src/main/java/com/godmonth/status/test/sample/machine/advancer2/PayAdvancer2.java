@@ -3,6 +3,7 @@ package com.godmonth.status.test.sample.machine.advancer2;
 import com.godmonth.status.advancer.intf.AdvanceRequest;
 import com.godmonth.status.advancer.intf.AdvancedResult;
 import com.godmonth.status.advancer.intf.StatusAdvancer2;
+import com.godmonth.status.annotations.Advancer;
 import com.godmonth.status.annotations.binding.ModelBinding;
 import com.godmonth.status.annotations.binding.StatusBinding;
 import com.godmonth.status.test.sample.domain.SampleModel;
@@ -13,6 +14,7 @@ import com.godmonth.status.transitor.tx.intf.TriggerBehavior;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+@Advancer
 @ModelBinding(SampleModel.class)
 @StatusBinding(statusClass = SampleStatus.class, statusValue = "CREATED")
 public class PayAdvancer2 implements StatusAdvancer2<SampleModel, String, SampleTrigger> {
