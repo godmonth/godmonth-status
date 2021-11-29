@@ -1,11 +1,12 @@
 package com.godmonth.status.test.sample.machine.cfg3;
 
-import com.godmonth.status.advancer.intf.SyncResult;
-import com.godmonth.status.executor.intf.OrderExecutor;
+import com.godmonth.status.executor.intf.ExecutionRequest;
+import com.godmonth.status.executor.intf.OrderExecutor2;
 import com.godmonth.status.test.sample.db2.RepoConfig2;
 import com.godmonth.status.test.sample.db3.RepoConfig3;
 import com.godmonth.status.test.sample.domain.SampleModel;
 import com.godmonth.status.test.sample.domain.SampleStatus;
+import com.godmonth.status.test.sample.machine.inst.SampleInstruction;
 import com.godmonth.status.test.sample.repo.SampleModelRepository;
 import com.godmonth.status.test.sample.repo2.SampleModelReadOnlyRepository;
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +35,7 @@ import java.util.Optional;
 public class Sample3Test {
 
     @Autowired
-    private OrderExecutor<SampleModel, String> sampleModelOrderExecutor;
+    private OrderExecutor2<SampleModel, Object> sampleModelOrderExecutor;
 
     @Autowired
     private SampleModelRepository sampleModelRepository;
@@ -55,19 +56,26 @@ public class Sample3Test {
         SampleModel sampleModel = new SampleModel();
         sampleModel.setStatus(SampleStatus.CREATED);
         sampleModel.setType("test");
-        SampleModel sampleModel1 = sampleModelRepository.save(sampleModel);
-        SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(sampleModel1, "eee", "fff");
-        Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
-
-
-        System.out.println(execute);
+        sampleModel = sampleModelRepository.save(sampleModel);
         {
-            Connection connection = dataSource2.getConnection();
-            ResultSet resultSet = connection.createStatement().executeQuery("select count(*) from sample_model");
-            resultSet.next();
-            Assertions.assertEquals(resultSet.getInt(1), 1);
-            String string = resultSet.getString(1);
-            System.out.println(string);
+            ExecutionRequest<SampleModel, Object> req = ExecutionRequest.<SampleModel, Object>builder().model(sampleModel).instruction("pay").message("balance").build();
+            com.godmonth.status.executor.intf.SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(req);
+            System.out.println(execute);
+            Assertions.assertEquals(SampleStatus.PAID, execute.getModel().getStatus());
+            sampleModel = execute.getModel();
+        }
+        {
+            ExecutionRequest<SampleModel, Object> req = ExecutionRequest.<SampleModel, Object>builder().model(sampleModel).instruction(SampleInstruction.DELIVER).message("yunda").build();
+            com.godmonth.status.executor.intf.SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(req);
+            System.out.println(execute);
+            Assertions.assertEquals(SampleStatus.DELIVERED, execute.getModel().getStatus());
+            sampleModel = execute.getModel();
+        }
+        {
+            ExecutionRequest<SampleModel, Object> req = ExecutionRequest.<SampleModel, Object>builder().model(sampleModel).instruction(SampleInstruction.EVALUATE).message("5").build();
+            com.godmonth.status.executor.intf.SyncResult<SampleModel, ?> execute = sampleModelOrderExecutor.execute(req);
+            System.out.println(execute);
+            Assertions.assertEquals(SampleStatus.EVALUATED, execute.getModel().getStatus());
         }
         {
             //查看数据源3
@@ -81,6 +89,7 @@ public class Sample3Test {
         Assertions.assertTrue(byId.isPresent());
         Optional<SampleModel> byId2 = sampleModelReadOnlyRepository.findById(1L);
         Assertions.assertFalse(byId2.isPresent());
-
     }
+
+
 }
