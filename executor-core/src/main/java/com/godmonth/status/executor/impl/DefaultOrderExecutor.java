@@ -30,6 +30,9 @@ public class DefaultOrderExecutor<MODEL, INST, TRIGGER, STATUS> implements Order
 
     private ModelAnalysis<MODEL, ?> modelAnalysis;
 
+    public TxStatusTransitor<MODEL, TRIGGER> getTxStatusTransitor() {
+        return txStatusTransitor;
+    }
     @Override
     public Future<SyncResult<MODEL, ?>> executeAsync(final MODEL model, final INST instruction, final Object message) {
         modelAnalysis.validate(model);
